@@ -1,4 +1,4 @@
-package com.ssafy.mvc.controller;
+package com.ssafy.soda.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,5 +14,4 @@ public class AdminController {
 		return "admin/adminMain";
 	}
 	
-
 }

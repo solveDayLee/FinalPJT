@@ -1,4 +1,4 @@
-package com.ssafy.mvc;
+package com.ssafy.soda;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.ssafy.mvc.controller;
+package com.ssafy.soda.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
 	
-	@GetMapping("main")
+	@GetMapping("/main")
 	public String adminMain() {
-		
+	System.out.println("확인");
 		return "admin/adminMain";
 	}
 	
-
 }

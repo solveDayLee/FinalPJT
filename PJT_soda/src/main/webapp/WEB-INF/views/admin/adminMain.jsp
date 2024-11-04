@@ -8,412 +8,249 @@
 <title>Insert title here</title>
 </head>
 <style>
-.div,
-.div * {
+.home-page,
+.home-page * {
   box-sizing: border-box;
 }
-.div {
-  background: #efefef;
-  height: 1024px;
+.home-page {
+  background: #ffffff;
+  height: 811px;
   position: relative;
   overflow: hidden;
 }
-.rectangle-3 {
-  width: 217px;
-  height: 1024px;
+.image-1 {
+  background: linear-gradient(
+    69.25deg,
+    rgba(209, 107, 165, 0.3) 0%,
+    rgba(134, 168, 231, 0.3) 51.73613429069519%,
+    rgba(95, 251, 241, 0.3) 100%
+  );
+  width: 1272px;
+  height: 811px;
+  position: absolute;
+  left: 64px;
+  top: 1px;
+  filter: blur(15px);
+  object-fit: cover;
+}
+.rectangle-1 {
+  background: #f9f9f9;
+  width: 93px;
+  height: 810px;
   position: absolute;
   left: 0px;
   top: 0px;
 }
-.rectangle-32 {
-  background: #d9d9d9;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  right: 0%;
-  left: 0%;
-  bottom: 0%;
-  top: 0%;
-}
-.logo {
-  color: #000000;
-  text-align: left;
-  font-family: "InriaSans-Regular", sans-serif;
-  font-size: 40px;
-  font-weight: 400;
-  position: absolute;
-  right: 35.94%;
-  left: 12.44%;
-  width: 51.61%;
-  bottom: 92.68%;
-  top: 2.73%;
-  height: 4.59%;
-}
-.board-button {
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    linear-gradient(to left, #ffffff, #ffffff);
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  height: 7.03%;
-  position: absolute;
-  right: 0%;
-  left: 0%;
-  bottom: 63.18%;
-  top: 29.79%;
-}
-.interface-essential-location {
-  flex-shrink: 0;
-  width: 46px;
-  height: 46px;
-  position: relative;
-  overflow: visible;
-}
-.main {
-  color: #000000;
-  text-align: left;
-  font-family: "InriaSans-Regular", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  position: relative;
-}
-.interface-essential-location2 {
-  flex-shrink: 0;
-  width: 46px;
-  height: 46px;
-  position: relative;
-  overflow: visible;
-}
-.board-button2 {
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    linear-gradient(to left, #ffffff, #ffffff);
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  height: 7.03%;
-  position: absolute;
-  right: 0%;
-  left: 0%;
-  bottom: 56.15%;
-  top: 36.82%;
-}
-.interface-essential-location3 {
-  flex-shrink: 0;
-  width: 46px;
-  height: 46px;
-  position: relative;
-  overflow: visible;
-}
-.rectangle-9 {
-  background: #ffffff;
-  width: 563.59%;
-  height: 7.32%;
-  position: absolute;
-  right: -563.59%;
-  left: 100%;
-  bottom: 92.68%;
-  top: 0%;
-}
-.user-button {
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    linear-gradient(to left, #ffffff, #ffffff);
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
-  justify-content: flex-start;
-  width: 15.07%;
-  height: 7.03%;
-  position: absolute;
-  right: 84.93%;
-  left: 0%;
-  bottom: 77.25%;
-  top: 15.72%;
-}
-.interface-essential-location4 {
-  flex-shrink: 0;
-  width: 46px;
-  height: 46px;
-  position: relative;
-  overflow: visible;
-}
-.user-button2 {
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    linear-gradient(to left, #ffffff, #ffffff);
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
-  justify-content: flex-start;
-  width: 15.07%;
-  height: 7.03%;
-  position: absolute;
-  right: 84.93%;
-  left: 0%;
-  bottom: 70.21%;
-  top: 22.75%;
-}
-.interface-essential-location5 {
-  flex-shrink: 0;
-  width: 46px;
-  height: 46px;
-  position: relative;
-  overflow: visible;
-}
-.user-button3 {
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    linear-gradient(to left, #ffffff, #ffffff);
-  border-radius: 15px;
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
-  justify-content: flex-start;
-  width: 14.44%;
-  height: 5.18%;
-  position: absolute;
-  right: 2.36%;
-  left: 83.19%;
-  bottom: 93.75%;
-  top: 1.07%;
-}
-.interface-essential-location6 {
-  flex-shrink: 0;
-  width: 46px;
-  height: 46px;
-  position: relative;
-  overflow: visible;
-}
-.user-button4 {
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    linear-gradient(to left, #ffffff, #ffffff);
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
-  justify-content: flex-start;
-  width: 15.07%;
-  height: 7.03%;
-  position: absolute;
-  right: 84.93%;
-  left: 0%;
-  bottom: 0%;
-  top: 92.97%;
-}
-.interface-essential-location7 {
-  flex-shrink: 0;
-  width: 46px;
-  height: 46px;
-  position: relative;
-  overflow: visible;
-}
-.rectangle-11 {
-  background: #d9d9d9;
-  width: 482px;
-  height: 571px;
-  position: absolute;
-  left: 603px;
-  top: 227px;
-}
-.ellipse-1 {
-  background: #ffffff;
-  border-radius: 50%;
-  width: 278px;
-  height: 278px;
-  position: absolute;
-  left: 705px;
-  top: 318px;
-}
-.interface-essential-location8 {
-  width: 211px;
-  height: 211px;
-  position: absolute;
-  left: 738px;
-  top: 364px;
-  overflow: visible;
-}
-.admin {
-  color: #000000;
-  text-align: center;
-  font-family: "InriaSans-Regular", sans-serif;
-  font-size: 40px;
-  font-weight: 400;
-  position: absolute;
-  left: 738px;
-  top: 640px;
-  width: 218px;
-  height: 68px;
-}
-.group-2 {
-  width: 1440px;
-  height: 44px;
+.rectangle-2 {
+  background: #f3f3f3;
+  width: 93px;
+  height: 75px;
   position: absolute;
   left: 0px;
-  top: 75px;
+  top: 0px;
 }
-.group-1 {
+.rectangle-3 {
+  background: #fcfcfc;
+  width: 1243px;
+  height: 75px;
+  position: absolute;
+  left: 93px;
+  top: 0px;
+}
+.export {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  left: 29px;
+  top: 746px;
+  object-fit: cover;
+}
+.ellipse-1 {
+  border-radius: 50%;
+  width: 59px;
+  height: 59px;
+  position: absolute;
+  left: 1898px;
+  top: 31px;
+  object-fit: cover;
+}
+.group-13 {
   position: absolute;
   inset: 0;
 }
-.rectangle-35 {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  right: 0%;
-  left: 0%;
-  bottom: 0%;
-  top: 0%;
-}
-.rectangle-352 {
-  background: #d9d9d9;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  right: 0%;
-  left: 0%;
-  bottom: 0%;
-  top: 0%;
-}
-._2024-10-29-21-13 {
-  color: #000000;
+.welcome-to-our-application-click-button-below-to-start-the-program {
+  color: #ffffff;
   text-align: left;
-  font-family: "Inter-Regular", sans-serif;
+  position: absolute;
+  right: 6.66%;
+  left: 14%;
+  width: 79.34%;
+  bottom: 20.22%;
+  top: 19.61%;
+  height: 60.17%;
+}
+.welcome-to-our-application-click-button-below-to-start-the-program-span {
+  color: #ffffff;
+  font-family: "RobotoMono-Bold", sans-serif;
+  font-size: 70px;
+  font-weight: 700;
+}
+.welcome-to-our-application-click-button-below-to-start-the-program-span2 {
+  color: #ffffff;
+  font-family: "RobotoMono-Bold", sans-serif;
   font-size: 20px;
+  font-weight: 700;
+}
+.welcome-to-our-application-click-button-below-to-start-the-program-span3 {
+  color: #ffffff;
+  font-family: "RobotoMono-Bold", sans-serif;
+  font-size: 35px;
+  font-weight: 700;
+}
+.group-11 {
+  width: 268px;
+  height: 72.8px;
+  position: static;
+}
+.rectangle-20 {
+  background: #1678f3;
+  border-radius: 56.5px;
+  width: 268px;
+  height: 72.8px;
+  position: absolute;
+  left: 187px;
+  top: 619px;
+}
+.rectangle-21 {
+  background: linear-gradient(
+    265.94deg,
+    rgba(249, 132, 244, 1) 0%,
+    rgba(22, 120, 243, 0) 100%
+  );
+  border-radius: 56.5px;
+  width: 268px;
+  height: 72.8px;
+  position: absolute;
+  left: 187px;
+  top: 619px;
+}
+.get-s-started {
+  width: 219px;
+  height: 38px;
+  position: absolute;
+  left: 212px;
+  top: 636px;
+}
+.get-s-started2 {
+  color: #ffffff;
+  text-align: left;
+  font-family: "RobotoMono-Regular", sans-serif;
+  font-size: 28px;
   font-weight: 400;
   position: absolute;
-  right: 1.04%;
-  left: 84.24%;
-  width: 14.72%;
-  bottom: 18.18%;
-  top: 22.73%;
-  height: 59.09%;
-}
-.group-4 {
-  width: 227px;
-  height: 28px;
-  position: absolute;
-  left: 971px;
-  top: 28px;
-}
-.eye-open {
-  width: 14.98%;
-  height: 100%;
-  position: absolute;
-  right: 85.02%;
+  right: 0%;
   left: 0%;
+  width: 100%;
   bottom: 0%;
   top: 0%;
-  overflow: visible;
+  height: 100%;
 }
-.div2 {
-  color: #000000;
-  text-align: left;
-  font-family: "Inter-Regular", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
+.list-of-parts {
+  width: 37px;
+  height: 50px;
   position: absolute;
-  right: 0%;
-  left: 14.98%;
-  width: 85.02%;
-  bottom: 50%;
-  top: 3.57%;
-  height: 46.43%;
+  left: 29px;
+  top: 528px;
+  object-fit: cover;
 }
-
+.selected {
+  position: absolute;
+  inset: 0;
+}
+.rectangle-4 {
+  background: #1678f3;
+  border-radius: 22px;
+  width: 53px;
+  height: 53px;
+  position: absolute;
+  left: 20px;
+  top: 311px;
+  box-shadow: 0px 6px 4px 0px rgba(0, 0, 0, 0.1);
+}
+.customer {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  left: 29px;
+  top: 320px;
+  object-fit: cover;
+}
+.dashboard-layout {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  left: 29px;
+  top: 439px;
+  object-fit: cover;
+}
+.online-store {
+  width: 53px;
+  height: 57px;
+  position: absolute;
+  left: 21px;
+  top: 203px;
+  object-fit: cover;
+}
 
 </style>
 
 
 <body>
-	<div class="div">
-  <div class="rectangle-3">
-    <div class="rectangle-32"></div>
-    <div class="logo">LOGO</div>
-    <div class="board-button">
-      <img
-        class="interface-essential-location"
-        src="interface-essential-location0.svg"
-      />
-      <div class="main">board</div>
+	<div class="home-page">
+  <img class="image-1" src="image-10.png" />
+  <div class="rectangle-1"></div>
+  <div class="rectangle-2"></div>
+  <div class="rectangle-3"></div>
+  <img class="export" src="export0.png" />
+  <img class="ellipse-1" src="ellipse-10.png" />
+  <div
+    class="welcome-to-our-application-click-button-below-to-start-the-program"
+  >
+    <span>
+      <span
+        class="welcome-to-our-application-click-button-below-to-start-the-program-span"
+      >
+        Welcome To Our Application
+        <br />
+      </span>
+      <span
+        class="welcome-to-our-application-click-button-below-to-start-the-program-span2"
+      >
+        <br />
+        <br />
+        <br />
+      </span>
+      <span
+        class="welcome-to-our-application-click-button-below-to-start-the-program-span3"
+      >
+        Click Button Below to Start the Program
+      </span>
+    </span>
+  </div>
+  <div class="group-11">
+    <div class="rectangle-20"></div>
+    <div class="rectangle-21"></div>
+    <div class="get-s-started">
+      <div class="get-s-started2">Get’s Started</div>
     </div>
-    <div class="board-button">
-      <img
-        class="interface-essential-location2"
-        src="interface-essential-location1.svg"
-      />
-      <div class="main">board</div>
-    </div>
-    <div class="board-button2">
-      <img
-        class="interface-essential-location3"
-        src="interface-essential-location2.svg"
-      />
-      <div class="main">notice</div>
-    </div>
-    <div class="rectangle-9"></div>
   </div>
-  <div class="user-button">
-    <img
-      class="interface-essential-location4"
-      src="interface-essential-location3.svg"
-    />
-    <div class="main">main</div>
-  </div>
-  <div class="user-button2">
-    <img
-      class="interface-essential-location5"
-      src="interface-essential-location4.svg"
-    />
-    <div class="main">user</div>
-  </div>
-  <div class="user-button3">
-    <img
-      class="interface-essential-location6"
-      src="interface-essential-location5.svg"
-    />
-    <div class="main">logout</div>
-  </div>
-  <div class="user-button4">
-    <img
-      class="interface-essential-location7"
-      src="interface-essential-location6.svg"
-    />
-    <div class="main">info</div>
-  </div>
-  <div class="rectangle-11"></div>
-  <div class="ellipse-1"></div>
-  <img
-    class="interface-essential-location8"
-    src="interface-essential-location7.svg"
-  />
-  <div class="admin">
-    관리자 :
-    <br />
-    admin 님
-  </div>
-  <div class="group-2">
-    <div class="rectangle-35">
-      <div class="rectangle-352"></div>
-    </div>
-    <div class="_2024-10-29-21-13">2024-10-29 21:13 기준</div>
-  </div>
-  <div class="group-4">
-    <img class="eye-open" src="eye-open0.svg" />
-    <div class="div2">관리자님 안녕하세요!</div>
-  </div>
+  <img class="list-of-parts" src="list-of-parts0.png" />
+  <div class="rectangle-4"></div>
+  <img class="customer" src="customer0.png" />
+  <img class="dashboard-layout" src="dashboard-layout0.png" />
+  <img class="online-store" src="online-store0.png" />
 </div>
+
 	
 </body>
 </html>

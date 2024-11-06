@@ -6,6 +6,11 @@ import com.ssafy.soda.model.dto.User;
 
 public interface AdminUserService {
 
-	List<User> getAllUser();
+	public List<User> getAllUser();
+
+	public void detailUser(int id);
+
+	public void removeUser(int id);
+	
 
 }

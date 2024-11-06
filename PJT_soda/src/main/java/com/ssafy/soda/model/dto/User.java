@@ -13,12 +13,13 @@ public class User {
 	private String address;
 	private String detail_address;
 	private String zonecode;
+	private LocalDate userRegDate;
 	
 	public User() {
 	}
 
 	public User(String userId, String password, String name, String email, String phoneNumber, LocalDate birthDate,
-			String gender, String address, String detail_address, String zonecode) {
+			String gender, String address, String detail_address, String zonecode, LocalDate userRegDate) {
 		super();
 		this.userId = userId;
 		this.password = password;
@@ -30,6 +31,7 @@ public class User {
 		this.address = address;
 		this.detail_address = detail_address;
 		this.zonecode = zonecode;
+		this.userRegDate = userRegDate;
 	}
 
 	public String getUserId() {
@@ -112,14 +114,22 @@ public class User {
 		this.zonecode = zonecode;
 	}
 
+	public LocalDate getUserRegDate() {
+		return userRegDate;
+	}
+
+	public void setUserRegDate(LocalDate userRegDate) {
+		this.userRegDate = userRegDate;
+	}
+
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email
 				+ ", phoneNumber=" + phoneNumber + ", birthDate=" + birthDate + ", gender=" + gender + ", address="
-				+ address + ", detail_address=" + detail_address + ", zonecode=" + zonecode + "]";
+				+ address + ", detail_address=" + detail_address + ", zonecode=" + zonecode + ", userRegDate="
+				+ userRegDate + "]";
 	}
-	
-	
-	
+
+
 	
 }

@@ -52,7 +52,7 @@
 	top: 0px;
 }
 
-.username {
+.userId {
 	color: #7d7d7d;
 	text-align: left;
 	font-family: "RoundedMplus1C-Regular", sans-serif;
@@ -103,7 +103,7 @@
 .login-button {
 	width: 227.48px;
 	height: 47.03px;
-	position: static;
+    position: absolute; /* static에서 absolute로 변경 */
 }
 
 .rectangle-12 {
@@ -115,8 +115,8 @@
 	width: 227.48px;
 	height: 47.03px;
 	position: absolute;
-	left: 380.21px;
-	top: 572.33px;
+    left: 0; /* 380.21px에서 0으로 변경 */
+    top: 0; /* 572.33px에서 0으로 변경 */
 }
 
 .login2 {
@@ -126,8 +126,8 @@
 	font-size: 21px;
 	font-weight: 400;
 	position: absolute;
-	left: 464.71px;
-	top: 580.34px;
+    left: 84.5px; /* 464.71px에서 수정 */
+    top: 8px; /* 580.34px에서 수정 */
 	width: 58.49px;
 	height: 31.02px;
 }
@@ -203,11 +203,13 @@
 	position: absolute;
 	left: 225.31px;
 	top: 472.27px;
-	width: 147.32px;
+	width: 500px; /* 입력 필드 넓이 증가 */
 	height: 27.02px;
+	outline: none; /* 이 줄 추가 */
+	border: none; /* 이 줄 추가 */
 }
 
-.insert-username {
+.insert-userId {
 	color: #7d7d7d;
 	text-align: left;
 	font-family: "RoundedMplus1C-Regular", sans-serif;
@@ -217,8 +219,10 @@
 	position: absolute;
 	left: 224.23px;
 	top: 362.21px;
-	width: 149.49px;
+	width: 500px; /* 입력 필드 넓이 증가 */
 	height: 27.02px;
+	outline: none; /* 이 줄 추가 */
+	border: none; /* 이 줄 추가 */
 }
 
 .user {
@@ -233,28 +237,30 @@
 
 
 <body>
-
-	<div class="login-form">
-		<div class="canvas"></div>
-		<div class="rectangle-9"></div>
-		<div class="rectangle-16"></div>
-		<div class="username">Username</div>
-		<div class="password">Password</div>
-		<div class="rectangle-10"></div>
-		<img class="hide" src="hide0.png" />
-		<div class="login-button">
-			<div class="rectangle-12"></div>
-			<div class="login2">Login</div>
+	<form action="login" method="POST">
+		<div class="login-form">
+			<div class="canvas"></div>
+			<div class="rectangle-9"></div>
+			<div class="rectangle-16"></div>
+			<div class="userId">userId</div>
+			<div class="password">Password</div>
+			<div class="rectangle-10"></div>
+			<img class="hide" src="hide0.png" />
+			<!-- 버튼 수정 -->
+			<button type="submit" class="login-button"
+				style="border: none; background: none; cursor: pointer; padding: 0;">
+				<div class="rectangle-12"></div>
+				<div class="login2">Login</div>
+			</button>
+			<div class="rectangle-11"></div>
+			<div class="get-s-started">Get Started</div>
+			<div class="don-t-have-account">Don’t have Account ?</div>
+			<div class="sign-up">Sign Up</div>
+			<img class="lock" src="lock0.png" /> <input class="insert-userId"
+				placeholder="Insert UserId" name="userId" /> <input
+				class="insert-password" placeholder="Insert password"
+				name="password" /> <img class="user" src="user0.png" />
 		</div>
-		<div class="rectangle-11"></div>
-		<div class="get-s-started">Get’s Started</div>
-		<div class="don-t-have-account">Don’t have Account ?</div>
-		<div class="sign-up">Sign Up</div>
-		<img class="lock" src="lock0.png" />
-		<div class="insert-password">Insert Password</div>
-		<div class="insert-username">Insert Username</div>
-		<img class="user" src="user0.png" />
-	</div>
-
+	</form>
 </body>
 </html>

@@ -241,7 +241,7 @@
     <div class="rectangle-20"></div>
     <div class="rectangle-21"></div>
     <div class="get-s-started">
-      <div class="get-s-started2">Get’s Started</div>
+      <a href="${pageContext.request.contextPath}/admin/adminUserBoard"><div class="get-s-started2">Get Started</div></a>
     </div>
   </div>
   <img class="list-of-parts" src="list-of-parts0.png" />

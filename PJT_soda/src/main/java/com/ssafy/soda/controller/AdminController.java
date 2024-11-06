@@ -1,19 +1,26 @@
 package com.ssafy.soda.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.soda.model.dto.User;
+import com.ssafy.soda.model.service.AdminUserService;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import ch.qos.logback.core.model.Model;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+	
+	AdminUserService adminUserService;
+	public AdminController(AdminUserService adminUserService) {
+		this.adminUserService = adminUserService;
+	}
 
 	@GetMapping("/main")
 	public String adminMain() {
@@ -23,8 +30,9 @@ public class AdminController {
 
 	// user 모두 조회하기
 	@GetMapping("/adminUserBoard")
-	public String adminUserBoard() {
-
+	public String adminUserBoard(Model model) {
+		List<User> list = adminUserService.getUserlist();
+		
 		return "admin/adminUserBoard";
 	}
 

@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>User Board</title>
 </head>
 <style>
 .user-board,
@@ -86,15 +86,7 @@
   transform-origin: 0 0;
   transform: rotate(0deg) scale(1, -1);
 }
-.rectangle-18 {
-  border-radius: 0px;
-  width: 1133px;
-  height: 583px;
-  position: absolute;
-  left: 149px;
-  top: 195px;
-  overflow: visible;
-}
+
 .rectangle-34 {
   background: #fdfdfd;
   border-radius: 19px;
@@ -292,9 +284,59 @@
   justify-content: center;
 }
 
+/* 새로 추가된 테이블 스타일 */
+/* 수정된 테이블 컨테이너 스타일 */
+.user-table-container {
+  width: 100%;
+  height: 100%;
+  padding: 0; /* 패딩 제거 */
+  overflow-y: auto;
+}
 
+/* 수정된 테이블 스타일 */
+.user-table {
+  width: 100%; /* 너비 100%로 설정 */
+  margin: 0; /* 마진 제거 */
+  border-collapse: collapse;
+  background: white;
+}
+
+/* 테이블 헤더 스타일 수정 */
+.user-table th {
+  background: #f8f9fa;
+  padding: 15px;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 16px;
+  color: #333;
+  border-bottom: 2px solid #dee2e6;
+  position: sticky; /* 헤더 고정 */
+  top: 0; /* 헤더 고정 */
+  z-index: 1; /* 헤더가 내용 위에 보이도록 */
+}
+
+/* 테이블 셀 스타일 수정 */
+.user-table td {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #dee2e6;
+  font-family: sans-serif;
+  font-size: 14px;
+}
+
+/* rectangle-34 스타일 수정 */
+.rectangle-34 {
+  background: #fdfdfd;
+  border-radius: 19px;
+  width: 1111px;
+  height: 513px;
+  position: absolute;
+  left: 159px;
+  top: 250px;
+  padding: 0; /* 패딩 제거 */
+  overflow: hidden; /* 내용이 넘치지 않도록 */
+}
 </style>
-
 
 <body>
 <div class="user-board">
@@ -305,13 +347,37 @@
   <div class="rectangle-2"></div>
   <div class="rectangle-3"></div>
   <div class="rectangle-39"></div>
-  <img class="rectangle-18" src="rectangle-180.svg" />
-  <div class="rectangle-34"></div>
-  <div class="div">아이디</div>
-  <div class="div2">이름</div>
-  <div class="div3">비밀번호</div>
-  <div class="div4">성별</div>
-  <div class="div5">....</div>
+  
+  <!-- User Table 추가 -->
+  <div class="rectangle-34">
+    <div class="user-table-container">
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>아이디</th>
+            <th>이름</th>
+            <th>비밀번호</th>
+            <th>성별</th>
+            <th>생일</th>
+            <th>...</th>
+          </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${user}" var="user" >
+          <tr>
+            <td>user001</td>
+            <td>홍길동</td>
+            <td>********</td>
+            <td>남성</td>
+            <td>1990-01-01</td>
+            <td>...</td>
+          </tr>
+          </c:forEach>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
   <div class="user-board2">User Board</div>
   <img class="export" src="export0.png" />
   <img class="ellipse-1" src="ellipse-10.png" />
@@ -322,10 +388,8 @@
     <div class="rectangle-40"></div>
     <div class="div7">신고된 유저</div>
   </div>
-  <div class="_2024-10-29-21-13">2024-10-29 21:13 기준</div>
-  <div class="div8">생일</div>
-</div>
+  <div class="_2024-10-29-21-13">2024-10-29 21:13 기준</div>
 
-	
+</div>
 </body>
 </html>

@@ -8,4 +8,6 @@ public interface UserDao {
 
 	List<User> selectAll();
 
+	User selectById(String userId);
+
 }

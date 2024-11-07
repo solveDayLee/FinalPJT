@@ -356,22 +356,25 @@
           <tr>
             <th>아이디</th>
             <th>이름</th>
-            <th>비밀번호</th>
             <th>성별</th>
             <th>생일</th>
+            <th>핸드폰 번호</th>
+            <th>가입일자</th>
             <th>...</th>
           </tr>
         </thead>
         <tbody>
-        <c:forEach items="${user}" var="user" >
-          <tr>
-            <td>user001</td>
-            <td>홍길동</td>
-            <td>********</td>
-            <td>남성</td>
-            <td>1990-01-01</td>
+        <c:forEach items="${list}" var="user" >
+          <tr onclick="location.href='${pageContext.request.contextPath}/admin/adminUserDetail?id=${user.userId}'">
+            <td>${user.userId}</td>
+            <td>${user.name}</td>
+            <td>${user.gender}</td>
+            <td>${user.birthDate}</td>
+            <td>${user.phoneNumber}</td>
+            <td>${user.userRegDate}</td>
             <td>...</td>
           </tr>
+          
           </c:forEach>
         </tbody>
       </table>

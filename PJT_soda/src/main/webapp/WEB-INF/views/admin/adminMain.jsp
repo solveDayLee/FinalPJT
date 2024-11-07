@@ -220,7 +220,7 @@
       <span
         class="welcome-to-our-application-click-button-below-to-start-the-program-span"
       >
-        Welcome To Our Application
+        Welcome To Our Admin Page
         <br />
       </span>
       <span
@@ -233,7 +233,7 @@
       <span
         class="welcome-to-our-application-click-button-below-to-start-the-program-span3"
       >
-        Click Button Below to Start the Program
+        Click the button to start the administrator program
       </span>
     </span>
   </div>
@@ -241,7 +241,9 @@
     <div class="rectangle-20"></div>
     <div class="rectangle-21"></div>
     <div class="get-s-started">
-      <div class="get-s-started2">Get’s Started</div>
+      <button type="button" class="get-started2" onclick="location.href='adminUserBoard'">
+    Get Started
+</button>
     </div>
   </div>
   <img class="list-of-parts" src="list-of-parts0.png" />

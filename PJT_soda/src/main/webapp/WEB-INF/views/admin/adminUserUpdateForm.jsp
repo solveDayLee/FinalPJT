@@ -160,6 +160,16 @@ th {
   font-size: 20px;
   color: #000000;
 }
+/* style 태그 내에 추가할 CSS */
+input {
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  width: 100%;
+  padding: 0;
+  font-family: inherit;
+}
+
 </style>
 </head>
 <body>
@@ -184,21 +194,21 @@ th {
 
   <div class="content-area">
     <table>
-      <tr><th>아이디</th><td>${user.userId}</td></tr>
-      <tr><th>비밀번호</th><td>${user.password}</td></tr>
-      <tr><th>이름</th><td>${user.name}</td></tr>
-      <tr><th>이메일</th><td>${user.email}</td></tr>
-      <tr><th>전화번호</th><td>${user.phoneNumber}</td></tr>
-      <tr><th>생년월일</th><td>${user.birthDate}</td></tr>
-      <tr><th>성별</th><td>${user.gender}</td></tr>
-      <tr><th>주소</th><td>${user.address}</td></tr>
-      <tr><th>상세주소</th><td>${user.detailAddress}</td></tr>
-      <tr><th>우편번호</th><td>${user.zoneCode}</td></tr>
-      <tr><th>가입일</th><td>${user.userRegDate}</td></tr>
+      <tr><th>아이디</th><td><input value="${user.userId}"></td></tr>
+      <tr><th>비밀번호</th><td><input value="${user.password}"></td></tr>
+      <tr><th>이름</th><td><input value="${user.name}"></td></tr>
+      <tr><th>이메일</th><td><input value="${user.email}"></td></tr>
+      <tr><th>전화번호</th><td><input value="${user.phoneNumber}"></td></tr>
+      <tr><th>생년월일</th><td><input value="${user.birthDate}"></td></tr>
+      <tr><th>성별</th><td><input value="${user.gender}"></td></tr>
+      <tr><th>주소</th><td><input value="${user.address}"></td></tr>
+      <tr><th>상세주소</th><td><input value="${user.detailAddress}"></td></tr>
+      <tr><th>우편번호</th><td><input value="${user.zoneCode}"></td></tr>
+      <tr><th>가입일</th><td><input value="${user.userRegDate}"></td></tr>
     </table>
   </div>
-  <form action="/admin/adminUserUpdateForm" method="get">
-  <input type="hidden" name="id" value="${user.userId}">
+  <form action="/admin/adminUserUpdate" method="get">
+  <input type="hidden" name="user" value="${user}">
   <div class="btn-area">
     <button class="btn btn-edit">수정하기</button>
     <button class="btn btn-delete">삭제하기</button>

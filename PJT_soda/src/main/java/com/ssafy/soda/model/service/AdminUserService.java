@@ -8,4 +8,6 @@ public interface AdminUserService {
 
 	List<User> getUserlist();
 
+	User getUser(String userId);
+
 }

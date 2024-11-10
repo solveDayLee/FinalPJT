@@ -42,37 +42,37 @@ public class AdminController {
 		return "admin/adminUserBoard";
 	}
 	
-	//사용자 상세보기
-	@GetMapping("/adminUserDetail")
-	public String detail(@RequestParam("id")int id, Model model) {
-		User user = adminUserService.detailUser(id);
-		model.addAttribute("user", user);
-		return "admin/adminUserDetail";
-		
-	}
-	
-	//사용자 삭제
-	@DeleteMapping("/adminUserBoard")
-	public String delete(@RequestParam("id") int id) {
-		adminUserService.removeUser(id);
-		return "redirect:/admin/adminUserBoard";
-	}
-	//사용자 수정
-	@PutMapping("/UserUpdate")
-	public String update(@RequestParam("id") int id, User user) {
-		adminUserService.modifyUser(user); // id 뿐만 아니라 수정된 사용자 정보 전체를 전달
-		return "redirect:/admin/adminUserDetail?id" + id;
-	}
-	
-	
-	
-	//사용자 수정폼 이동
-	@GetMapping("/UserUpdate")
-	public String updateform(@RequestParam("id")int id, Model model) {
-		User user = adminUserService.detailUser(id);
-		model.addAttribute("user", user);
-		return "admin/adminUserUpdate";
-	}
+//	//사용자 상세보기
+//	@GetMapping("/adminUserDetail")
+//	public String detail(@RequestParam("id")int id, Model model) {
+//		User user = adminUserService.detailUser(id);
+//		model.addAttribute("user", user);
+//		return "admin/adminUserDetail";
+//		
+//	}
+//	
+//	//사용자 삭제
+//	@DeleteMapping("/adminUserBoard")
+//	public String delete(@RequestParam("id") int id) {
+//		adminUserService.removeUser(id);
+//		return "redirect:/admin/adminUserBoard";
+//	}
+//	//사용자 수정
+//	@PutMapping("/UserUpdate")
+//	public String update(@RequestParam("id") int id, User user) {
+//		adminUserService.modifyUser(user); // id 뿐만 아니라 수정된 사용자 정보 전체를 전달
+//		return "redirect:/admin/adminUserDetail?id" + id;
+//	}
+//	
+//	
+//	
+//	//사용자 수정폼 이동
+//	@GetMapping("/UserUpdate")
+//	public String updateform(@RequestParam("id")int id, Model model) {
+//		User user = adminUserService.detailUser(id);
+//		model.addAttribute("user", user);
+//		return "admin/adminUserUpdate";
+//	}
 	
 	
 	

@@ -2,16 +2,20 @@ package com.ssafy.soda.model.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
 import com.ssafy.soda.model.dto.User;
 
+@Mapper
 public interface UserDao {
 
-	List<User> selectAll();
+	public List<User> selectAll();
 
-	void deleteUser(int id);
-
-	User selectByNo(int id);
-
-	void update(User user);
+//	public void deleteUser(int id);
+//
+//	public User selectByNo(int id);
+//
+//	public void update(User user);
 
 }

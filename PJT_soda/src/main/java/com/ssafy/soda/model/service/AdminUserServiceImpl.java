@@ -22,19 +22,19 @@ public class AdminUserServiceImpl implements AdminUserService{
 		return userDao.selectAll();
 	}
 
-	@Override
-	public User detailUser(int id) {
-		return userDao.selectByNo(id);
-	}
-
-	@Override
-	public void removeUser(int id) {
-		userDao.deleteUser(id);
-	}
-
-	@Override
-	public void modifyUser(User user) {
-		userDao.update(user);		
-	}
+//	@Override
+//	public User detailUser(int id) {
+//		return userDao.selectByNo(id);
+//	}
+//
+//	@Override
+//	public void removeUser(int id) {
+//		userDao.deleteUser(id);
+//	}
+//
+//	@Override
+//	public void modifyUser(User user) {
+//		userDao.update(user);		
+//	}
 
 }

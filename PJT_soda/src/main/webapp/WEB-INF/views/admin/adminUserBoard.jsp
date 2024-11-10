@@ -349,9 +349,10 @@
   <div class="rectangle-3"></div>
   <div class="rectangle-39"></div>
   
-  
+  <!-- User Table 추가 -->
   <img class="rectangle-18" src="rectangle-180.svg" />
   <div class="rectangle-34"></div>
+  
   <div class="div">아이디</div>
   <div class="div2">이름</div>
   <div class="div3">비밀번호</div>

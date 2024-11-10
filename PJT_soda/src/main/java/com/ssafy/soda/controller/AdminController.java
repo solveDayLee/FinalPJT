@@ -1,13 +1,17 @@
 package com.ssafy.soda.controller;
 
+import java.lang.reflect.Parameter;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ssafy.soda.model.dto.User;
 import com.ssafy.soda.model.service.AdminUserService;
@@ -37,7 +41,6 @@ public class AdminController {
 	@GetMapping("/adminUserDetail")
 		public String adminUserBoardDetail(@RequestParam("id") String id, Model model) {
 		User user = adminUserService.getUser(id);
-		System.out.println(user);
 		model.addAttribute("user", user);
 		return "/admin/adminUserDetail";
 	}
@@ -45,16 +48,23 @@ public class AdminController {
 	public String adminUserUpdate(@RequestParam("id") String id, Model model) {
 		User user = adminUserService.getUser(id);
 		model.addAttribute("user", user);
+		System.out.println("adminUserUpdateForm 에서 보내주는 유저: " + user);
 		return "/admin/adminUserUpdateForm";
 	}
 	
-//	@GetMapping("/adminUserUpdate")
-//	public String adminUserUpdate(@RequestParam("user") User user, Model model) {
-//		// user 디테일로 가려면 id 저장해둬야 함. 
-//		User user = adminUserService.getUser(id);
+	// user 정보 수정하기
+	@PostMapping("/adminUserUpdate")
+	public String adminUserUpdate(User user, RedirectAttributes ra) {
 //		model.addAttribute("user", user);
-//		return "/admin/adminUserUpdate";
-//	}
+		// 원래 아이디 저장해둬야 함. 
+		System.out.println("adminUserUpdated 에서 받은 유저: "+ user);
+		adminUserService.updateUser(user);
+		System.out.println("서비스도 다녀옴!");
+		
+		// user 디테일로 가려면 id 저장해둬야 함. 
+		ra.addAttribute("id", user.getUserId());
+		return "redirect:/admin/adminUserDetail";
+	}
 	
 
 	// 로그인 화면으로 넘어가기
@@ -78,9 +88,17 @@ public class AdminController {
 
 	// user id/ 이름으로 검색하기
 
-	// user 정보 수정하기
+	
 
 	// user 삭제하기
+	@GetMapping("/adminUserDelete")
+	public String adminUserDelete(@RequestParam("id") String id) {
+		adminUserService.deleteUser(id);
+		System.out.println("삭제 메서드 실행");
+		return "redirect:/admin/adminUserBoard";
+	}
+		
+	
 
 	// user 중 신고된 유저만 조회하기
 

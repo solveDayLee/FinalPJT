@@ -176,7 +176,7 @@ input {
 <div class="customer-detail">
   <div class="sidebar">
     <div class="sidebar-header"></div>
-    <div class="menu-icon"></div>
+    <a href="${pageContext.request.contextPath}/admin/adminUserBoard"><div class="menu-icon"></div></a>
     <img class="icon icon-customer" src="customer0.png" />
     <img class="icon icon-dashboard" src="dashboard-layout0.png" />
     <img class="icon icon-store" src="online-store0.png" />
@@ -192,26 +192,25 @@ input {
   <h1 class="page-title">사용자 상세 정보</h1>
   <div class="date-info">2024-10-29 21:13 기준</div>
 
+  <form action="/admin/adminUserUpdate" method="post">
   <div class="content-area">
     <table>
-      <tr><th>아이디</th><td><input value="${user.userId}"></td></tr>
-      <tr><th>비밀번호</th><td><input value="${user.password}"></td></tr>
-      <tr><th>이름</th><td><input value="${user.name}"></td></tr>
-      <tr><th>이메일</th><td><input value="${user.email}"></td></tr>
-      <tr><th>전화번호</th><td><input value="${user.phoneNumber}"></td></tr>
-      <tr><th>생년월일</th><td><input value="${user.birthDate}"></td></tr>
-      <tr><th>성별</th><td><input value="${user.gender}"></td></tr>
-      <tr><th>주소</th><td><input value="${user.address}"></td></tr>
-      <tr><th>상세주소</th><td><input value="${user.detailAddress}"></td></tr>
-      <tr><th>우편번호</th><td><input value="${user.zoneCode}"></td></tr>
-      <tr><th>가입일</th><td><input value="${user.userRegDate}"></td></tr>
+      <tr><th>아이디</th><td><input value="${user.userId}" name="userId" readonly></td></tr>
+      <tr><th>비밀번호</th><td><input value="${user.password}" name="password"></td></tr>
+      <tr><th>이름</th><td><input value="${user.name}" name="name"></td></tr>
+      <tr><th>이메일</th><td><input value="${user.email}" name="email"></td></tr>
+      <tr><th>전화번호</th><td><input value="${user.phoneNumber}" name="phoneNumber"></td></tr>
+      <tr><th>생년월일</th><td><input value="${user.birthDate}" name="birthDate"></td></tr>
+      <tr><th>성별</th><td><input value="${user.gender}" name="gender"></td></tr>
+      <tr><th>주소</th><td><input value="${user.address}" name="address"></td></tr>
+      <tr><th>상세주소</th><td><input value="${user.detailAddress}" name="detailAddress"></td></tr>
+      <tr><th>우편번호</th><td><input value="${user.zoneCode}" name="zoneCode"></td></tr>
+      <tr><th>가입일</th><td><input value="${user.userRegDate}" name="userRegDate"></td></tr>
     </table>
   </div>
-  <form action="/admin/adminUserUpdate" method="get">
-  <input type="hidden" name="user" value="${user}">
   <div class="btn-area">
     <button class="btn btn-edit">수정하기</button>
-    <button class="btn btn-delete">삭제하기</button>
+    <button type="button" class="btn btn-delete">삭제하기</button>
     <!-- <button type="button" class="btn btn-report">사용자 신고</button> -->
   </div>
   </form>
@@ -223,7 +222,8 @@ document.querySelector('.btn-edit').onclick = function() {
 }
 
 document.querySelector('.btn-delete').onclick = function() {
-    console.log('삭제하기 클릭');
+	alert("${user.userId} 가 삭제됩니다. ")
+	window.location.href = "${pageContext.request.contextPath}/admin/adminUserDelete?id=${user.userId}";
 }
 
 document.querySelector('.btn-report').onclick = function() {

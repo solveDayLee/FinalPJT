@@ -166,7 +166,7 @@ th {
 <div class="customer-detail">
   <div class="sidebar">
     <div class="sidebar-header"></div>
-    <div class="menu-icon"></div>
+    <a href="${pageContext.request.contextPath}/admin/adminUserBoard"><div class="menu-icon"></div></a>
     <img class="icon icon-customer" src="customer0.png" />
     <img class="icon icon-dashboard" src="dashboard-layout0.png" />
     <img class="icon icon-store" src="online-store0.png" />
@@ -201,7 +201,7 @@ th {
   <input type="hidden" name="id" value="${user.userId}">
   <div class="btn-area">
     <button class="btn btn-edit">수정하기</button>
-    <button class="btn btn-delete">삭제하기</button>
+    <button type="button" class="btn btn-delete" >삭제하기</button>
     <!-- <button type="button" class="btn btn-report">사용자 신고</button> -->
   </div>
   </form>
@@ -213,7 +213,8 @@ document.querySelector('.btn-edit').onclick = function() {
 }
 
 document.querySelector('.btn-delete').onclick = function() {
-    console.log('삭제하기 클릭');
+	alert('${user.userId}가 삭제되었습니다.');
+	window.location.href = "${pageContext.request.contextPath}/admin/adminUserDelete?id=${user.userId}";
 }
 
 document.querySelector('.btn-report').onclick = function() {

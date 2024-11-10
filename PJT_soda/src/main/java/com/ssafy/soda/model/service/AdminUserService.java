@@ -10,4 +10,8 @@ public interface AdminUserService {
 
 	User getUser(String userId);
 
+	void updateUser(User user);
+
+	void deleteUser(String id);
+
 }

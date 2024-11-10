@@ -28,4 +28,16 @@ public class AdminUserServiceImpl implements AdminUserService{
 		return userDao.selectById(userId);
 	}
 
+
+	@Override
+	public void updateUser(User user) {
+		userDao.update(user);
+	}
+
+
+	@Override
+	public void deleteUser(String id) {
+		userDao.delete(id);
+	}
+
 }

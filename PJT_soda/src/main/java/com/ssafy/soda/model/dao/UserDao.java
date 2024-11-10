@@ -10,4 +10,8 @@ public interface UserDao {
 
 	User selectById(String userId);
 
+	void update(User user);
+
+	void delete(String id);
+
 }

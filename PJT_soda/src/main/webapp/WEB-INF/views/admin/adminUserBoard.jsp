@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>User Board</title>
-</head>
 <style>
 .user-board,
 .user-board * {
@@ -72,20 +71,6 @@
   left: 96px;
   top: 0px;
 }
-.rectangle-39 {
-  background: #f3f3f3;
-  border-radius: 9px;
-  border-style: solid;
-  border-color: #353535;
-  border-width: 0.5px;
-  width: 347px;
-  height: 37px;
-  position: absolute;
-  left: 153px;
-  top: 129px;
-  transform-origin: 0 0;
-  transform: rotate(0deg) scale(1, -1);
-}
 
 .rectangle-34 {
   background: #fdfdfd;
@@ -95,82 +80,10 @@
   position: absolute;
   left: 159px;
   top: 250px;
+  padding: 0;
+  overflow: hidden;
 }
-.div {
-  color: #000000;
-  text-align: center;
-  font-family: "RoundedMplus1C-Regular", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  position: absolute;
-  left: 242px;
-  top: 212px;
-  width: 95px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.div2 {
-  color: #000000;
-  text-align: center;
-  font-family: "RoundedMplus1C-Regular", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  position: absolute;
-  left: 378px;
-  top: 212px;
-  width: 81px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.div3 {
-  color: #000000;
-  text-align: center;
-  font-family: "RoundedMplus1C-Regular", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  position: absolute;
-  left: 473px;
-  top: 212px;
-  width: 167px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.div4 {
-  color: #000000;
-  text-align: center;
-  font-family: "RoundedMplus1C-Regular", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  position: absolute;
-  left: 731px;
-  top: 212px;
-  width: 137px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.div5 {
-  color: #000000;
-  text-align: center;
-  font-family: "RoundedMplus1C-Regular", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  position: absolute;
-  left: 1072px;
-  top: 216px;
-  width: 109px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 .user-board2 {
   color: #000000;
   text-align: left;
@@ -213,10 +126,6 @@
   left: 19px;
   top: 203px;
   object-fit: cover;
-}
-.group-131 {
-  position: absolute;
-  inset: 0;
 }
 .div6 {
   color: #ffffff;
@@ -268,40 +177,22 @@
   width: 212px;
   height: 26px;
 }
-.div8 {
-  color: #000000;
-  text-align: center;
-  font-family: "RoundedMplus1C-Regular", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  position: absolute;
-  left: 920px;
-  top: 212px;
-  width: 71px;
-  height: 19px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-/* 새로 추가된 테이블 스타일 */
-/* 수정된 테이블 컨테이너 스타일 */
+/* 테이블 스타일 */
 .user-table-container {
   width: 100%;
   height: 100%;
-  padding: 0; /* 패딩 제거 */
+  padding: 0;
   overflow-y: auto;
 }
 
-/* 수정된 테이블 스타일 */
 .user-table {
-  width: 100%; /* 너비 100%로 설정 */
-  margin: 0; /* 마진 제거 */
+  width: 100%;
+  margin: 0;
   border-collapse: collapse;
   background: white;
 }
 
-/* 테이블 헤더 스타일 수정 */
 .user-table th {
   background: #f8f9fa;
   padding: 15px;
@@ -310,12 +201,11 @@
   font-size: 16px;
   color: #333;
   border-bottom: 2px solid #dee2e6;
-  position: sticky; /* 헤더 고정 */
-  top: 0; /* 헤더 고정 */
-  z-index: 1; /* 헤더가 내용 위에 보이도록 */
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
-/* 테이블 셀 스타일 수정 */
 .user-table td {
   padding: 15px;
   text-align: center;
@@ -324,19 +214,53 @@
   font-size: 14px;
 }
 
-/* rectangle-34 스타일 수정 */
-.rectangle-34 {
-  background: #fdfdfd;
-  border-radius: 19px;
-  width: 1111px;
-  height: 513px;
+/* 검색 영역 스타일 */
+.search-area {
   position: absolute;
-  left: 159px;
-  top: 250px;
-  padding: 0; /* 패딩 제거 */
-  overflow: hidden; /* 내용이 넘치지 않도록 */
+  left: 153px;
+  top: 129px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+}
+
+.search-area select {
+  height: 37px;
+  width: 120px;
+  border-radius: 9px;
+  border: 0.5px solid #353535;
+  background: #f3f3f3;
+  padding: 0 10px;
+  font-family: "RoundedMplus1c-Regular", sans-serif;
+  font-size: 14px;
+}
+
+.search-area input {
+  width: 347px;
+  height: 37px;
+  border-radius: 9px;
+  border: 0.5px solid #353535;
+  background: #f3f3f3;
+  padding: 0 10px;
+  font-family: "RoundedMplus1c-Regular", sans-serif;
+  font-size: 14px;
+}
+/* 등록 버튼 스타일 추가 */
+.register-btn {
+    height: 37px;
+    padding: 0 20px;
+    border-radius: 9px;
+    border: none;
+    background: #1678f3;  /* 파란색 계열로 설정 */
+    color: white;
+    font-family: "RoundedMplus1c-Regular", sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 </style>
+</head>
 
 <body>
 <div class="user-board">
@@ -346,9 +270,19 @@
   <img class="customer" src="customer0.png" />
   <div class="rectangle-2"></div>
   <div class="rectangle-3"></div>
-  <div class="rectangle-39"></div>
   
-  <!-- User Table 추가 -->
+  <!-- 검색 영역 -->
+  <div class="search-area">
+    <select id="searchCategory" onchange="changePlaceholder()">
+      <option value="name">이름 검색</option>
+      <option value="userId">아이디 검색</option>
+      <option value="email">이메일 검색</option>
+    </select>
+    <input type="text" id="searchInput" placeholder="사용자 아이디로 검색하기"> 
+  	 <button type="button" id="searchButton" class="register-btn" onclick="location.href='${pageContext.request.contextPath}/admin/searchAdminUserBoard'">검색</button>
+  </div>
+
+  <!-- 테이블 영역 -->
   <div class="rectangle-34">
     <div class="user-table-container">
       <table class="user-table">
@@ -364,17 +298,16 @@
           </tr>
         </thead>
         <tbody>
-        <c:forEach items="${list}" var="user" >
-          <tr onclick="location.href='${pageContext.request.contextPath}/admin/adminUserDetail?id=${user.userId}'">
-            <td>${user.userId}</td>
-            <td>${user.name}</td>
-            <td>${user.gender}</td>
-            <td>${user.birthDate}</td>
-            <td>${user.phoneNumber}</td>
-            <td>${user.userRegDate}</td>
-            <td>...</td>
-          </tr>
-          
+          <c:forEach items="${list}" var="user">
+            <tr onclick="location.href='${pageContext.request.contextPath}/admin/adminUserDetail?no=${user.userNo}'">
+              <td>${user.userId}</td>
+              <td>${user.name}</td>
+              <td>${user.gender}</td>
+              <td>${user.birthDate}</td>
+              <td>${user.phoneNumber}</td>
+              <td>${user.userRegDate}</td>
+              <td>...</td>
+            </tr>
           </c:forEach>
         </tbody>
       </table>
@@ -392,7 +325,43 @@
     <div class="div7">신고된 유저</div>
   </div>
   <div class="_2024-10-29-21-13">2024-10-29 21:13 기준</div>
-
 </div>
+<script type="text/javascript">
+function changePlaceholder() {
+    const select = document.getElementById('searchCategory');
+    const input = document.getElementById('searchInput');
+    const button = document.getElementById('searchButton');
+    const contextPath = '${pageContext.request.contextPath}';'
+    
+    // 플레이스홀더 변경
+    switch(select.value) {
+        case 'name':
+            input.placeholder = "사용자 이름으로 검색하기";
+            break;
+        case 'userId':
+            input.placeholder = "사용자 id로 검색하기";
+            break;
+        case 'email':
+            input.placeholder = "사용자 이메일로 검색하기";
+            break;
+    }
+    
+    // 검색 버튼 클릭 이벤트
+    button.onclick = function() {
+        const keyword = input.value.trim();
+        if(keyword) {
+            location.href = `${contextPath}/admin/searchAdminUserBoard?category=${select.value}&keyword=${encodeURIComponent(input.value)}`;
+        } else {
+            alert('검색어를 입력해주세요.');
+        }
+    }
+}
+
+// 페이지 로드 시 초기 설정
+window.onload = function() {
+    changePlaceholder();
+}
+  
+</script>
 </body>
 </html>

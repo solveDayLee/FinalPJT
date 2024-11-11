@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.soda.model.dao.UserDao;
 import com.ssafy.soda.model.dto.User;
+import com.ssafy.soda.model.dto.UserSearchCondition;
 @Service
 @Primary
 public class AdminUserServiceImpl implements AdminUserService{
@@ -24,8 +25,8 @@ public class AdminUserServiceImpl implements AdminUserService{
 
 
 	@Override
-	public User getUser(String userId) {
-		return userDao.selectById(userId);
+	public User getUser(int no) {
+		return userDao.selectByNo(no);
 	}
 
 
@@ -36,8 +37,16 @@ public class AdminUserServiceImpl implements AdminUserService{
 
 
 	@Override
-	public void deleteUser(String id) {
-		userDao.delete(id);
+	public void deleteUser(int no) {
+		userDao.delete(no);
 	}
+
+
+	@Override
+	public List<User> getSearchedUserlist(UserSearchCondition userSearchCondition) {
+		return userDao.selectSearched(userSearchCondition);
+	}
+
+
 
 }

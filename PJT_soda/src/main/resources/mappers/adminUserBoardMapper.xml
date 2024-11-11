@@ -11,19 +11,25 @@
 		user_reg_date DESC
 	</select>
 
-	<select id="selectById" resultType="User" parameterType="String">
+	<select id="selectByNo" resultType="User" parameterType="int">
 		SELECT *
 		FROM user
-		WHERE user_id = #{userId}
+		WHERE user_no = #{no}
 	</select>
 
 	<update id="update" parameterType="User">
-		UPDATE user SET password = #{password}, name = #{name}, email = #{email}, phone_number = #{phoneNumber}, birth_date = #{birthDate}, gender= #{gender}, address= #{address}, detail_address = #{detailAddress} ,zonecode = #{zoneCode}
-		WHERE user_id = #{userId}
+		UPDATE user SET password = #{password}, name = #{name}, email = #{email}, phone_number = #{phoneNumber}, birth_date = #{birthDate}, gender= #{gender}, address= #{address}, detail_address = #{detailAddress} ,zonecode = #{zonecode}
+		WHERE user_no = #{userNo}
 	</update>
 	
-	<delete id="delete" parameterType="String">
+	<delete id="delete" parameterType="int">
 		DELETE from user
-		WHERE user_id = #{id}
+		WHERE user_no = #{no}
 	</delete>
+	
+	<select id="selectSearched" resultType="User" parameterType="UserSearchCondition">
+		SELECT *
+		FROM user
+		WHERE ${category} LIKE CONCAT('%', #{keyword}, '%') 
+	</select>
 </mapper>

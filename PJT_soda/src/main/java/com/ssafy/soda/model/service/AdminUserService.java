@@ -8,11 +8,11 @@ public interface AdminUserService {
 
 	public List<User> getAllUser();
 
-//	public User detailUser(int id);
-//
-//	public void removeUser(int id);
-//
-//	public void modifyUser(User user);
-//	
+	public User detailUser(int id);
+
+	public void removeUser(int id);
+
+	public void modifyUser(User user);
+	
 
 }

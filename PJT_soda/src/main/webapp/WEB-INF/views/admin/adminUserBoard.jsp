@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>User Board</title>
 </head>
 <style>
 .user-board,
@@ -336,8 +336,21 @@
   padding: 0; /* 패딩 제거 */
   overflow: hidden; /* 내용이 넘치지 않도록 */
 }
-</style>
 
+.date-info {
+   color: #000000;
+   text-align: left;
+   font-family: "Inter-Regular", sans-serif;
+   font-size: 20px;
+   font-weight: 400;
+   position: absolute;
+   left: 1041px;
+   top: 89px;
+   width: 250px;
+   height: 26px;
+}
+
+</style>
 
 <body>
 <div class="user-board">
@@ -350,15 +363,37 @@
   <div class="rectangle-39"></div>
   
   <!-- User Table 추가 -->
-  <img class="rectangle-18" src="rectangle-180.svg" />
-  <div class="rectangle-34"></div>
-  
-  <div class="div">아이디</div>
-  <div class="div2">이름</div>
-  <div class="div3">비밀번호</div>
-  <div class="div4">성별</div>
-  <div class="div5">....</div>
-  
+  <div class="rectangle-34">
+    <div class="user-table-container">
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>아이디</th>
+            <th>이름</th>
+            <th>성별</th>
+            <th>생일</th>
+            <th>핸드폰 번호</th>
+            <th>가입일자</th>
+            <th>...</th>
+          </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${list}" var="user" >
+          <tr onclick="location.href='${pageContext.request.contextPath}/admin/adminUserDetail?no=${user.userNo}'">
+            <td>${user.userId}</td>
+            <td>${user.name}</td>
+            <td>${user.gender}</td>
+            <td>${user.birthDate}</td>
+            <td>${user.phoneNumber}</td>
+            <td>${user.userRegDate}</td>
+            <td>...</td>
+          </tr>
+          
+          </c:forEach>
+        </tbody>
+      </table>
+    </div>
+  </div>
   
   <div class="user-board2">User Board</div>
   <img class="export" src="export0.png" />
@@ -370,10 +405,35 @@
     <div class="rectangle-40"></div>
     <div class="div7">신고된 유저</div>
   </div>
-  <div class="_2024-10-29-21-13">2024-10-29 21:13 기준</div>
-  <div class="div8">생일</div>
-</div>
+ 	<div class="date-info">실시간 날짜 기준</div>
 
-	
+
+
+</div>
+  <script>
+   function updateDateTime() {
+       const now = new Date();
+       const options = { 
+           year: 'numeric', 
+           month: '2-digit', 
+           day: '2-digit',
+           hour: '2-digit', 
+           minute: '2-digit',
+           hour12: false 
+       };
+       
+       document.querySelector('.date-info').textContent = 
+           now.toLocaleString('ko-KR', options).replace(',', '') + ' 기준';
+   }
+
+   // 페이지 로드 시 초기 실행
+   updateDateTime();
+
+   // 1분마다 업데이트
+   setInterval(updateDateTime, 60000);
+   </script>
+
+
+
 </body>
 </html>

@@ -7,15 +7,15 @@ import org.springframework.stereotype.Repository;
 
 import com.ssafy.soda.model.dto.User;
 
-@Mapper
+//@Mapper
 public interface UserDao {
 
 	public List<User> selectAll();
 
-//	public void deleteUser(int id);
-//
-//	public User selectByNo(int id);
-//
-//	public void update(User user);
+	public void deleteUser(int no);
+
+	public User selectByNo(int no);
+
+	public void update(User user);
 
 }

@@ -3,6 +3,7 @@ package com.ssafy.soda.model.dto;
 import java.time.LocalDate;
 
 public class User {
+	private int userNo;
 	private String userId;
 	private String password;
 	private String name;
@@ -11,16 +12,18 @@ public class User {
 	private LocalDate birthDate;
 	private String gender;
 	private String address;
-	private String detail_address;
+	private String detailAddress;
 	private String zonecode;
 	private LocalDate userRegDate;
 	
 	public User() {
 	}
 
-	public User(String userId, String password, String name, String email, String phoneNumber, LocalDate birthDate,
-			String gender, String address, String detail_address, String zonecode, LocalDate userRegDate) {
+	public User(int userNo, String userId, String password, String name, String email, String phoneNumber,
+			LocalDate birthDate, String gender, String address, String detailAddress, String zonecode,
+			LocalDate userRegDate) {
 		super();
+		this.userNo = userNo;
 		this.userId = userId;
 		this.password = password;
 		this.name = name;
@@ -29,9 +32,17 @@ public class User {
 		this.birthDate = birthDate;
 		this.gender = gender;
 		this.address = address;
-		this.detail_address = detail_address;
+		this.detailAddress = detailAddress;
 		this.zonecode = zonecode;
 		this.userRegDate = userRegDate;
+	}
+
+	public int getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
 	}
 
 	public String getUserId() {
@@ -98,12 +109,12 @@ public class User {
 		this.address = address;
 	}
 
-	public String getDetail_address() {
-		return detail_address;
+	public String getDetailAddress() {
+		return detailAddress;
 	}
 
-	public void setDetail_address(String detail_address) {
-		this.detail_address = detail_address;
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
 	}
 
 	public String getZonecode() {
@@ -124,12 +135,13 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email
-				+ ", phoneNumber=" + phoneNumber + ", birthDate=" + birthDate + ", gender=" + gender + ", address="
-				+ address + ", detail_address=" + detail_address + ", zonecode=" + zonecode + ", userRegDate="
-				+ userRegDate + "]";
+		return "User [userNo=" + userNo + ", userId=" + userId + ", password=" + password + ", name=" + name
+				+ ", email=" + email + ", phoneNumber=" + phoneNumber + ", birthDate=" + birthDate + ", gender="
+				+ gender + ", address=" + address + ", detailAddress=" + detailAddress + ", zonecode=" + zonecode
+				+ ", userRegDate=" + userRegDate + "]";
 	}
 
-
+	
+	
 	
 }

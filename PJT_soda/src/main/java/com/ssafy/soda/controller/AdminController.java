@@ -38,41 +38,42 @@ public class AdminController {
 	@GetMapping("/adminUserBoard")
 	public String list(Model model) {
 		List<User> users = adminUserService.getAllUser();
-		model.addAttribute("users", users);
+		model.addAttribute("list", users);
 		return "admin/adminUserBoard";
 	}
 	
-//	//사용자 상세보기
-//	@GetMapping("/adminUserDetail")
-//	public String detail(@RequestParam("id")int id, Model model) {
-//		User user = adminUserService.detailUser(id);
-//		model.addAttribute("user", user);
-//		return "admin/adminUserDetail";
-//		
-//	}
-//	
-//	//사용자 삭제
-//	@DeleteMapping("/adminUserBoard")
-//	public String delete(@RequestParam("id") int id) {
-//		adminUserService.removeUser(id);
-//		return "redirect:/admin/adminUserBoard";
-//	}
-//	//사용자 수정
-//	@PutMapping("/UserUpdate")
-//	public String update(@RequestParam("id") int id, User user) {
-//		adminUserService.modifyUser(user); // id 뿐만 아니라 수정된 사용자 정보 전체를 전달
-//		return "redirect:/admin/adminUserDetail?id" + id;
-//	}
-//	
-//	
-//	
-//	//사용자 수정폼 이동
-//	@GetMapping("/UserUpdate")
-//	public String updateform(@RequestParam("id")int id, Model model) {
-//		User user = adminUserService.detailUser(id);
-//		model.addAttribute("user", user);
-//		return "admin/adminUserUpdate";
-//	}
+	//사용자 상세보기
+	@GetMapping("/adminUserDetail")
+	public String detail(@RequestParam("no") int no, Model model) {
+		User user = adminUserService.detailUser(no);
+		model.addAttribute("user", user);
+		return "admin/adminUserDetail";
+		
+	}
+	
+	//사용자 삭제
+	@GetMapping("/adminUserDelete")
+	public String delete(@RequestParam("no") int no) {
+		adminUserService.removeUser(no);
+		return "redirect:/admin/adminUserBoard";
+	}
+	
+	//사용자 수정폼 이동
+	@GetMapping("/adminUserUpdateForm")
+	public String updateform(@RequestParam("no")int no, Model model) {
+		User user = adminUserService.detailUser(no);
+		model.addAttribute("user", user);
+		System.out.println("수정폼"+ user);
+		return "admin/adminUserUpdateForm";
+	}
+	
+	//사용자 수정
+	@PostMapping("/adminUserUpdate")
+	public String update(User user) {
+		System.out.println("수정"+user);
+		adminUserService.modifyUser(user); // id 뿐만 아니라 수정된 사용자 정보 전체를 전달
+		return "redirect:/admin/adminUserDetail?no=" + user.getUserNo();
+	}
 	
 	
 	
@@ -106,6 +107,11 @@ public class AdminController {
 	public String mainPage() {
 		return "/admin/adminMain";
 	}
+	
+	//아이디, 이름, 이메일 로 검색하기
+	
+	
+	
 	
 	
 	//신고된 사용자 조회

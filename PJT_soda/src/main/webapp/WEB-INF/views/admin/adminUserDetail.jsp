@@ -193,12 +193,12 @@ th {
       <tr><th>성별</th><td>${user.gender}</td></tr>
       <tr><th>주소</th><td>${user.address}</td></tr>
       <tr><th>상세주소</th><td>${user.detailAddress}</td></tr>
-      <tr><th>우편번호</th><td>${user.zoneCode}</td></tr>
+      <tr><th>우편번호</th><td>${user.zonecode}</td></tr>
       <tr><th>가입일</th><td>${user.userRegDate}</td></tr>
     </table>
   </div>
   <form action="/admin/adminUserUpdateForm" method="get">
-  <input type="hidden" name="id" value="${user.userId}">
+  <input type="hidden" name="no" value="${user.userNo}">
   <div class="btn-area">
     <button class="btn btn-edit">수정하기</button>
     <button type="button" class="btn btn-delete" >삭제하기</button>
@@ -214,7 +214,7 @@ document.querySelector('.btn-edit').onclick = function() {
 
 document.querySelector('.btn-delete').onclick = function() {
 	alert('${user.userId}가 삭제되었습니다.');
-	window.location.href = "${pageContext.request.contextPath}/admin/adminUserDelete?id=${user.userId}";
+	window.location.href = "${pageContext.request.contextPath}/admin/adminUserDelete?no=${user.userNo}";
 }
 
 document.querySelector('.btn-report').onclick = function() {

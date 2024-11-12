@@ -90,11 +90,11 @@ public class AdminController {
 	// 검색해서 리스트 나오게 하기 
 		@GetMapping("/searchAdminUserBoard")
 		public String searchAdminUserBoard(UserSearchCondition userSearchCondition, Model model) {
+			System.out.println("파라미터 잘 받아왔나: " + userSearchCondition);
 			List<User> list = adminUserService.getSearchedUserlist(userSearchCondition);
-//			System.out.println(list);
 			model.addAttribute("list", list);
 			System.out.println("검색된 리스트!:" + list);
-			return "redirect:/admin/adminUserBoard";
+			return "admin/adminUserBoard";
 		}
 
 	

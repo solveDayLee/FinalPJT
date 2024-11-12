@@ -275,11 +275,11 @@
   <div class="search-area">
     <select id="searchCategory" onchange="changePlaceholder()">
       <option value="name">이름 검색</option>
-      <option value="userId">아이디 검색</option>
+      <option value="user_id">아이디 검색</option>
       <option value="email">이메일 검색</option>
     </select>
     <input type="text" id="searchInput" placeholder="사용자 아이디로 검색하기"> 
-  	 <button type="button" id="searchButton" class="register-btn" onclick="location.href='${pageContext.request.contextPath}/admin/searchAdminUserBoard'">검색</button>
+  	 <button type="button" id="searchButton" class="register-btn">검색</button>
   </div>
 
   <!-- 테이블 영역 -->
@@ -327,41 +327,44 @@
   <div class="_2024-10-29-21-13">2024-10-29 21:13 기준</div>
 </div>
 <script type="text/javascript">
-function changePlaceholder() {
     const select = document.getElementById('searchCategory');
     const input = document.getElementById('searchInput');
     const button = document.getElementById('searchButton');
-    const contextPath = '${pageContext.request.contextPath}';'
+    const contextPath = '${pageContext.request.contextPath}';
+    
+function changePlaceholder() {
     
     // 플레이스홀더 변경
     switch(select.value) {
         case 'name':
             input.placeholder = "사용자 이름으로 검색하기";
             break;
-        case 'userId':
+        case 'user_id':
             input.placeholder = "사용자 id로 검색하기";
             break;
         case 'email':
             input.placeholder = "사용자 이메일로 검색하기";
             break;
     }
-    
-    // 검색 버튼 클릭 이벤트
-    button.onclick = function() {
-        const keyword = input.value.trim();
-        if(keyword) {
-            location.href = `${contextPath}/admin/searchAdminUserBoard?category=${select.value}&keyword=${encodeURIComponent(input.value)}`;
-        } else {
-            alert('검색어를 입력해주세요.');
-        }
-    }
 }
+    // 검색 버튼 클릭 이벤트
+    document.getElementById('searchButton').addEventListener('click', function (){
+    	const keyword = input.value.trim();
+    	console.log(keyword);
+        if(keyword) {
+        	const URL = `\${contextPath}/admin/searchAdminUserBoard?category=\${select.value}&keyword=\${keyword}`;
+            console.log("요청 URL :" , URL);
+         	location.href = URL; 
+        	} else {
+            alert('검색어를 입력해주세요.');
+        } 
+    });
+
 
 // 페이지 로드 시 초기 설정
-window.onload = function() {
+document.addEventListener('DOMContentLoaded', function() {
     changePlaceholder();
-}
-  
+});
 </script>
 </body>
 </html>

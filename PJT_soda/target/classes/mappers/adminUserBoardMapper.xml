@@ -30,6 +30,17 @@
 	<select id="selectSearched" resultType="User" parameterType="UserSearchCondition">
 		SELECT *
 		FROM user
-		WHERE ${category} LIKE CONCAT('%', #{keyword}, '%') 
+		<!-- WHERE ${category} LIKE CONCAT('%', #{keyword}, '%')  -->
+		<where>
+        <if test="category == 'name'">
+            name LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="category == 'user_id'">
+            user_id LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="category == 'email'">
+            email LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+    	</where>
 	</select>
 </mapper>

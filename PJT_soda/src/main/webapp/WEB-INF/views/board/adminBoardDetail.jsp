@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>사용자 상세</title>
+<title>게시판 상세</title>
 <style>
 /* 기존 스타일 유지 */
 .customer-detail {

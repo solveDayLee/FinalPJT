@@ -1,4 +1,5 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -183,6 +184,28 @@ th {
 	font-size: 20px;
 	color: #000000;
 }
+/* style 태그 내에 추가할 CSS */
+input {
+	border: none;
+	background: transparent;
+	font-size: 16px;
+	width: 100%;
+	padding: 0;
+	font-family: inherit;
+}
+
+.date-info {
+	color: #000000;
+	text-align: left;
+	font-family: "Inter-Regular", sans-serif;
+	font-size: 20px;
+	font-weight: 400;
+	position: absolute;
+	left: 1041px;
+	top: 89px;
+	width: 212px;
+	height: 26px;
+}
 </style>
 </head>
 <body>
@@ -203,64 +226,64 @@ th {
 		</div>
 
 		<h1 class="page-title">사용자 상세 정보</h1>
-		<div class="date-info">실시간 날짜</div>
+		<div class="date-info">실시간 날짜 기준</div>
 
-		<div class="content-area">
-			<table>
-				<tr>
-					<th>아이디</th>
-					<td>${user.userId}</td>
-				</tr>
-				<tr>
-					<th>비밀번호</th>
-					<td>${user.password}</td>
-				</tr>
-				<tr>
-					<th>이름</th>
-					<td>${user.name}</td>
-				</tr>
-				<tr>
-					<th>이메일</th>
-					<td>${user.email}</td>
-				</tr>
-				<tr>
-					<th>전화번호</th>
-					<td>${user.phoneNumber}</td>
-				</tr>
-				<tr>
-					<th>생년월일</th>
-					<td>${user.birthDate}</td>
-				</tr>
-				<tr>
-					<th>성별</th>
-					<td>${user.gender}</td>
-				</tr>
-				<tr>
-					<th>주소</th>
-					<td>${user.address}</td>
-				</tr>
-				<tr>
-					<th>상세주소</th>
-					<td>${user.detailAddress}</td>
-				</tr>
-				<tr>
-					<th>우편번호</th>
-					<td>${user.zonecode}</td>
-				</tr>
-				<tr>
-					<th>가입일</th>
-					<td>${user.userRegDate}</td>
-				</tr>
-			</table>
-		</div>
-		<form action="/admin/adminUserUpdateForm" method="get">
-			<input type="hidden" name="no" value="${user.userNo }" />
-			<div class="btn-area">
-				<button type="submit" class="btn btn-edit">수정하기</button>
-				<button type="button" class="btn btn-delete">삭제하기</button>
-				<!-- <button type="button" class="btn btn-report">사용자 신고</button> -->
-			</div>
-		</form>
+        <form action="/admin/adminUserUpdate" method="post">
+            <input type="hidden" name="userNo" value="${user.userNo}" >
+            <div class="content-area">
+                <table>
+                    <tr>
+                        <th>아이디</th>
+                        <td><input name="userId" value="${user.userId}" readonly></td>
+                    </tr>
+                    <tr>
+                        <th>비밀번호</th>
+                        <td><input name="password" value="${user.password}"></td>
+                    </tr>
+                    <tr>
+                        <th>이름</th>
+                        <td><input name="name" value="${user.name}"></td>
+                    </tr>
+                    <tr>
+                        <th>이메일</th>
+                        <td><input name="email" value="${user.email}"></td>
+                    </tr>
+                    <tr>
+                        <th>전화번호</th>
+                        <td><input name="phoneNumber" value="${user.phoneNumber}"></td>
+                    </tr>
+                    <tr>
+                        <th>생년월일</th>
+                        <td><input name="birthDate" value="${user.birthDate}"></td>
+                    </tr>
+                    <tr>
+                        <th>성별</th>
+                        <td><input name="gender" value="${user.gender}"></td>
+                    </tr>
+                    <tr>
+                        <th>주소</th>
+                        <td><input name="address" value="${user.address}"></td>
+                    </tr>
+                    <tr>
+                        <th>상세주소</th>
+                        <td><input name="detailAddress" value="${user.detailAddress}"></td>
+                    </tr>
+                    <tr>
+                        <th>우편번호</th>
+                        <td><input name="zonecode" value="${user.zonecode}"></td>
+                    </tr>
+                    <tr>
+                        <th>가입일</th>
+                        <td><input name="userRegDate" value="${user.userRegDate}" readonly></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="btn-area">
+                <button type="submit" class="btn btn-edit">수정하기</button>
+                <button type="button" class="btn btn-delete">삭제하기</button>
+                <!-- <button type="button" class="btn btn-report">사용자 신고</button> -->
+            </div>
+        </form>
 	</div>
 
 	<script>
@@ -274,7 +297,7 @@ th {
 				minute : '2-digit',
 				hour12 : false
 			};
-
+			// 클래스 선택자를 'date-info'로 변경
 			document.querySelector('.date-info').textContent = now
 					.toLocaleString('ko-KR', options).replace(',', '')
 					+ ' 기준';
@@ -286,15 +309,15 @@ th {
 		// 1분마다 업데이트
 		setInterval(updateDateTime, 60000);
 
-		////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////
+
 		document.querySelector('.btn-delete').onclick = function() {
 			if (confirm('정말 삭제하시겠습니까?')) {
-				//정보를 받아줘야하니까
+				//정보를 받아줘야하니까 datail주소를 그대로 준다.
 				location.href = '/admin/adminUserDelete?no=${user.userNo}';
 			}
 			console.log('삭제하기 클릭');
 		}
-
 	</script>
 </body>
 </html>

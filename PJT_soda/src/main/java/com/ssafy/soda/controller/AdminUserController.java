@@ -18,12 +18,12 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminController {
+public class AdminUserController {
 	
 	//서비스 싱글턴 주입
 	private AdminUserService adminUserService;
 
-	public AdminController(AdminUserService adminUserService) {
+	public AdminUserController(AdminUserService adminUserService) {
 		super();
 		this.adminUserService = adminUserService;
 	}

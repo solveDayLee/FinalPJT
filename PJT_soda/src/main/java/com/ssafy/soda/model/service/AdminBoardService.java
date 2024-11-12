@@ -1,0 +1,13 @@
+package com.ssafy.soda.model.service;
+
+import java.util.List;
+
+import com.ssafy.soda.model.dto.Board;
+import com.ssafy.soda.model.dto.User;
+
+public interface AdminBoardService {
+
+	List<Board> getAllBoard();
+
+
+}

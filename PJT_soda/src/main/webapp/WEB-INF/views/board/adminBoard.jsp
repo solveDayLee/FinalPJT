@@ -4,28 +4,26 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>User Board</title>
+    <title>Board</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        /* 전체 레이아웃 스타일 */
-        .user-board,
-        .user-board * {
+        .board-list,
+        .board-list * {
             box-sizing: border-box;
         }
 
-        .user-board {
+        .board-list {
             background: #ffffff;
             min-height: 100vh;
             position: relative;
             padding-left: 93px;
-            padding-top: 95px; /* 헤더와의 간격을 위해 약간 증가 */
+            padding-top: 95px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* 테이블 컨테이너 스타일 */
         .rectangle-34 {
             background: #fdfdfd;
             border-radius: 19px;
@@ -38,22 +36,21 @@
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
 
-        .user-table-container {
+        .board-table-container {
             width: 100%;
             height: 100%;
             padding: 1rem;
             overflow-y: auto;
         }
 
-        /* 테이블 스타일 */
-        .user-table {
+        .board-table {
             width: 100%;
             margin: 0 auto;
             border-collapse: collapse;
             background: white;
         }
 
-        .user-table th {
+        .board-table th {
             background: #f8f9fa;
             padding: 1rem 1.5rem;
             text-align: center;
@@ -66,7 +63,7 @@
             z-index: 1;
         }
 
-        .user-table td {
+        .board-table td {
             padding: 1rem 1.5rem;
             text-align: center;
             border-bottom: 1px solid #dee2e6;
@@ -74,17 +71,15 @@
             font-size: 14px;
         }
 
-        /* 행 호버 효과 */
-        .user-table tbody tr {
+        .board-table tbody tr {
             cursor: pointer;
             transition: background-color 0.2s;
         }
 
-        .user-table tbody tr:hover {
+        .board-table tbody tr:hover {
             background-color: #f8f9fa;
         }
         
-        /* 반응형 디자인을 위한 미디어 쿼리 */
         @media (max-width: 1200px) {
             .rectangle-34 {
                 width: 95%;
@@ -92,12 +87,12 @@
         }
 
         @media (max-width: 768px) {
-            .user-board {
-                padding-left: 73px; /* 모바일에서는 사이드바 너비 줄임 */
+            .board-list {
+                padding-left: 73px;
             }
             
-            .user-table th,
-            .user-table td {
+            .board-table th,
+            .board-table td {
                 padding: 0.75rem 1rem;
                 font-size: 14px;
             }
@@ -106,37 +101,31 @@
 </head>
 
 <body>
-    <!-- 사이드바 include -->
     <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
+    <%@ include file="/WEB-INF/views/common/boardHeader.jsp" %>
     
-    <!-- 헤더 include -->
-    <%@ include file="/WEB-INF/views/common/userHeader.jsp" %>
-    
-    <div class="user-board">
-        <!-- 테이블 영역 -->
+    <div class="board-list">
         <div class="rectangle-34">
-            <div class="user-table-container">
-                <table class="user-table">
+            <div class="board-table-container">
+                <table class="board-table">
                     <thead>
                         <tr>
-                            <th>아이디</th>
-                            <th>이름</th>
-                            <th>성별</th>
-                            <th>생일</th>
-                            <th>핸드폰 번호</th>
-                            <th>가입일자</th>
+                            <th>번호</th>
+                            <th>제목</th>
+                            <th>카테고리</th>
+                            <th>작성일</th>
+                            <th>조회수</th>
                             <th>관리</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${list}" var="user">
-                            <tr onclick="location.href='${pageContext.request.contextPath}/admin/adminUserDetail?no=${user.userNo}'">
-                                <td>${user.userId}</td>
-                                <td>${user.name}</td>
-                                <td>${user.gender}</td>
-                                <td>${user.birthDate}</td>
-                                <td>${user.phoneNumber}</td>
-                                <td>${user.userRegDate}</td>
+                        <c:forEach items="${list}" var="board">
+                            <tr onclick="location.href='${pageContext.request.contextPath}/board/adminBoardDetail?no=${board.boardNo}'">
+                                <td>${board.boardNo}</td>
+                                <td>${board.title}</td>
+                                <td>${board.category}</td>
+                                <td>${board.regDate}</td>
+                                <td>${board.viewCnt}</td>
                                 <td><i class="bi bi-three-dots"></i></td>
                             </tr>
                         </c:forEach>
@@ -148,8 +137,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // 테이블 행 호버 효과
-            const tableRows = document.querySelectorAll('.user-table tbody tr');
+            const tableRows = document.querySelectorAll('.board-table tbody tr');
             tableRows.forEach(row => {
                 row.addEventListener('mouseenter', () => {
                     row.style.backgroundColor = '#f8f9fa';

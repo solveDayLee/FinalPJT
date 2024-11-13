@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.soda.model.dao.BoardDao">
+	<select id="selectAll" resultType="Board">
+		SELECT *
+		FROM board 
+		ORDER BY
+		board_no DESC
+	</select>
+
+	<select id="selectByNo" resultType="Board" parameterType="int">
+		SELECT b.*,
+		u.user_no as "user.userNo",
+    	u.user_id as "user.userId"
+		FROM board b
+		LEFT JOIN user u ON b.user_no = u.user_no
+		WHERE board_no = #{no}
+	</select>
+
+	<update id="update" parameterType="User">
+		UPDATE user SET password = #{password}, name = #{name}, email = #{email}, phone_number = #{phoneNumber}, birth_date = #{birthDate}, gender= #{gender}, address= #{address}, detail_address = #{detailAddress} ,zonecode = #{zonecode}
+		WHERE user_no = #{userNo}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE from user
+		WHERE user_no = #{no}
+	</delete>
+	
+	<select id="selectSearched" resultType="User" parameterType="UserSearchCondition">
+		SELECT *
+		FROM user
+		<!-- WHERE ${category} LIKE CONCAT('%', #{keyword}, '%')  -->
+		<where>
+        <if test="category == 'name'">
+            name LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="category == 'user_id'">
+            user_id LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="category == 'email'">
+            email LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+    	</where>
+	</select>
+</mapper>

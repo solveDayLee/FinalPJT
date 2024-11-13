@@ -42,8 +42,12 @@
             user_id LIKE CONCAT('%', #{keyword}, '%')
         </if>
         <if test="category == 'email'">
-            email LIKE CONCAT('%', #{keyword}, '%')
+            email LIKE CONCAT('%', #{keyword}, '%') 
         </if>
     	</where>
 	</select>
+		<delete id="delete" parameterType="int">
+		DELETE from board
+		WHERE board_no = #{no}
+	</delete>
 </mapper>

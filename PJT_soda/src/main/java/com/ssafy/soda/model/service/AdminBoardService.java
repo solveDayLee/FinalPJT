@@ -10,7 +10,7 @@ public interface AdminBoardService {
 
 	void updateUser(User user);
 
-	void deleteUser(int no);
+	void deleteBoard(int no);
 
 	List<User> getSearchedUserlist(UserSearchCondition userSearchCondition);
 

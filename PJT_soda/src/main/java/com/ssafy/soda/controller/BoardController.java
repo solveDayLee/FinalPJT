@@ -47,5 +47,12 @@ public class BoardController {
 	return "/board/adminBoardDetail";
 }
 	
+	// user 삭제하기
+	@GetMapping("/adminBoardDelete")
+	public String adminBoardDelete(@RequestParam("no") int no) {
+		adminBoardService.deleteBoard(no);
+		System.out.println("삭제 메서드 실행");
+		return "redirect:/admin/adminBoard";
+	}
 	
 }

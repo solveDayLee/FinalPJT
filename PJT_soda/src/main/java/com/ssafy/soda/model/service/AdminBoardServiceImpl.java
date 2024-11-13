@@ -27,10 +27,6 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	}
 
 
-	@Override
-	public void deleteUser(int no) {
-		userDao.delete(no);
-	}
 
 
 	@Override
@@ -52,6 +48,13 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	@Override
 	public Board getBoard(int no) {
 		return boardDao.selectByNo(no);
+	}
+
+
+
+	@Override
+	public void deleteBoard(int no) {
+		boardDao.delete(no);
 	}
 
 

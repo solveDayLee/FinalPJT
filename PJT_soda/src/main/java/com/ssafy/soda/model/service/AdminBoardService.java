@@ -14,4 +14,8 @@ public interface AdminBoardService {
 	void removeBoard(int no);
 
 
+
+
+
+
 }

@@ -5,16 +5,16 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import com.ssafy.soda.model.dto.Board;
 import com.ssafy.soda.model.dto.User;
 
 //@Mapper
 public interface BoardDao {
 
-	public List<User> selectAll();
+	List<Board> selectAll();
 
-	public void deleteUser(int no);
+	User seletByNo(int no);
 
-	public User selectByNo(int no);
-
+	void delete(int no);
 
 }

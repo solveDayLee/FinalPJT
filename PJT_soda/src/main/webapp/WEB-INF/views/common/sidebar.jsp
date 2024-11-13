@@ -69,7 +69,7 @@
     position: fixed;
     left: 0;
     top: 0;
-    z-index: 100;
+    z-index: 101;
     transition: all 0.3s;
     display: flex;
     flex-direction: column;
@@ -77,6 +77,7 @@
 
 .sidebar:hover {
     width: 200px;
+    opacity: 90%;
 }
 
 .menu-section {

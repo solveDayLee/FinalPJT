@@ -146,8 +146,9 @@ td {
 	document.querySelector('.btn-delete').onclick = function() {
 		if (confirm('정말 삭제하시겠습니까?')) {
 			alert('게시글이 삭제되었습니다.');
-			window.location.href = "${pageContext.request.contextPath}/admin/adminBoardDelete?no=${board.boardNo}";
+			window.location.href = "${pageContext.request.contextPath}/board/adminBoardDelete?no=${board.boardNo}";
 		}
 	}
+	
 </script>
 </html>

@@ -16,6 +16,5 @@ public interface BoardDao {
 
 	public User selectByNo(int no);
 
-	public void update(User user);
 
 }

@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <style>
 .login-form, .login-form * {
@@ -101,9 +102,11 @@
 }
 
 .login-button {
-	width: 227.48px;
-	height: 47.03px;
-    position: absolute; /* static에서 absolute로 변경 */
+    width: 227.48px;
+    height: 47.03px;
+    position: absolute;  /* static에서 absolute로 변경 */
+    left: 380px;        /* 중앙 정렬을 위해 추가 */
+    top: 540px;         /* input 창 아래로 위치 조정 */
 }
 
 .rectangle-12 {
@@ -115,21 +118,22 @@
 	width: 227.48px;
 	height: 47.03px;
 	position: absolute;
-    left: 0; /* 380.21px에서 0으로 변경 */
-    top: 0; /* 572.33px에서 0으로 변경 */
+	left: 0px;
+	top: 0px;
 }
 
 .login2 {
-	color: #ffffff;
-	text-align: left;
-	font-family: "RoundedMplus1C-Regular", sans-serif;
-	font-size: 21px;
-	font-weight: 400;
-	position: absolute;
-    left: 84.5px; /* 464.71px에서 수정 */
-    top: 8px; /* 580.34px에서 수정 */
-	width: 58.49px;
-	height: 31.02px;
+    color: #ffffff;
+    text-align: center;  /* left에서 center로 변경 */
+    font-family: "RoundedMplus1C-Regular", sans-serif;
+    font-size: 21px;
+    font-weight: 400;
+    position: absolute;
+    left: 50%;          /* 중앙 정렬을 위해 수정 */
+    top: 50%;           /* 중앙 정렬을 위해 수정 */
+    transform: translate(-50%, -50%); /* 중앙 정렬을 위해 추가 */
+    width: 58.49px;
+    height: 31.02px;
 }
 
 .rectangle-11 {
@@ -223,7 +227,7 @@
 	height: 27.02px;
 	outline: none; /* 이 줄 추가 */
 	border: none; /* 이 줄 추가 */
-}
+} 
 
 .user {
 	width: 25px;
@@ -237,7 +241,8 @@
 
 
 <body>
-	<form action="login" method="POST">
+	<!-- 절대 경로 사용 -->
+	<form action="/admin/login" method="POST">
 		<div class="login-form">
 			<div class="canvas"></div>
 			<div class="rectangle-9"></div>
@@ -245,22 +250,57 @@
 			<div class="userId">userId</div>
 			<div class="password">Password</div>
 			<div class="rectangle-10"></div>
-			<img class="hide" src="hide0.png" />
-			<!-- 버튼 수정 -->
+			<i class="bi bi-eye-slash" style="
+    position: absolute;
+    left: 772.34px;
+    top: 476.28px;
+    font-size: 20px;
+    color: #7d7d7d;
+    cursor: pointer;
+"></i>
 			<button type="submit" class="login-button"
 				style="border: none; background: none; cursor: pointer; padding: 0;">
+				>
 				<div class="rectangle-12"></div>
 				<div class="login2">Login</div>
 			</button>
 			<div class="rectangle-11"></div>
-			<div class="get-s-started">Get Started</div>
-			<div class="don-t-have-account">Don’t have Account ?</div>
-			<div class="sign-up">Sign Up</div>
-			<img class="lock" src="lock0.png" /> <input class="insert-userId"
+			<div class="get-s-started">Get’s Started</div>
+
+			<i class="bi bi-lock" style="
+    position: absolute;
+    left: 184.15px;
+    top: 474.28px;
+    font-size: 25px;
+    color: #7d7d7d;
+"></i> <input class="insert-userId"
 				placeholder="Insert UserId" name="userId" /> <input
-				class="insert-password" placeholder="Insert password"
-				name="password" /> <img class="user" src="user0.png" />
+				class="insert-password" placeholder="Insert Password"
+				name="password" /> <i class="bi bi-person" style="
+    position: absolute;
+    left: 186px;
+    top: 363px;
+    font-size: 25px;
+    color: #7d7d7d;
+"></i>
 		</div>
 	</form>
+	
+<script>
+
+document.querySelector('.bi-eye-slash').addEventListener('click', function () {
+    const passwordInput = document.querySelector('.insert-password');
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        this.classList.replace('bi-eye-slash', 'bi-eye');
+    } else {
+        passwordInput.type = 'password';
+        this.classList.replace('bi-eye', 'bi-eye-slash');
+    }
+});
+
+</script>
+	
+	
 </body>
 </html>

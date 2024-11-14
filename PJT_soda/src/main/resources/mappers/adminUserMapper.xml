@@ -2,33 +2,52 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
-  <mapper namespace="com.ssafy.soda.model.dao.UserDao">
-  
-  	<select id="selectAllUser" resultType="User">
-  		select *
-  		from user
-   	</select>
-  	
-  	<delete id="deleteUser" parameterType="int">
-  		delete from user
-  		where user_no= #{no}
-  	</delete>
-  
-  	<select id="selectByNo" resultType="User" parameterType="int">
-  		select *
-  		from user
-  		where user_no = #{userNo}
-  	</select>
-  	
-  	<update id="update" parameterType="User">
-  		update user set password=#{password}, name=#{name}, email=#{email}, phone_number=#{phoneNumber}, 
-  		birth_date=#{birthDate}, gender=#{gender}, address=#{address}, detail_address =#{detailAddress}, 
-  		zonecode=#{zonecode}, user_reg_date =#{userRegDate}
-  		where user_no = #{userNo}
-  	</update>
-  
 
-  
-  
-  </mapper>
+<mapper namespace="com.ssafy.soda.model.dao.UserDao">
+
+	<select id="selectAllUser" resultType="User">
+		select *
+		from user
+	</select>
+
+	<delete id="deleteUser" parameterType="int">
+		delete from user
+		where user_no= #{no}
+	</delete>
+
+	<select id="selectByNo" resultType="User" parameterType="int">
+		select *
+		from user
+		where user_no = #{userNo}
+	</select>
+
+	<update id="update" parameterType="User">
+		update user set password=#{password}, name=#{name}, email=#{email},
+		phone_number=#{phoneNumber},
+		birth_date=#{birthDate}, gender=#{gender}, address=#{address}, detail_address
+		=#{detailAddress},
+		zonecode=#{zonecode}, user_reg_date =#{userRegDate}
+		where user_no = #{userNo}
+	</update>
+
+	<select id="selectSearched" resultType="User"
+		parameterType="searchCondition">
+		select * from user
+		<where>
+			<if test="category =='all'">
+				<!-- all like CONCAT('%',#{keyword}, '%') -->
+			</if>
+		
+			<if test="category == 'name'">
+				name like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="category == 'user_id'">
+				user_id like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="category == 'email'">
+				email like CONCAT('%',#{keyword},'%')
+			</if>
+		</where>
+	</select>
+
+</mapper>

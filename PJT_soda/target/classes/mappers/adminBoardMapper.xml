@@ -2,13 +2,38 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
-  <mapper namespace="com.ssafy.soda.model.dao.BoardDao">
-  
-  
-  	
 
-  
-  
-  
-  </mapper>
+<mapper namespace="com.ssafy.soda.model.dao.BoardDao">
+
+	<select id="selectAll" resultType="Board">
+		select * from board
+	</select>
+
+	<select id="seletByNo" resultType="User" parameterType="int">
+		select * from board
+		where board_no=#{boardNo}
+
+	</select>
+
+	<delete id="delete" parameterType="int">
+		delete from board
+		where board_no=#{boardNo}
+
+	</delete>
+
+	<select id="selectSearched" resultType="Board" parameterType="searchCondition">
+		select * from board
+		<where>
+			<if test="category == 'title'">
+				title like concat('%', '#{keyword}','%')
+			</if>
+			<if test="category == 'content'">
+				content like concat('%', '#{keyword}','%')
+			</if>
+			<if test="category == 'writer'">
+				writer like concat('%', '#{keyword}','%')
+			</if>
+		</where>
+	</select>
+
+</mapper>

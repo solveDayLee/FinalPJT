@@ -26,7 +26,7 @@
             <a class="nav-link ${pageContext.request.servletPath == '/admin/board.jsp' ? 'active' : ''}" 
                href="${pageContext.request.contextPath}/board/adminBoard">
                 <i class="bi bi-clipboard2-data-fill"></i>
-                <span>보드</span>
+                <span>게시판</span>
             </a>
         </li>
         <li class="nav-item">

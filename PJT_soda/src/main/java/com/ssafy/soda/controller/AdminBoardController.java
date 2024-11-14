@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.soda.model.dto.Board;
+import com.ssafy.soda.model.dto.SearchCondition;
 import com.ssafy.soda.model.dto.User;
 import com.ssafy.soda.model.service.AdminBoardService;
 
@@ -29,7 +30,7 @@ public class AdminBoardController {
 	public String list(Model model) {
 		List<Board> board = adminBoardService.getAllBoard();
 		model.addAttribute("list", board);
-		return "admin/adminBoard";
+		return "board/adminBoard";
 	}
 	
 	//게시판 상세보기
@@ -48,7 +49,15 @@ public class AdminBoardController {
 		return "redirect:/board/adminBoard";
 	} 
 	
-	//아이디, 이름, 이메일 로 검색하기
+	//검색하기
+	@GetMapping("/searchAdminBoard")
+	public String searchAdminBoard(SearchCondition searchCondition, Model model) {
+		List<Board> list = adminBoardService.getSearchBoardList(searchCondition);
+		model.addAttribute("list", list);
+		return "board/adminBoard";
+		
+	}
+	
 	
 	
 	//신고된 사용자 조회

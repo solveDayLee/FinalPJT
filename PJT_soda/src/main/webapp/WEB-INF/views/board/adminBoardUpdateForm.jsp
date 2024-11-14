@@ -228,62 +228,63 @@ input {
 		<h1 class="page-title">사용자 상세 정보</h1>
 		<div class="date-info">실시간 날짜 기준</div>
 
-        <form action="/admin/adminUserUpdate" method="post">
-            <input type="hidden" name="userNo" value="${user.userNo}" >
-            <div class="content-area">
-                <table>
-                    <tr>
-                        <th>아이디</th>
-                        <td><input name="userId" value="${user.userId}" readonly></td>
-                    </tr>
-                    <tr>
-                        <th>비밀번호</th>
-                        <td><input name="password" value="${user.password}"></td>
-                    </tr>
-                    <tr>
-                        <th>이름</th>
-                        <td><input name="name" value="${user.name}"></td>
-                    </tr>
-                    <tr>
-                        <th>이메일</th>
-                        <td><input name="email" value="${user.email}"></td>
-                    </tr>
-                    <tr>
-                        <th>전화번호</th>
-                        <td><input name="phoneNumber" value="${user.phoneNumber}"></td>
-                    </tr>
-                    <tr>
-                        <th>생년월일</th>
-                        <td><input name="birthDate" value="${user.birthDate}"></td>
-                    </tr>
-                    <tr>
-                        <th>성별</th>
-                        <td><input name="gender" value="${user.gender}"></td>
-                    </tr>
-                    <tr>
-                        <th>주소</th>
-                        <td><input name="address" value="${user.address}"></td>
-                    </tr>
-                    <tr>
-                        <th>상세주소</th>
-                        <td><input name="detailAddress" value="${user.detailAddress}"></td>
-                    </tr>
-                    <tr>
-                        <th>우편번호</th>
-                        <td><input name="zonecode" value="${user.zonecode}"></td>
-                    </tr>
-                    <tr>
-                        <th>가입일</th>
-                        <td><input name="userRegDate" value="${user.userRegDate}" readonly></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="btn-area">
-                <button type="submit" class="btn btn-edit">수정하기</button>
-                <button type="button" class="btn btn-delete">삭제하기</button>
-                <!-- <button type="button" class="btn btn-report">사용자 신고</button> -->
-            </div>
-        </form>
+		<form action="/admin/adminUserUpdate" method="post">
+			<input type="hidden" name="userNo" value="${user.userNo}">
+			<div class="content-area">
+				<table>
+					<tr>
+						<th>아이디</th>
+						<td><input name="userId" value="${user.userId}" readonly></td>
+					</tr>
+					<tr>
+						<th>비밀번호</th>
+						<td><input name="password" value="${user.password}"></td>
+					</tr>
+					<tr>
+						<th>이름</th>
+						<td><input name="name" value="${user.name}"></td>
+					</tr>
+					<tr>
+						<th>이메일</th>
+						<td><input name="email" value="${user.email}"></td>
+					</tr>
+					<tr>
+						<th>전화번호</th>
+						<td><input name="phoneNumber" value="${user.phoneNumber}"></td>
+					</tr>
+					<tr>
+						<th>생년월일</th>
+						<td><input name="birthDate" value="${user.birthDate}"></td>
+					</tr>
+					<tr>
+						<th>성별</th>
+						<td><input name="gender" value="${user.gender}"></td>
+					</tr>
+					<tr>
+						<th>주소</th>
+						<td><input name="address" value="${user.address}"></td>
+					</tr>
+					<tr>
+						<th>상세주소</th>
+						<td><input name="detailAddress" value="${user.detailAddress}"></td>
+					</tr>
+					<tr>
+						<th>우편번호</th>
+						<td><input name="zonecode" value="${user.zonecode}"></td>
+					</tr>
+					<tr>
+						<th>가입일</th>
+						<td><input name="userRegDate" value="${user.userRegDate}"
+							readonly></td>
+					</tr>
+				</table>
+			</div>
+			<div class="btn-area">
+				<button type="submit" class="btn btn-edit">수정하기</button>
+				<button type="button" class="btn btn-delete">삭제하기</button>
+				<!-- <button type="button" class="btn btn-report">사용자 신고</button> -->
+			</div>
+		</form>
 	</div>
 
 	<script>

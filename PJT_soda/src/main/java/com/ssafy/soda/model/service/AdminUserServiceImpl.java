@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.soda.model.dao.UserDao;
+import com.ssafy.soda.model.dto.SearchCondition;
 import com.ssafy.soda.model.dto.User;
 
 @Service
@@ -35,6 +36,11 @@ public class AdminUserServiceImpl implements AdminUserService{
 	@Override
 	public void modifyUser(User user) {
 		userDao.update(user);		
+	}
+
+	@Override
+	public List<User> getSearchUserLit(SearchCondition searchCondition) {
+		return userDao.selectSearched(searchCondition);
 	}
 
 

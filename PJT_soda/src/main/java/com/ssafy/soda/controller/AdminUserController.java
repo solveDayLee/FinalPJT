@@ -31,7 +31,7 @@ public class AdminUserController {
 	@GetMapping("/main")
 	public String adminMain() {
 //	System.out.println("확인");
-		return "admin/adminLogin";
+		return "admin/adminMain";
 	}
 	
 	//사용자 전체목록 이동
@@ -97,10 +97,10 @@ public class AdminUserController {
 	}
 	
 	//로그아웃
-	@PostMapping("logout")
+	@GetMapping("logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/admin/adminMain";
+		return "/admin/adminLogin";
 	}
 
 	@GetMapping("/adminMain")
@@ -110,9 +110,11 @@ public class AdminUserController {
 	
 	//아이디, 이름, 이메일 로 검색하기
 	@GetMapping("/searchAdminBoard")
-	public void searchAdminBoard(SearchCondition searchCondition, Model model) {
+	public String searchAdminBoard(SearchCondition searchCondition, Model model) {
+		List<User> list = adminUserService.getSearchUserLit(searchCondition);
+		model.addAttribute("list", list);
 		
-		
+		return "admin/adminUserBoard";
 
 
 		}
@@ -130,4 +132,4 @@ public class AdminUserController {
 	
 	
 	
-}
+

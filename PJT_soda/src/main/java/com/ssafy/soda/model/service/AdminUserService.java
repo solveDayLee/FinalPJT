@@ -2,6 +2,7 @@ package com.ssafy.soda.model.service;
 
 import java.util.List;
 
+import com.ssafy.soda.model.dto.SearchCondition;
 import com.ssafy.soda.model.dto.User;
 
 public interface AdminUserService {
@@ -13,6 +14,8 @@ public interface AdminUserService {
 	public void removeUser(int id);
 
 	public void modifyUser(User user);
+
+	public List<User> getSearchUserLit(SearchCondition searchCondition);
 
 
 

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.soda.model.dao.BoardDao;
 import com.ssafy.soda.model.dto.Board;
+import com.ssafy.soda.model.dto.SearchCondition;
 import com.ssafy.soda.model.dto.User;
 
 @Service
@@ -32,6 +33,11 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	@Override
 	public void removeBoard(int no) {
 		boardDao.delete(no);
+	}
+
+	@Override
+	public List<Board> getSearchBoardList(SearchCondition searchCondition) {
+		return boardDao.selectSearched(searchCondition);
 	}
 
 

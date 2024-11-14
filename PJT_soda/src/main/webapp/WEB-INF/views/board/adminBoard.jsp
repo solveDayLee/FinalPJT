@@ -115,18 +115,19 @@
                             <th>카테고리</th>
                             <th>작성일</th>
                             <th>조회수</th>
-                            <th>관리</th>
+                            <th>좋아요</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${list}" var="board">
+                       <c:forEach items="${list}" var="board" varStatus="state">
                             <tr onclick="location.href='${pageContext.request.contextPath}/board/adminBoardDetail?no=${board.boardNo}'">
                                 <td>${board.boardNo}</td>
                                 <td>${board.title}</td>
                                 <td>${board.category}</td>
                                 <td>${board.regDate}</td>
                                 <td>${board.viewCnt}</td>
-                                <td><i class="bi bi-three-dots"></i></td>
+                                <td>${likes[state.index]}</td>
+                                <!-- <td><i class="bi bi-three-dots"></i></td> -->
                             </tr>
                         </c:forEach>
                     </tbody>

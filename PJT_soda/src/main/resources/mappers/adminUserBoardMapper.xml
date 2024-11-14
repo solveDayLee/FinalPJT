@@ -27,10 +27,9 @@
 		WHERE user_no = #{no}
 	</delete>
 	
-	<select id="selectSearched" resultType="User" parameterType="UserSearchCondition">
+	<select id="selectSearched" resultType="User" parameterType="SearchCondition">
 		SELECT *
 		FROM user
-		<!-- WHERE ${category} LIKE CONCAT('%', #{keyword}, '%')  -->
 		<where>
         <if test="category == 'name'">
             name LIKE CONCAT('%', #{keyword}, '%')

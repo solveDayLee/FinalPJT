@@ -2,8 +2,8 @@ package com.ssafy.soda.model.dao;
 
 import java.util.List;
 
+import com.ssafy.soda.model.dto.SearchCondition;
 import com.ssafy.soda.model.dto.User;
-import com.ssafy.soda.model.dto.UserSearchCondition;
 
 public interface UserDao {
 
@@ -15,6 +15,6 @@ public interface UserDao {
 
 	void delete(int no);
 
-	List<User> selectSearched(UserSearchCondition userSearchCondition);
+	List<User> selectSearched(SearchCondition searchCondition);
 
 }

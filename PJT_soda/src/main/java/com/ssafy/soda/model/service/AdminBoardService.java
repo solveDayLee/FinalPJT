@@ -3,19 +3,20 @@ package com.ssafy.soda.model.service;
 import java.util.List;
 
 import com.ssafy.soda.model.dto.Board;
-import com.ssafy.soda.model.dto.User;
-import com.ssafy.soda.model.dto.UserSearchCondition;
+import com.ssafy.soda.model.dto.SearchCondition;
 
 public interface AdminBoardService {
 
-	void updateUser(User user);
-
 	void deleteBoard(int no);
 
-	List<User> getSearchedUserlist(UserSearchCondition userSearchCondition);
+	List<Board> getSearchedBoardlist(SearchCondition searchCondition);
 
 	List<Board> getBoardlist();
 
 	Board getBoard(int no);
+
+	List<Integer> likesListCount();
+
+	int getLikesCount(int no);
 
 }

@@ -274,7 +274,7 @@
     font-size: 25px;
     color: #7d7d7d;
 "></i> <input class="insert-userId"
-				placeholder="Insert UserId" name="userId" /> <input
+				placeholder="Insert UserId" name="userId" /> <input type="password"
 				class="insert-password" placeholder="Insert Password"
 				name="password" /> <i class="bi bi-person" style="
     position: absolute;

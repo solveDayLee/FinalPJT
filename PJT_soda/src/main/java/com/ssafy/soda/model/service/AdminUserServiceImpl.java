@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.soda.model.dao.UserDao;
+import com.ssafy.soda.model.dto.SearchCondition;
 import com.ssafy.soda.model.dto.User;
-import com.ssafy.soda.model.dto.UserSearchCondition;
 @Service
 @Primary
 public class AdminUserServiceImpl implements AdminUserService{
@@ -43,8 +43,8 @@ public class AdminUserServiceImpl implements AdminUserService{
 
 
 	@Override
-	public List<User> getSearchedUserlist(UserSearchCondition userSearchCondition) {
-		return userDao.selectSearched(userSearchCondition);
+	public List<User> getSearchedUserlist(SearchCondition searchCondition) {
+		return userDao.selectSearched(searchCondition);
 	}
 
 

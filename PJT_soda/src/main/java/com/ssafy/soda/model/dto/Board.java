@@ -12,10 +12,26 @@ public class Board {
 
 	///// --- 유저와 보드 연결 소운 실험 코드------------
 	private User user;
-
+	
+	private Likes likes;
+	
+	public Likes getLikes() {
+		if (likes != null) {
+			return likes;
+		} else {
+			return null;
+		}
+	}
+	
 	public Board(User user) {
 		this.user = user;
 	}
+
+	public Board(User user, Likes likes) {
+		this.user = user;
+		this.likes = likes;
+	}
+	
 
 	public User getUser() {
 		if (user != null) {
@@ -48,9 +64,9 @@ public class Board {
 
 	public Board() {
 	}
-
+	
 	public Board(int boardNo, String title, String writer, String content, String regDate, int viewCnt, String category,
-			User user) {
+			User user, Likes likes) {
 		super();
 		this.boardNo = boardNo;
 		this.title = title;
@@ -60,6 +76,7 @@ public class Board {
 		this.viewCnt = viewCnt;
 		this.category = category;
 		this.user = user;
+		this.likes = likes;
 	}
 
 	public int getBoardNo() {
@@ -122,10 +139,20 @@ public class Board {
 		this.user = user;
 	}
 
+	public void setLikes(Likes likes) {
+		this.likes = likes;
+	}
+
 	@Override
 	public String toString() {
 		return "Board [boardNo=" + boardNo + ", title=" + title + ", writer=" + writer + ", content=" + content
-				+ ", regDate=" + regDate + ", viewCnt=" + viewCnt + ", category=" + category + ", user=" + user + "]";
+				+ ", regDate=" + regDate + ", viewCnt=" + viewCnt + ", category=" + category + ", user=" + user
+				+ ", likes=" + likes + "]";
 	}
+
+	
+	
+
+
 
 }

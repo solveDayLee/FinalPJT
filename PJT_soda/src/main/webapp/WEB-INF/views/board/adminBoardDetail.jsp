@@ -49,6 +49,10 @@
 					<th>카테고리</th>
 					<td>${board.category}</td>
 				</tr>
+				<tr>
+					<th>좋아요 수</th>
+					<td>${likesCount}</td>
+				</tr>
 			</table>
 
 			<div class="btn-area">

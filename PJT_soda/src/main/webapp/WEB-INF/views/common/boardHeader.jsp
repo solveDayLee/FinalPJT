@@ -16,7 +16,7 @@
             <select id="searchCategory" onchange="changePlaceholder()">
                 <option value="title">제목 검색</option>
                 <option value="content">내용 검색</option>
-                <option value="writer">작성자 검색</option>
+                <option value="board_no">보드 no 검색</option>
             </select>
             <input type="text" id="searchInput" placeholder="게시글 제목으로 검색하기">
             <button type="button" id="searchButton" class="search-btn">
@@ -225,8 +225,8 @@ function changePlaceholder() {
         case 'content':
             input.placeholder = "게시글 내용으로 검색하기";
             break;
-        case 'writer':
-            input.placeholder = "작성자로 검색하기";
+        case 'board_no':
+            input.placeholder = "보드 숫자로 검색하기";
             break;
     }
 }
@@ -241,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const keyword = input.value.trim();
         
         if(keyword) {
-            const URL = contextPath + `/admin/searchAdminBoard?category=\${select.value}&keyword=\${keyword}`;
+            const URL = contextPath + `/board/searchAdminBoard?category=\${select.value}&keyword=\${keyword}`;
             location.href = URL;
         } else {
             alert('검색어를 입력해주세요.');
@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.querySelector('.report-btn').addEventListener('click', function() {
-        location.href = contextPath + '/admin/reportedBoards';
+        location.href = contextPath + '/board/reportedBoards';
     });
 });
 </script>

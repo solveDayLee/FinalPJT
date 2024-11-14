@@ -20,7 +20,6 @@
                 <p class="subtitle">Click Button Below to Start the administrator Program</p>
                 
                 <a href="${pageContext.request.contextPath}/admin/adminUserBoard" class="start-button">
-                    Get Started
                     <div class="button-gradient"></div>
                 </a>
             </div>

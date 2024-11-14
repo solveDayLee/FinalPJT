@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ssafy.soda.model.dto.SearchCondition;
 import com.ssafy.soda.model.dto.User;
-import com.ssafy.soda.model.dto.UserSearchCondition;
 import com.ssafy.soda.model.service.AdminUserService;
 
 @Controller
@@ -83,12 +83,17 @@ public class AdminController {
 			return "admin/adminLogin";
 		}
 	}
+	
+	@GetMapping("/logout")
+	public String adminLogout() {
+		return "admin/adminLogin";
+	}
 
 	// 검색해서 리스트 나오게 하기 
 		@GetMapping("/searchAdminUserBoard")
-		public String searchAdminUserBoard(UserSearchCondition userSearchCondition, Model model) {
-			System.out.println("파라미터 잘 받아왔나: " + userSearchCondition);
-			List<User> list = adminUserService.getSearchedUserlist(userSearchCondition);
+		public String searchAdminUserBoard(SearchCondition searchCondition, Model model) {
+			System.out.println("파라미터 잘 받아왔나: " + searchCondition);
+			List<User> list = adminUserService.getSearchedUserlist(searchCondition);
 			model.addAttribute("list", list);
 			System.out.println("검색된 리스트!:" + list);
 			return "admin/adminUserBoard";

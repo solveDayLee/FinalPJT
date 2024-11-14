@@ -6,10 +6,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.soda.model.dao.BoardDao;
-import com.ssafy.soda.model.dao.UserDao;
 import com.ssafy.soda.model.dto.Board;
-import com.ssafy.soda.model.dto.User;
-import com.ssafy.soda.model.dto.UserSearchCondition;
+import com.ssafy.soda.model.dto.SearchCondition;
 @Service
 @Primary
 public class AdminBoardServiceImpl implements AdminBoardService{
@@ -18,23 +16,6 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	public AdminBoardServiceImpl(BoardDao boardDao) {
 		this.boardDao = boardDao;
 	}
-
-
-
-	@Override
-	public void updateUser(User user) {
-		userDao.update(user);
-	}
-
-
-
-
-	@Override
-	public List<User> getSearchedUserlist(UserSearchCondition userSearchCondition) {
-		return userDao.selectSearched(userSearchCondition);
-	}
-
-
 
 
 
@@ -55,6 +36,27 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	@Override
 	public void deleteBoard(int no) {
 		boardDao.delete(no);
+	}
+
+
+
+	@Override
+	public List<Board> getSearchedBoardlist(SearchCondition searchCondition) {
+		return boardDao.selectBoardSearched(searchCondition);
+	}
+
+
+
+	@Override
+	public List<Integer> likesListCount() {
+		return boardDao.allLikesCount();
+	}
+
+
+
+	@Override
+	public int getLikesCount(int no) {
+		return boardDao.likesCount(no);
 	}
 
 

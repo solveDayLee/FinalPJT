@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class User {
 	private int userNo;
 	private String userId;
+	private String userNickname;
 	private String password;
 	private String name;
 	private String email;
@@ -19,12 +20,13 @@ public class User {
 	public User() {
 	}
 
-	public User(int userNo, String userId, String password, String name, String email, String phoneNumber,
-			LocalDate birthDate, String gender, String address, String detailAddress, String zonecode,
-			LocalDate userRegDate) {
+	public User(int userNo, String userId, String userNickname, String password, String name, String email,
+			String phoneNumber, LocalDate birthDate, String gender, String address, String detailAddress,
+			String zonecode, LocalDate userRegDate) {
 		super();
 		this.userNo = userNo;
 		this.userId = userId;
+		this.userNickname = userNickname;
 		this.password = password;
 		this.name = name;
 		this.email = email;
@@ -51,6 +53,14 @@ public class User {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getUserNickname() {
+		return userNickname;
+	}
+
+	public void setUserNickname(String userNickname) {
+		this.userNickname = userNickname;
 	}
 
 	public String getPassword() {
@@ -135,11 +145,13 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [userNo=" + userNo + ", userId=" + userId + ", password=" + password + ", name=" + name
-				+ ", email=" + email + ", phoneNumber=" + phoneNumber + ", birthDate=" + birthDate + ", gender="
-				+ gender + ", address=" + address + ", detailAddress=" + detailAddress + ", zonecode=" + zonecode
-				+ ", userRegDate=" + userRegDate + "]";
+		return "User [userNo=" + userNo + ", userId=" + userId + ", userNickname=" + userNickname + ", password="
+				+ password + ", name=" + name + ", email=" + email + ", phoneNumber=" + phoneNumber + ", birthDate="
+				+ birthDate + ", gender=" + gender + ", address=" + address + ", detailAddress=" + detailAddress
+				+ ", zonecode=" + zonecode + ", userRegDate=" + userRegDate + "]";
 	}
+
+	
 
 	
 

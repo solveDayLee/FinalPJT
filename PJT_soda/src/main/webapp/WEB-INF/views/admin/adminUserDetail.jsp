@@ -22,6 +22,7 @@
                 <tr><th>아이디</th><td>${user.userId}</td></tr>
                 <tr><th>비밀번호</th><td>${user.password}</td></tr>
                 <tr><th>이름</th><td>${user.name}</td></tr>
+                <tr><th>닉네임</th><td>${user.userNickname}</td></tr>
                 <tr><th>이메일</th><td>${user.email}</td></tr>
                 <tr><th>전화번호</th><td>${user.phoneNumber}</td></tr>
                 <tr><th>생년월일</th><td>${user.birthDate}</td></tr>

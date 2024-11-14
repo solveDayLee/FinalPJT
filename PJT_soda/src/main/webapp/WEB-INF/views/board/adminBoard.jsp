@@ -32,7 +32,7 @@
             height: 513px;
             margin: 0 auto;
             padding: 0;
-            overflow: hidden;
+           	overflow: hidden;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
 

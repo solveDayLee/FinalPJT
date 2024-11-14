@@ -6,7 +6,7 @@
     <div class="header-left">
         <h1 class="page-title">
             <i class="bi bi-people-fill"></i>
-            User Board
+            User
             <span class="subtitle">관리자 페이지</span>
         </h1>
     </div>

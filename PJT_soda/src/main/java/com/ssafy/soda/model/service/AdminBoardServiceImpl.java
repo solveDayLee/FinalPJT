@@ -2,14 +2,16 @@ package com.ssafy.soda.model.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ssafy.soda.model.dao.BoardDao;
 import com.ssafy.soda.model.dto.Board;
 import com.ssafy.soda.model.dto.User;
 
+@Service
 public class AdminBoardServiceImpl implements AdminBoardService{
 
 	private BoardDao boardDao;
-	
 	
 	
 	public AdminBoardServiceImpl(BoardDao boardDao) {

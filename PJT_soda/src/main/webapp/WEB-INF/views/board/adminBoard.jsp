@@ -1,312 +1,152 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>Board</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .board-list,
+        .board-list * {
+            box-sizing: border-box;
+        }
+
+        .board-list {
+            background: #ffffff;
+            min-height: 100vh;
+            position: relative;
+            padding-left: 93px;
+            padding-top: 95px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .rectangle-34 {
+            background: #fdfdfd;
+            border-radius: 19px;
+            width: 90%;
+            max-width: 1200px;
+            height: 513px;
+            margin: 0 auto;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .board-table-container {
+            width: 100%;
+            height: 100%;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .board-table {
+            width: 100%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        .board-table th {
+            background: #f8f9fa;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            font-family: sans-serif;
+            font-size: 16px;
+            color: #333;
+            border-bottom: 2px solid #dee2e6;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .board-table td {
+            padding: 1rem 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid #dee2e6;
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+
+        .board-table tbody tr {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .board-table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        @media (max-width: 1200px) {
+            .rectangle-34 {
+                width: 95%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .board-list {
+                padding-left: 73px;
+            }
+            
+            .board-table th,
+            .board-table td {
+                padding: 0.75rem 1rem;
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
-<style>
-
-.board-list,
-.board-list * {
-  box-sizing: border-box;
-}
-.board-list {
-  background: #ffffff;
-  height: 811px;
-  position: relative;
-  overflow: hidden;
-}
-.rectangle-1 {
-  background: #f9f9f9;
-  width: 93px;
-  height: 810px;
-  position: absolute;
-  left: 0px;
-  top: 0px;
-}
-.selected {
-  position: absolute;
-  inset: 0;
-}
-.rectangle-4 {
-  background: #1678f3;
-  border-radius: 22px;
-  width: 53px;
-  height: 52px;
-  position: absolute;
-  left: 20px;
-  top: 426px;
-  box-shadow: 0px 6px 4px 0px rgba(0, 0, 0, 0.1);
-}
-.dashboard-layout {
-  width: 35px;
-  height: 35px;
-  position: absolute;
-  left: 29px;
-  top: 435px;
-  object-fit: cover;
-}
-.list-of-parts {
-  width: 37px;
-  height: 50px;
-  position: absolute;
-  left: 27px;
-  top: 528px;
-  object-fit: cover;
-}
-.rectangle-2 {
-  background: #f3f3f3;
-  width: 93px;
-  height: 75px;
-  position: absolute;
-  left: 0px;
-  top: 0px;
-}
-.rectangle-3 {
-  background: #fcfcfc;
-  width: 1240px;
-  height: 75px;
-  position: absolute;
-  left: 96px;
-  top: 0px;
-}
-.rectangle-39 {
-  background: #f3f3f3;
-  border-radius: 9px;
-  border-style: solid;
-  border-color: #353535;
-  border-width: 0.5px;
-  width: 347px;
-  height: 37px;
-  position: absolute;
-  left: 204px;
-  top: 161px;
-  transform-origin: 0 0;
-  transform: rotate(0deg) scale(1, -1);
-}
-.rectangle-18 {
-  border-radius: 0px;
-  width: 1133px;
-  height: 583px;
-  position: absolute;
-  left: 152px;
-  top: 178px;
-  overflow: visible;
-}
-.rectangle-22 {
-  background: #fdfdfd;
-  border-radius: 19px;
-  width: 1111px;
-  height: 501px;
-  position: absolute;
-  left: 163px;
-  top: 250px;
-}
-.no {
-  color: #000000;
-  text-align: center;
-  font-family: "RoundedMplus1C-Regular", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  position: absolute;
-  left: 163px;
-  top: 195px;
-  width: 95px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.div {
-  color: #000000;
-  text-align: center;
-  font-family: "RoundedMplus1C-Regular", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  position: absolute;
-  left: 297px;
-  top: 193px;
-  width: 81px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.div2 {
-  color: #000000;
-  text-align: center;
-  font-family: "RoundedMplus1C-Regular", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  position: absolute;
-  left: 941px;
-  top: 193px;
-  width: 167px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.div3 {
-  color: #000000;
-  text-align: center;
-  font-family: "RoundedMplus1C-Regular", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  position: absolute;
-  left: 1133px;
-  top: 193px;
-  width: 137px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.board {
-  color: #000000;
-  text-align: left;
-  font-family: "RoundedMplus1C-Regular", sans-serif;
-  font-size: 35px;
-  font-weight: 400;
-  position: absolute;
-  left: 120px;
-  top: 11px;
-}
-.export {
-  width: 35px;
-  height: 35px;
-  position: absolute;
-  left: 27px;
-  top: 728px;
-  object-fit: cover;
-}
-.ellipse-1 {
-  border-radius: 50%;
-  width: 53px;
-  height: 59px;
-  position: absolute;
-  left: 1898px;
-  top: 31px;
-  object-fit: cover;
-}
-.online-store {
-  width: 53px;
-  height: 57px;
-  position: absolute;
-  left: 19px;
-  top: 203px;
-  object-fit: cover;
-}
-.customer {
-  width: 35px;
-  height: 35px;
-  position: absolute;
-  left: 27px;
-  top: 325px;
-  object-fit: cover;
-}
-.interface-essential-magnifier {
-  width: 34px;
-  height: 34px;
-  position: absolute;
-  left: 159px;
-  top: 126px;
-  overflow: visible;
-}
-.group-126 {
-  position: absolute;
-  inset: 0;
-}
-.div4 {
-  color: #ffffff;
-  text-align: left;
-  font-family: "RoundedMplus1C-Regular", sans-serif;
-  font-size: 25px;
-  font-weight: 400;
-  position: absolute;
-  left: 1068.91px;
-  top: 120.03px;
-  width: 167.55px;
-  height: 30.94px;
-}
-.group-127 {
-  width: 244.98px;
-  height: 51px;
-  position: static;
-}
-.rectangle-40 {
-  background: #ff74a6;
-  border-radius: 13px;
-  width: 244.98px;
-  height: 51px;
-  position: absolute;
-  left: 1025px;
-  top: 110px;
-}
-.group-1272 {
-  position: absolute;
-  inset: 0;
-}
-.group-1273 {
-  width: 167.55px;
-  height: 30.94px;
-  position: static;
-}
-._2024-10-29-21-13 {
-  color: #000000;
-  text-align: left;
-  font-family: "Inter-Regular", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  position: absolute;
-  left: 1047px;
-  top: 77px;
-  width: 212px;
-  height: 26px;
-}
-
-
-
-</style>
-
 
 <body>
-	<div class="board-list">
-  <div class="rectangle-1"></div>
-  <div class="rectangle-4"></div>
-  <img class="dashboard-layout" src="dashboard-layout0.png" />
-  <img class="list-of-parts" src="list-of-parts0.png" />
-  <div class="rectangle-2"></div>
-  <div class="rectangle-3"></div>
-  <div class="rectangle-39"></div>
-  <img class="rectangle-18" src="rectangle-180.svg" />
-  <div class="rectangle-22"></div>
-  <div class="no">No</div>
-  <div class="div">제목</div>
-  <div class="div2">작성자</div>
-  <div class="div3">작성일</div>
-  <div class="board">Board</div>
-  <img class="export" src="export0.png" />
-  <img class="ellipse-1" src="ellipse-10.png" />
-  <img class="online-store" src="online-store0.png" />
-  <img class="customer" src="customer0.png" />
-  <img
-    class="interface-essential-magnifier"
-    src="interface-essential-magnifier0.svg"
-  />
-  <div class="div4">신고된 게시글</div>
-  <div class="group-127">
-    <div class="rectangle-40"></div>
-    <div class="div4">신고된 게시글</div>
-  </div>
-  <div class="div4">신고된 게시글</div>
-  <div class="group-1273">
-    <div class="div4">신고된 게시글</div>
-  </div>
-  <div class="_2024-10-29-21-13">2024-10-29 21:13 기준</div>
-</div>
-	
+    <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
+    <%@ include file="/WEB-INF/views/common/boardHeader.jsp" %>
+    
+    <div class="board-list">
+        <div class="rectangle-34">
+            <div class="board-table-container">
+                <table class="board-table">
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>제목</th>
+                            <th>카테고리</th>
+                            <th>작성일</th>
+                            <th>조회수</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${list}" var="board">
+                            <tr onclick="location.href='${pageContext.request.contextPath}/board/adminBoardDetail?no=${board.boardNo}'">
+                                <td>${board.boardNo}</td>
+                                <td>${board.title}</td>
+                                <td>${board.category}</td>
+                                <td>${board.regDate}</td>
+                                <td>${board.viewCnt}</td>
+                                <td><i class="bi bi-three-dots"></i></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tableRows = document.querySelectorAll('.board-table tbody tr');
+            tableRows.forEach(row => {
+                row.addEventListener('mouseenter', () => {
+                    row.style.backgroundColor = '#f8f9fa';
+                });
+                row.addEventListener('mouseleave', () => {
+                    row.style.backgroundColor = '';
+                });
+            });
+        });
+    </script>
 </body>
 </html>

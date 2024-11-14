@@ -1,323 +1,163 @@
-
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>사용자 상세</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+<body>
+     <!-- 사이드바 include -->
+    <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
+    
+    <!-- 헤더 include -->
+    <%@ include file="/WEB-INF/views/common/userHeader.jsp" %>
+    
+    <div class="main-content">
+        <form action="/admin/adminUserUpdate" method="post">
+            <input type="hidden" name="userNo" value="${user.userNo}">
+            <div class="content-area">
+                <table>
+                    <tr><th>아이디</th><td><input value="${user.userId}" name="userId" readonly></td></tr>
+                    <tr><th>비밀번호</th><td><input value="${user.password}" name="password"></td></tr>
+                    <tr><th>이름</th><td><input value="${user.name}" name="name"></td></tr>
+                    <tr><th>이메일</th><td><input value="${user.email}" name="email"></td></tr>
+                    <tr><th>전화번호</th><td><input value="${user.phoneNumber}" name="phoneNumber"></td></tr>
+                    <tr><th>생년월일</th><td><input value="${user.birthDate}" name="birthDate"></td></tr>
+                    <tr><th>성별</th><td><input value="${user.gender}" name="gender"></td></tr>
+                    <tr><th>주소</th><td><input value="${user.address}" name="address"></td></tr>
+                    <tr><th>상세주소</th><td><input value="${user.detailAddress}" name="detailAddress"></td></tr>
+                    <tr><th>우편번호</th><td><input value="${user.zonecode}" name="zoneCode"></td></tr>
+                    <tr><th>가입일</th><td><input value="${user.userRegDate}" name="userRegDate" readonly></td></tr>
+                </table>
+                
+                <div class="btn-area">
+                    <button class="btn btn-edit">수정하기</button>
+                    <button type="button" class="btn btn-delete">삭제하기</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
 <style>
-/* 기존 스타일 유지 */
-.customer-detail {
-	background: #ffffff;
-	height: 811px;
-	position: relative;
-	overflow: hidden;
-}
-
-.sidebar {
-	background: #f9f9f9;
-	width: 93px;
-	height: 810px;
-	position: absolute;
-	left: 0;
-	top: 0;
-}
-
-.sidebar-header {
-	background: #f3f3f3;
-	width: 93px;
-	height: 75px;
-}
-
-.top-header {
-	background: #fcfcfc;
-	width: 1240px;
-	height: 75px;
-	position: absolute;
-	left: 96px;
-	top: 0;
-}
-
-.menu-icon {
-	background: #1678f3;
-	border-radius: 22px;
-	width: 53px;
-	height: 53px;
-	position: absolute;
-	left: 18px;
-	top: 311px;
-	box-shadow: 0px 6px 4px 0px rgba(0, 0, 0, 0.1);
-}
-
-.page-title {
-	color: #000000;
-	font-family: sans-serif;
-	font-size: 35px;
-	position: absolute;
-	left: 120px;
-	top: 11px;
+.main-content {
+    margin-left: 93px;
+    margin-top: 75px;
+    padding: 2rem;
+    background: #f8f9fa;
+    min-height: calc(100vh - 75px);
 }
 
 .content-area {
-	position: absolute;
-	left: 160px;
-	top: 100px;
-	width: 1111px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    padding: 2rem;
 }
 
 table {
-	width: 100%;
-	border-collapse: collapse;
-	margin-top: 20px;
-	background: #fdfdfd;
-	border-radius: 8px;
-	overflow: hidden;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    background: #fdfdfd;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 th, td {
-	padding: 15px;
-	text-align: left;
-	border-bottom: 1px solid #f5f5f5;
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #f5f5f5;
 }
 
 th {
-	background-color: #f8f9fa;
-	width: 200px;
-	font-weight: normal;
+    background-color: #f8f9fa;
+    width: 200px;
+    font-weight: normal;
+    color: #495057;
 }
 
-/* 버튼 영역 수정 */
-.top-buttons {
-	position: absolute;
-	right: 160px;
-	top: 20px;
-	display: flex;
-	gap: 20px;
+td {
+    color: #2c3e50;
+}
+
+input {
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    width: 100%;
+    padding: 0;
+    font-family: inherit;
+    color: #2c3e50;
+}
+
+input:focus {
+    outline: none;
+    background: #f8f9fa;
+    border-radius: 4px;
+    padding: 0.5rem;
+}
+
+input[readonly] {
+    color: #6c757d;
+    cursor: not-allowed;
 }
 
 .btn-area {
-	position: absolute;
-	right: 160px;
-	bottom: 40px;
-	display: flex;
-	gap: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding-top: 1rem;
 }
 
 .btn {
-	border-radius: 13px;
-	height: 51px;
-	border: none;
-	font-size: 16px;
-	cursor: pointer;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 0 30px;
-	font-family: sans-serif;
-}
-
-.btn-pink {
-	background: #ff74a6;
-	color: white;
-	min-width: 245px;
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 118px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-edit {
-	background: #bddaff;
-	min-width: 118px;
-	border-radius: 50px;
-	height: 35px;
+    background: #bddaff;
+    color: #1678f3;
+}
+
+.btn-edit:hover {
+    background: #a5ceff;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(22,120,243,0.2);
 }
 
 .btn-delete {
-	background: #ff7474;
-	color: white;
-	min-width: 118px;
-	border-radius: 50px;
-	height: 35px;
+    background: #ff7474;
+    color: white;
 }
 
-.btn-report {
-	background: #ff74a6;
-	color: white;
-	min-width: 118px;
-	border-radius: 50px;
-	height: 35px;
-}
-
-.icon {
-	width: 35px;
-	height: 35px;
-	position: absolute;
-}
-
-.icon-customer {
-	left: 27px;
-	top: 320px;
-}
-
-.icon-dashboard {
-	left: 27px;
-	top: 439px;
-}
-
-.icon-store {
-	left: 19px;
-	top: 203px;
-}
-
-.icon-parts {
-	left: 27px;
-	top: 528px;
-}
-
-.icon-export {
-	left: 27px;
-	top: 728px;
-}
-
-.date-info {
-	position: absolute;
-	right: 160px;
-	top: 89px;
-	font-size: 20px;
-	color: #000000;
-}
-/* style 태그 내에 추가할 CSS */
-input {
-	border: none;
-	background: transparent;
-	font-size: 16px;
-	width: 100%;
-	padding: 0;
-	font-family: inherit;
-}
-
-.date-info {
-	color: #000000;
-	text-align: left;
-	font-family: "Inter-Regular", sans-serif;
-	font-size: 20px;
-	font-weight: 400;
-	position: absolute;
-	left: 1041px;
-	top: 89px;
-	width: 212px;
-	height: 26px;
+.btn-delete:hover {
+    background: #ff5c5c;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(255,116,116,0.2);
 }
 </style>
-</head>
-<body>
-	<div class="customer-detail">
-		<div class="sidebar">
-			<div class="sidebar-header"></div>
-			<div class="menu-icon"></div>
-			<img class="icon icon-customer" src="customer0.png" /> <img
-				class="icon icon-dashboard" src="dashboard-layout0.png" /> <img
-				class="icon icon-store" src="online-store0.png" /> <img
-				class="icon icon-parts" src="list-of-parts0.png" /> <img
-				class="icon icon-export" src="export0.png" />
-		</div>
 
-		<div class="top-header"></div>
-		<div class="top-buttons">
-			<button type="button" class="btn btn-pink">신고된 유저</button>
-		</div>
-
-		<h1 class="page-title">사용자 상세 정보</h1>
-		<div class="date-info">실시간 날짜 기준</div>
-
-        <form action="/admin/adminUserUpdate" method="post">
-            <input type="hidden" name="userNo" value="${user.userNo}" >
-            <div class="content-area">
-                <table>
-                    <tr>
-                        <th>아이디</th>
-                        <td><input name="userId" value="${user.userId}" readonly></td>
-                    </tr>
-                    <tr>
-                        <th>비밀번호</th>
-                        <td><input name="password" value="${user.password}"></td>
-                    </tr>
-                    <tr>
-                        <th>이름</th>
-                        <td><input name="name" value="${user.name}"></td>
-                    </tr>
-                    <tr>
-                        <th>이메일</th>
-                        <td><input name="email" value="${user.email}"></td>
-                    </tr>
-                    <tr>
-                        <th>전화번호</th>
-                        <td><input name="phoneNumber" value="${user.phoneNumber}"></td>
-                    </tr>
-                    <tr>
-                        <th>생년월일</th>
-                        <td><input name="birthDate" value="${user.birthDate}"></td>
-                    </tr>
-                    <tr>
-                        <th>성별</th>
-                        <td><input name="gender" value="${user.gender}"></td>
-                    </tr>
-                    <tr>
-                        <th>주소</th>
-                        <td><input name="address" value="${user.address}"></td>
-                    </tr>
-                    <tr>
-                        <th>상세주소</th>
-                        <td><input name="detailAddress" value="${user.detailAddress}"></td>
-                    </tr>
-                    <tr>
-                        <th>우편번호</th>
-                        <td><input name="zonecode" value="${user.zonecode}"></td>
-                    </tr>
-                    <tr>
-                        <th>가입일</th>
-                        <td><input name="userRegDate" value="${user.userRegDate}" readonly></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="btn-area">
-                <button type="submit" class="btn btn-edit">수정하기</button>
-                <button type="button" class="btn btn-delete">삭제하기</button>
-                <!-- <button type="button" class="btn btn-report">사용자 신고</button> -->
-            </div>
-        </form>
-	</div>
-
-	<script>
-		function updateDateTime() {
-			const now = new Date();
-			const options = {
-				year : 'numeric',
-				month : '2-digit',
-				day : '2-digit',
-				hour : '2-digit',
-				minute : '2-digit',
-				hour12 : false
-			};
-			// 클래스 선택자를 'date-info'로 변경
-			document.querySelector('.date-info').textContent = now
-					.toLocaleString('ko-KR', options).replace(',', '')
-					+ ' 기준';
-		}
-
-		// 페이지 로드 시 초기 실행
-		updateDateTime();
-
-		// 1분마다 업데이트
-		setInterval(updateDateTime, 60000);
-
-		//////////////////////////////////////////////////////////////////
-
-		document.querySelector('.btn-delete').onclick = function() {
-			if (confirm('정말 삭제하시겠습니까?')) {
-				//정보를 받아줘야하니까 datail주소를 그대로 준다.
-				location.href = '/admin/adminUserDelete?no=${user.userNo}';
-			}
-			console.log('삭제하기 클릭');
-		}
-	</script>
-</body>
+<script>
+document.querySelector('.btn-delete').onclick = function() {
+    if(confirm('${user.userId}를 정말 삭제하시겠습니까?')) {
+        alert("${user.userId}가 삭제됩니다.");
+        window.location.href = "${pageContext.request.contextPath}/admin/adminUserDelete?no=${user.userNo}";
+    }
+}
+</script>
 </html>

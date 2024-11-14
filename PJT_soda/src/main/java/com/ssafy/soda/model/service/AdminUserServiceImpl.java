@@ -19,7 +19,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 	@Override
 	public List<User> getAllUser() {
 		
-		return userDao.selectAll();
+		return userDao.selectAllUser();
 	}
 
 	@Override
@@ -36,5 +36,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 	public void modifyUser(User user) {
 		userDao.update(user);		
 	}
+
+
 
 }

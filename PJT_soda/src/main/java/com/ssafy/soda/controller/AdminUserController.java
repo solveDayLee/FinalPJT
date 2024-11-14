@@ -1,16 +1,16 @@
 package com.ssafy.soda.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ssafy.soda.model.dto.SearchCondition;
 import com.ssafy.soda.model.dto.User;
 import com.ssafy.soda.model.service.AdminUserService;
 
@@ -109,7 +109,14 @@ public class AdminUserController {
 	}
 	
 	//아이디, 이름, 이메일 로 검색하기
-	
+	@GetMapping("/searchAdminBoard")
+	public void searchAdminBoard(SearchCondition searchCondition, Model model) {
+		
+		
+
+
+		}
+	}	
 	
 	
 	

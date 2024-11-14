@@ -13,7 +13,7 @@ import com.ssafy.soda.model.dto.User;
 import com.ssafy.soda.model.service.AdminBoardService;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/board")
 public class AdminBoardController {
 	
 	//서비스 싱글턴 주입
@@ -37,15 +37,15 @@ public class AdminBoardController {
 	public String detail(@RequestParam("no") int no, Model model) {
 		User user = adminBoardService.detailBoard(no);
 		model.addAttribute("user", user);
-		return "admin/adminBoardDetail";
+		return "board/adminBoardDetail";
 		
 	}
 	
 	//게시판 삭제
-	@GetMapping("/adminUserDelete")
+	@GetMapping("/adminBoardDelete")
 	public String delete(@RequestParam("no") int no) {
 		adminBoardService.removeBoard(no);
-		return "redirect:/admin/adminBoard";
+		return "redirect:/board/adminBoard";
 	} 
 	
 	//아이디, 이름, 이메일 로 검색하기

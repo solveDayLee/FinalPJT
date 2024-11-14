@@ -10,12 +10,13 @@ import com.ssafy.soda.model.dto.User;
 //@Mapper
 public interface UserDao {
 
-	public List<User> selectAll();
+	public List<User> selectAllUser();
 
 	public void deleteUser(int no);
 
 	public User selectByNo(int no);
 
 	public void update(User user);
+
 
 }

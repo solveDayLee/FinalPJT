@@ -13,6 +13,7 @@ public interface AdminUserService {
 	public void removeUser(int id);
 
 	public void modifyUser(User user);
-	
+
+
 
 }

@@ -2,6 +2,7 @@ package com.ssafy.soda.controller;
 
 import java.util.List;
 
+import org.springframework.cglib.reflect.MethodDelegate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,8 +37,16 @@ public class AdminBoardController {
 	//게시판 상세보기
 	@GetMapping("/adminBoardDetail")
 	public String detail(@RequestParam("no") int no, Model model) {
-		User user = adminBoardService.detailBoard(no);
-		model.addAttribute("user", user);
+		Board board = adminBoardService.detailBoard(no);
+		
+		if(board.getUser() != null) {
+			String userId = board.getUser().getUserId();
+			model.addAttribute("userId", userId);
+		} else {
+			model.addAttribute("userId", "존재하지 않는 사용자입니다.");
+		}
+		
+		model.addAttribute("board", board);
 		return "board/adminBoardDetail";
 		
 	}

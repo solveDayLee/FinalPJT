@@ -19,7 +19,7 @@
 				<option value="name">이름 검색</option>
 				<option value="user_id">아이디 검색</option>
 				<option value="email">이메일 검색</option>
-			</select> <input type="text" id="searchInput" placeholder="사용자 아이디로 검색하기">
+			</select> <input type="text" id="searchInput" placeholder="사용자 전체 리스트 검색하기">
 			<button type="button" id="searchButton" class="search-btn">
 				<i class="bi bi-search"></i> 검색
 			</button>
@@ -236,15 +236,11 @@
 	}
 
 	//실시간
-	document
-			.addEventListener(
-					'DOMContentLoaded',
-					function() {
-						updateTime();
-						setInterval(updateTime, 60000);
+	document.addEventListener('DOMContentLoaded',function() {
+	updateTime();
+	setInterval(updateTime, 60000);
 
-						document
-								.getElementById('searchButton')
+	document.getElementById('searchButton')
 								.addEventListener(
 										'click',
 										function() {
@@ -253,11 +249,18 @@
 											const select = document
 													.getElementById('searchCategory');
 											const keyword = input.value.trim();
-
-											if (keyword) {
-												const URL = contextPath
+											const category = select.value;
+											
+											if (category === 'all') {
+												console.log("전체 검색 경로:", contextPath + '/admin/adminUserBoard');
+											location.href = contextPath + '/admin/adminUserBoard';
+											
+											} else if(keyword) {
+												
+											const URL = contextPath
 														+ `/admin/searchAdminUserBoard?category=\${select.value}&keyword=\${keyword}`;
 												location.href = URL;
+											
 											} else {
 												alert('검색어를 입력해주세요.');
 											}

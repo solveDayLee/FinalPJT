@@ -109,7 +109,7 @@ public class AdminUserController {
 	}
 	
 	//아이디, 이름, 이메일 로 검색하기
-	@GetMapping("/searchAdminBoard")
+	@GetMapping("/searchAdminUserBoard")
 	public String searchAdminBoard(SearchCondition searchCondition, Model model) {
 		List<User> list = adminUserService.getSearchUserLit(searchCondition);
 		model.addAttribute("list", list);

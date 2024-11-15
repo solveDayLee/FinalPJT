@@ -14,7 +14,7 @@ public interface BoardDao {
 
 	List<Board> selectAll();
 
-	User seletByNo(int no);
+	Board seletByNo(int no);
 
 	void delete(int no);
 

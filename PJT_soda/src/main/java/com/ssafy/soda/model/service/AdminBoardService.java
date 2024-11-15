@@ -10,7 +10,7 @@ public interface AdminBoardService {
 
 	List<Board> getAllBoard();
 
-	User detailBoard(int no);
+	Board detailBoard(int no);
 
 	void removeBoard(int no);
 

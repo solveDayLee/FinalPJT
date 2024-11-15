@@ -14,11 +14,13 @@
     <div class="header-center">
         <div class="search-area">
             <select id="searchCategory" onchange="changePlaceholder()">
+                
+                <option value="all">전체 게시판 조회</option>
                 <option value="title">제목 검색</option>
                 <option value="content">내용 검색</option>
-                <option value="board_no">보드 no 검색</option>
+                <option value="writer">작성자 검색</option>
             </select>
-            <input type="text" id="searchInput" placeholder="게시글 제목으로 검색하기">
+            <input type="text" id="searchInput" placeholder="게시판 전체 리스트 검색하기">
             <button type="button" id="searchButton" class="search-btn">
                 <i class="bi bi-search"></i> 검색
             </button>
@@ -219,14 +221,17 @@ function changePlaceholder() {
     const input = document.getElementById('searchInput');
     
     switch(select.value) {
+    case 'all':
+        input.placeholder = "게시판 전체 리스트 검색하기"
+        break;
         case 'title':
             input.placeholder = "게시글 제목으로 검색하기";
             break;
         case 'content':
             input.placeholder = "게시글 내용으로 검색하기";
             break;
-        case 'board_no':
-            input.placeholder = "보드 숫자로 검색하기";
+        case 'writer':
+            input.placeholder = "작성자로 검색하기";
             break;
     }
 }
@@ -239,8 +244,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const input = document.getElementById('searchInput');
         const select = document.getElementById('searchCategory');
         const keyword = input.value.trim();
+        const category = select.value;
         
-        if(keyword) {
+        if(category ==='all') {
+            location.href = contextPath + '/board/adminBoard';
+        } else if(keyword) {
+             // URL 인코딩을 사용하여 한글 검색어 처리
+            const encodedKeyword = encodeURIComponent(keyword);
             const URL = contextPath + `/board/searchAdminBoard?category=\${select.value}&keyword=\${keyword}`;
             location.href = URL;
         } else {
@@ -255,7 +265,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.querySelector('.report-btn').addEventListener('click', function() {
-        location.href = contextPath + '/board/reportedBoards';
+        location.href = contextPath + '/board/adminReportBoard';
     });
 });
 </script>

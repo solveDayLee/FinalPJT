@@ -38,7 +38,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link ${pageContext.request.servletPath == '/admin/reports.jsp' ? 'active' : ''}" 
-               href="${pageContext.request.contextPath}/admin/reports">
+               href="${pageContext.request.contextPath}/board/adminReportBoard">
                 <i class="bi bi-exclamation-triangle-fill"></i>
                 <span>신고관리</span>
             </a>

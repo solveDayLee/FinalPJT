@@ -8,12 +8,24 @@ public class Board {
 	private String regDate;
 	private int viewCnt;
 	private String category;
-//	private int userNo;
+	private int userNo;
 
 	///// --- 유저와 보드 연결 소운 실험 코드------------
 	private User user;
-	
 	private Likes likes;
+	private BoardReport boardReport;
+	
+	
+	
+	
+	public BoardReport getBoardReport() {
+		if (boardReport != null) {
+			return boardReport;
+		} else {
+			return null;
+		}
+	}
+
 	
 	public Likes getLikes() {
 		if (likes != null) {
@@ -45,7 +57,7 @@ public class Board {
 	public Integer getUserNo() {
 		// 유저가 삭제된 경우 null 이 뜰 수도 있음
 		if (user != null) {
-			return user.getUserNo();
+			return userNo;
 		} else {
 			return null;
 		}
@@ -66,7 +78,7 @@ public class Board {
 	}
 	
 	public Board(int boardNo, String title, String writer, String content, String regDate, int viewCnt, String category,
-			User user, Likes likes) {
+			int userNo, User user, Likes likes) {
 		super();
 		this.boardNo = boardNo;
 		this.title = title;
@@ -75,6 +87,7 @@ public class Board {
 		this.regDate = regDate;
 		this.viewCnt = viewCnt;
 		this.category = category;
+		this.userNo = userNo;
 		this.user = user;
 		this.likes = likes;
 	}
@@ -135,6 +148,10 @@ public class Board {
 		this.category = category;
 	}
 
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
+	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}
@@ -146,8 +163,8 @@ public class Board {
 	@Override
 	public String toString() {
 		return "Board [boardNo=" + boardNo + ", title=" + title + ", writer=" + writer + ", content=" + content
-				+ ", regDate=" + regDate + ", viewCnt=" + viewCnt + ", category=" + category + ", user=" + user
-				+ ", likes=" + likes + "]";
+				+ ", regDate=" + regDate + ", viewCnt=" + viewCnt + ", category=" + category + ", userNo=" + userNo
+				+ ", user=" + user + ", likes=" + likes + "]";
 	}
 
 	

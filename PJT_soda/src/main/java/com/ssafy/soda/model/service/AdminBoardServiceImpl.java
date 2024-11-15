@@ -61,4 +61,33 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 
 
 
+	@Override
+	public List<Board> getReportBoardlist() {
+		return boardDao.sellectAllReported();
+		
+	}
+
+
+
+	@Override
+	public List<Integer> reportlikesListCount() {
+		return boardDao.allReportLikesCount();
+	}
+
+
+
+	@Override
+	public List<Character> getReportStatusList() {
+		return boardDao.allResportStatus();
+	}
+
+
+
+	@Override
+	public Board getReportBoardByNo(int no) {
+		return boardDao.sellectReportedByNo(no);
+	}
+
+
+
 }

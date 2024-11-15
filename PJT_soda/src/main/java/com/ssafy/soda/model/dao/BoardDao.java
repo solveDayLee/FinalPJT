@@ -19,5 +19,13 @@ public interface BoardDao {
 
 	int likesCount(int no);
 
+	List<Board> sellectAllReported();
+
+	List<Integer> allReportLikesCount();
+
+	List<Character> allResportStatus();
+
+	Board sellectReportedByNo(int no);
+
 
 }

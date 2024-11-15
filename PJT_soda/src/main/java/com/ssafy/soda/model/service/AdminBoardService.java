@@ -19,4 +19,12 @@ public interface AdminBoardService {
 
 	int getLikesCount(int no);
 
+	List<Board> getReportBoardlist();
+
+	List<Integer> reportlikesListCount();
+
+	List<Character> getReportStatusList();
+
+	Board getReportBoardByNo(int no);
+
 }

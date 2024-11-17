@@ -35,7 +35,6 @@
 		select * from user
 		<where>
 			<if test="category =='all'">
-				<!-- all like CONCAT('%',#{keyword}, '%') -->
 			</if>
 		
 			<if test="category == 'name'">

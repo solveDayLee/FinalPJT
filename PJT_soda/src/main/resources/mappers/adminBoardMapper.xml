@@ -9,29 +9,39 @@
 		select * from board
 	</select>
 
-	<select id="seletByNo" resultType="User" parameterType="int">
-		select * from board
+	<select id="seletByNo" resultType="Board" parameterType="int">
+		select b.*,
+		u.user_no as "user.userNo",
+		u.user_id as "user.userId"
+		
+		
+		from board b
+		left join user u on b.user_no = u.user_no
 		where board_no=#{boardNo}
 
 	</select>
 
 	<delete id="delete" parameterType="int">
 		delete from board
-		where board_no=#{boardNo}
+		where
+		board_no=#{boardNo}
 
 	</delete>
 
-	<select id="selectSearched" resultType="Board" parameterType="searchCondition">
+	<select id="selectSearched" resultType="Board"
+		parameterType="searchCondition">
 		select * from board
 		<where>
+			<if test="category =='all'">
+			</if>
 			<if test="category == 'title'">
-				title like concat('%', '#{keyword}','%')
+				title like CONCAT('%', #{keyword},'%')
 			</if>
 			<if test="category == 'content'">
-				content like concat('%', '#{keyword}','%')
+				content like CONCAT('%', #{keyword},'%')
 			</if>
 			<if test="category == 'writer'">
-				writer like concat('%', '#{keyword}','%')
+				writer like CONCAT('%', #{keyword},'%')
 			</if>
 		</where>
 	</select>

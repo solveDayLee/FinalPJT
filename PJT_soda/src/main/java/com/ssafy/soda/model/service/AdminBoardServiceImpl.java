@@ -26,7 +26,7 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	}
 
 	@Override
-	public User detailBoard(int no) {
+	public Board detailBoard(int no) {
 		return boardDao.seletByNo(no);
 	}
 

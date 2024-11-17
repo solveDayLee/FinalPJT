@@ -39,7 +39,10 @@
 </template>
 
 <script setup>
-import logo from '@/assets/로고/엣코 로고.gif'
+import logo from '@/assets/엣코 로고.gif'
+
+
+
 </script>
 
 <style scoped>
@@ -47,6 +50,7 @@ header {
   padding: 1rem 2rem;
   background-color: rgb(178, 242, 165);
   box-shadow: 0 2px 8px rgba(158, 157, 157, 0.1);
+  min-width: 1024px;  /* 또는 원하는 크기 */
 }
 
 .header-container {

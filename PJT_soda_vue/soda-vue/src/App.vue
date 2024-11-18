@@ -1,9 +1,15 @@
 <template>
-  <DefaultLayout/>
+       <Header/>
+      <RouterView/>
+      <Footer/>
 </template>
 
 <script setup>
-import DefaultLayout from './components/Layouts/DefaultLayout.vue';
+
+import Footer from './components/Layouts/Footer.vue';
+import Header from './components/Layouts/Header.vue';
+
+
 </script>
 
 <style scoped>

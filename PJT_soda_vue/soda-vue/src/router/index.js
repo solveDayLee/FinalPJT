@@ -1,3 +1,4 @@
+import BoardView from '@/views/BoardView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -7,6 +8,11 @@ const router = createRouter({
       path: '/',
       name: 'Main',
       component: () => import('@/views/MainPage.vue')
+    },
+    {
+      path: '/board',
+      name: 'board',
+      component: BoardView,
     },
  ],
 })

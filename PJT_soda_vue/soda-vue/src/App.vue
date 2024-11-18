@@ -1,11 +1,9 @@
 <template>
-  <Header />
-  <Banner />
+  <DefaultLayout/>
 </template>
 
 <script setup>
-import Header from '@/components/Header.vue'
-import Banner from '@/components/Banner.vue'
+import DefaultLayout from './components/Layouts/DefaultLayout.vue';
 </script>
 
 <style scoped>

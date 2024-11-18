@@ -1,9 +1,4 @@
 <template>
-    <div>
-      <h2>App vue</h2>
-      <Sidebar/>
-  
-    </div>
   
     <footer>
       <div class="footerBox">
@@ -40,7 +35,6 @@
   
   <script setup> 
     import logo from "@/assets/logo/etce_logo.gif";
-    import Sidebar from "./components/Sidebar.vue";
   </script>
    
   <style scoped>

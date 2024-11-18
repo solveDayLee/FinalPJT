@@ -15,7 +15,7 @@
             </tr>
         </tbody>
         <hr>
-        <thead>
+        <thead> 
             <tr>
                 <th>에디터 게시판</th>
             </tr>

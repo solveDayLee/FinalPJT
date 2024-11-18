@@ -10,7 +10,7 @@
   
         <nav class="nav-menu">
           <div class="nav-item">Home</div>
-          <div class="nav-item">Category</div>
+          <RouterLink :to="{name: 'board'}"><div class="nav-item">Category</div></RouterLink>
           <div class="nav-item">About</div>
           <div class="nav-item">Contact</div>
         </nav>
@@ -41,6 +41,7 @@
   <script setup>
 
   import logo from '@/assets/etco-logo.gif'
+import { RouterLink } from 'vue-router';
 
 
 

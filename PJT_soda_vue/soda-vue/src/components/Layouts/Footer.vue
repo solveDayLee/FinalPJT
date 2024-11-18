@@ -43,6 +43,8 @@
      border-radius: 20px 20px 0 0;
      padding: 30px 20px;
      color: white;
+
+
   }
   
   .search {

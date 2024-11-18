@@ -35,7 +35,6 @@
   
   <script setup> 
     import logo from "@/assets/logo/etce_logo.gif";
-
   </script>
    
   <style scoped>

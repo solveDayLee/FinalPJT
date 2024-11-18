@@ -1,5 +1,4 @@
      <template>
-<<<<<<< HEAD
         <table>
             <thead>
                 <tr>

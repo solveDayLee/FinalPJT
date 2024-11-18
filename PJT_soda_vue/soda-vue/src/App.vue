@@ -1,7 +1,4 @@
 <template>
-  <div>
-    
-  </div>
   <Header />
   <Banner />
 </template>

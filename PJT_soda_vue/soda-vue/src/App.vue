@@ -1,11 +1,14 @@
 <template>
   <div>
-    <h2>App vue</h2>
+    
   </div>
+  <Header />
+  <Banner />
 </template>
 
 <script setup>
-
+import Header from '@/components/Header.vue'
+import Banner from '@/components/Banner.vue'
 </script>
 
 <style scoped>

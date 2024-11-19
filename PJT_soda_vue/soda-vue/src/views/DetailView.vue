@@ -1,14 +1,24 @@
 <template>
+    <Banner />
     <div>
-        <h2>게시판 디테일</h2>
+        <div class="flex">
+            <Sidebar />
+            <DetailBoard />
+        </div>
+
     </div>
-    <DetailBoard />
+
 </template>
 
 <script setup>
-import detailboard from '@/components/detailboard.vue';
+import DetailBoard from '@/components/DetailBoard.vue';
+import Sidebar from '@/components/Layouts/Sidebar.vue';
+import Banner from '@/components/Layouts/Banner.vue';
+
 </script>
 
 <style scoped>
-
+.flex {
+    display: flex;
+}
 </style>

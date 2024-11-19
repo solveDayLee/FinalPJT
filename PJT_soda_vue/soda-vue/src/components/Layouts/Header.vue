@@ -4,14 +4,14 @@
   
         <div class="logo-wrapper">
           <div class="logo-background">
-            <img :src="logo" alt="logo" class="logo-container">
+            <RouterLink to="/"><img :src="logo" alt="logo" class="logo-container"></RouterLink>
           </div>
         </div>
   
         <nav class="nav-menu">
           <div class="nav-item">Home</div>
           <div class="nav-item">Category</div>
-          <div class="nav-item">About</div>
+          <RouterLink to="/board"><div class="nav-item">About</div></RouterLink>
           <div class="nav-item">Contact</div>
         </nav>
   
@@ -24,10 +24,12 @@
           </div>
   
           <div class="auth-links">
+            <RouterLink to="/login">
             <a href="#" class="auth-link">
               <i class="bi bi-person-circle"></i>
               로그인
             </a>
+          </RouterLink>
             <a href="#" class="auth-link">
               <i class="bi bi-person-plus"></i>
               회원가입

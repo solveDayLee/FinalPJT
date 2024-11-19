@@ -1,5 +1,7 @@
 import BoardView from '@/views/BoardView.vue'
+import DetailView from '@/views/DetailView.vue'
 import JoinView from '@/views/JoinView.vue'
+import LoginView from '@/views/LoginView.vue'
 import WriteView from '@/views/WriteView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 

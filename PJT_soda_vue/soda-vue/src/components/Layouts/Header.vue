@@ -11,7 +11,7 @@
         <nav class="nav-menu">
           <div class="nav-item">Home</div>
           <RouterLink :to="{name: 'Board'}"><div class="nav-item">Category</div></RouterLink>
-          <RouterLink to="/board"><div class="nav-item">About</div></RouterLink>
+          <RouterLink to="/detailboard"><div class="nav-item">About</div></RouterLink>
           <div class="nav-item">Contact</div>
         </nav>
   

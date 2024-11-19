@@ -2,7 +2,7 @@
     <div>
     <div class="listHeader">
         <h2>전체 글</h2>
-        <button>글쓰기</button>
+        <RouterLink :to="{name: 'Write'}"><button>글쓰기</button></RouterLink>
     </div>
     <table class="table table-hover text-center">
         <thead>

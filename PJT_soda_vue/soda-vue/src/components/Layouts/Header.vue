@@ -10,7 +10,7 @@
   
         <nav class="nav-menu">
           <div class="nav-item">Home</div>
-          <RouterLink :to="{name: 'board'}"><div class="nav-item">Category</div></RouterLink>
+          <RouterLink :to="{name: 'Board'}"><div class="nav-item">Category</div></RouterLink>
           <div class="nav-item">About</div>
           <div class="nav-item">Contact</div>
         </nav>
@@ -28,10 +28,12 @@
               <i class="bi bi-person-circle"></i>
               로그인
             </a>
-            <a href="#" class="auth-link">
-              <i class="bi bi-person-plus"></i>
-              회원가입
-            </a>
+            <RouterLink :to="{name: 'Join'}">
+              <a href="#" class="auth-link">
+                <i class="bi bi-person-plus"></i>
+                회원가입
+              </a>
+            </RouterLink>
           </div>
         </div>
       </div>

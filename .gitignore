@@ -1,70 +1,3 @@
-
-# Dependencies
-node_modules/
-/.pnp
-.pnp.js
-
-# Testing
-/coverage
-/cypress/videos/
-/cypress/screenshots/
-
-# Production
-/build
-/dist
-dist-ssr
-*.local
-
-# Vue specific
-.DS_Store
-.env.local
-.env.*.local
-.env.development
-.env.test
-.env.production
-
-# Log files
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-.project
-.classpath
-.settings
-
-# Optional npm cache directory
-.npm
-
-# Optional eslint cache
-.eslintcache
-
-# Optional stylelint cache
-.stylelintcache
-
-# Misc
-.DS_Store
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.cache
-.parcel-cache
-
 # Spring Boot
 HELP.md
 target/
@@ -74,7 +7,9 @@ target/
 
 ### STS ###
 .apt_generated
+.classpath
 .factorypath
+.project
 .settings
 .springBeans
 .sts4-cache
@@ -85,30 +20,52 @@ target/
 *.iml
 *.ipr
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-# Visual Studio Code
+### VS Code ###
 .vscode/
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-*.code-workspace
-.history/
 
-# Temporary files
+### Vue.js ###
+# 의존성 패키지
+node_modules/
+/dist/
+
+# 로컬 환경 파일
+.env.local
+.env.*.local
+
+# 로그 파일
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 캐시 파일
+.DS_Store
+Thumbs.db
+
+### 기타 ###
+# 로그 파일
+*.log
+
+# 임시 파일
 *.swp
 *.swo
 *~
 
-# System Files
-.DS_Store
-Thumbs.db
+# 빌드 결과물
+/build
+/out
+
+# properties 파일 (필요한 경우)
+# application.properties
+# application.yml
+
+# 보안 관련 파일
+*.pem
+*.key
+
+### 프로젝트 특정 파일 ###
+/.metadata/
+/PJT_soda/target/
+/PJT_soda/.settings/
+/PJT_soda/.classpath
+/PJT_soda/.project

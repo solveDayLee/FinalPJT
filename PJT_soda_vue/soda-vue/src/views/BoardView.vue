@@ -12,8 +12,6 @@
 
 import BoardList from '@/components/BoardList.vue';
 import Banner from '@/components/Layouts/Banner.vue';
-import Footer from '@/components/Layouts/Footer.vue';
-import Header from '@/components/Layouts/Header.vue';
 import Sidebar from '@/components/Layouts/Sidebar.vue';
 
 </script>

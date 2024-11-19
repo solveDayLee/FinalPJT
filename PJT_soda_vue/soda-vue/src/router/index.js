@@ -1,3 +1,6 @@
+import DetailView from '@/views/DetailView.vue'
+import LoginView from '@/views/LoginView.vue'
+import MainPage from '@/views/MainPage.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -6,10 +9,24 @@ const router = createRouter({
     {
       path: '/',
       name: 'Main',
-      component: () => import('@/views/MainPage.vue')
+      component: MainPage
     },
- ],
+    {
+      path: '/board', //:id는 동적 라우트 파라미터
+      name: 'DetailBoard',
+      component: DetailView
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: LoginView
+    },
+
+  ],
+
+
 })
+
 
 
 export default router

@@ -1,7 +1,9 @@
+import BoardView from '@/views/BoardView.vue'
+import JoinView from '@/views/JoinView.vue'
+import WriteView from '@/views/WriteView.vue'
+import { createRouter, createWebHistory } from 'vue-router'
 import DetailView from '@/views/DetailView.vue'
 import LoginView from '@/views/LoginView.vue'
-import MainPage from '@/views/MainPage.vue'
-import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,10 +11,25 @@ const router = createRouter({
     {
       path: '/',
       name: 'Main',
-      component: MainPage
+      component: () => import('@/views/MainPageView.vue')
     },
     {
-      path: '/board', //:id는 동적 라우트 파라미터
+      path: '/board',
+      name: 'Board',
+      component: BoardView,
+    },
+    {
+      path: '/write',
+      name: 'Write',
+      component: WriteView,
+    },
+    {
+      path: '/join',
+      name: 'Join',
+      component: JoinView,
+    },
+    {
+      path: '/detailboard', //:id는 동적 라우트 파라미터
       name: 'DetailBoard',
       component: DetailView
     },

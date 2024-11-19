@@ -10,8 +10,8 @@
   
         <nav class="nav-menu">
           <div class="nav-item">Home</div>
-          <div class="nav-item">Category</div>
-          <RouterLink to="/board"><div class="nav-item">About</div></RouterLink>
+          <RouterLink :to="{name: 'Board'}"><div class="nav-item">Category</div></RouterLink>
+          <RouterLink to="/detailboard"><div class="nav-item">About</div></RouterLink>
           <div class="nav-item">Contact</div>
         </nav>
   
@@ -29,11 +29,13 @@
               <i class="bi bi-person-circle"></i>
               로그인
             </a>
-          </RouterLink>
-            <a href="#" class="auth-link">
-              <i class="bi bi-person-plus"></i>
-              회원가입
-            </a>
+            </RouterLink>
+            <RouterLink :to="{name: 'Join'}">
+              <a href="#" class="auth-link">
+                <i class="bi bi-person-plus"></i>
+                회원가입
+              </a>
+            </RouterLink>
           </div>
         </div>
       </div>
@@ -43,6 +45,7 @@
   <script setup>
 
   import logo from '@/assets/etco-logo.gif'
+import { RouterLink } from 'vue-router';
 
 
 

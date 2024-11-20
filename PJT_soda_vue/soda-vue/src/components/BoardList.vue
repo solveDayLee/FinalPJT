@@ -4,7 +4,7 @@
             <div class="list-header">
                 <div class="header-left">
                     <h2 class="title">전체 글</h2>
-                    <!-- <span class="post-count">총 {{ boardList.length() }}개의 글</span> -->
+                    <span class="post-count">총 {{ store.boardList.length }}개의 글</span>
                 </div>
                 <RouterLink :to="{ name: 'Write' }">
                     <button class="write-button">
@@ -28,9 +28,9 @@
                     </thead>
                     <tbody>
                         <tr
-                            v-for="board in boardList"
+                            v-for="board in store.boardList"
                             :key="board.boardNo"
-                            @click="$router.push({ name: 'DetailBoard', params: { id: board.boardNo } })"
+                            @click="$router.push({ name: 'DetailBoard', params: { no: board.boardNo } })"
                             class="table-row"
                         >
                             <td class="board-no">{{ board.boardNo }}</td>
@@ -66,7 +66,7 @@ import { onMounted } from "vue";
 const store = useBoardStore();
 
 onMounted(()=>{
-    store.getBoardList
+    store.getBoardList();
 })
 
 </script>

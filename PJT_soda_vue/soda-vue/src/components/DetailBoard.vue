@@ -1,17 +1,17 @@
 <template>
-  <div class="board-container" v-if="board">
+  <div class="board-container">
     <div class="board-detail">
       <div class="category-wrapper">
-        <h2 class="category">{{ board.category }}</h2>
+        <h2 class="category">{{ store.board.category }}</h2>
       </div>
 
       <div class="detail-content">  <!-- content-wrapper를 detail-content로 변경 -->
         <div class="title-section">
-          <div class="title">{{ board.title }}</div>
+          <div class="title">{{ store.board.title }}</div>
           <div class="meta-info">
-            <span class="writer">{{ board.writer }}</span>
-            <span class="date">{{ formatDate(board.regDate) }}</span>
-            <span class="view-count">조회 {{ board.viewCnt }}</span>
+            <span class="writer">{{ store.board.writer }}</span>
+            <span class="date">{{ formatDate(store.board.regDate) }}</span>
+            <span class="view-count">조회 {{ store.board.viewCnt }}</span>
             <button class="report-button" @click="handleReport">
               🚨 신고
             </button>
@@ -19,14 +19,14 @@
         </div>
 
         <div class="main-content">
-          <div class="text-content">{{ board.content }}</div>
+          <div class="text-content">{{ store.board.content }}</div>
           <div class="like-section">
             <button 
               class="like-button"
               :class="{ 'liked': isLiked }"
               @click="handleLike"
             >
-              ❤️ {{ board.likes }}
+              ❤️ {{ store.board.likes }}
             </button>
           </div>
         </div>
@@ -45,11 +45,13 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue'
 import Comment from './Comment.vue'
+import { useBoardStore } from '@/stores/board';
 
 const router = useRouter()
+const route = useRoute()
 const isLiked = ref(false)
 
 const goToList = () => {
@@ -75,18 +77,27 @@ return new Date(date).toLocaleDateString('ko-KR', {
   hour: '2-digit',
   minute: '2-digit'
 })
-}
+};
 
-const board = ref({
-id: 1,
-category: '자유게시판',
-title: '첫 번째 게시글입니다',
-writer: '홍길동',
-regDate: '2024-11-19T10:30:00',
-viewCnt: 42,
-content: '안녕하세요! 이것은 게시판의 첫 번째 게시글입니다. 긴 내용의 텍스트가 들어갈 수 있는 본문 영역입니다. 게시글에 대한 자세한 내용을 작성할 수 있습니다.',
-likes: 15
+const store = useBoardStore();
+
+onMounted(()=>{
+  store.getBoardByNo(route.params.no);
 })
+
+// const board = ref([]);
+// board.value = store.board;
+
+// const board = ref({
+// id: 1,
+// category: '자유게시판',
+// title: '첫 번째 게시글입니다',
+// writer: '홍길동',
+// regDate: '2024-11-19T10:30:00',
+// viewCnt: 42,
+// content: '안녕하세요! 이것은 게시판의 첫 번째 게시글입니다. 긴 내용의 텍스트가 들어갈 수 있는 본문 영역입니다. 게시글에 대한 자세한 내용을 작성할 수 있습니다.',
+// likes: 15
+// })
 </script>
 
 <style scoped>

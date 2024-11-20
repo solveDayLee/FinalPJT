@@ -34,9 +34,10 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 
 
 	@Override
-	public void deleteBoard(int no) {
-		boardDao.delete(no);
-	}
+	public boolean deleteBoard(int no) {
+		if (boardDao.delete(no) == 1 ) return true;
+			return false; 
+		}
 
 
 
@@ -88,6 +89,25 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 		return boardDao.sellectReportedByNo(no);
 	}
 
+
+
+	@Override
+	public boolean writeBoard(Board board) {
+		if( boardDao.create(board) == 1) {
+			return true;
+		}
+		return false;
+	}
+
+
+
+	@Override
+	public boolean updateBoard(Board board) {
+		if( boardDao.update(board) == 1) {
+			return true;
+		}
+		return false;
+	}
 
 
 }

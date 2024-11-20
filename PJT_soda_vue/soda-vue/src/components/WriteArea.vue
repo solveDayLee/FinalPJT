@@ -5,11 +5,11 @@
       <div class="form-content">
         <div class="input-group">
           <label>게시판</label>
-          <select class="form-select">
+          <select class="form-select" v-model="board.category">
             <option value="" disabled selected>게시판을 선택해주세요</option>
             <option v-for="category in categories" 
                     :key="category" 
-                    :value="category">
+                    :value="category" >
               {{category}}
             </option>
           </select>
@@ -19,13 +19,13 @@
           <label>제목</label>
           <input class="form-input" 
                  placeholder="제목을 입력해주세요"
-                 type="text">
+                 type="text" v-model="board.title">
         </div>
         
         <div class="write-section">
           <textarea class="content-textarea" 
                   rows="20" 
-                  placeholder="여기에 글을 입력해주세요..."></textarea>
+                  placeholder="여기에 글을 입력해주세요..." v-model="board.content"></textarea>
         </div>
   
         <div class="attach-section">
@@ -46,13 +46,15 @@
   
         <div class="form-actions">
           <button class="cancel-button" type="button">취소</button>
-          <button class="submit-button" type="submit">완료</button>
+          <button class="submit-button" type="submit" @click="submitBoard">완료</button>
         </div>
       </div>
     </div>
   </template>
   
   <script setup>
+  import { useRouter } from 'vue-router';
+import { useBoardStore } from '@/stores/board';
   import { ref } from 'vue';
   
   const categories = [
@@ -60,10 +62,25 @@
       "수구",
       "발레",
       "정보공유방",
-      "홍보방"
+      "홍보방",
+      "관리자에게 요청합니다."
   ]
   
   const attachBytes = ref(0);
+
+  const board = ref({
+    title: "",
+    content: "",
+    category: "",
+})
+
+const store = useBoardStore()
+
+const submitBoard = function(){
+    store.writeBoard(board.value);
+}
+
+
   </script>
   
   <style scoped>

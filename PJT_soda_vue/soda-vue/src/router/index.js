@@ -30,7 +30,7 @@ const router = createRouter({
       component: JoinView,
     },
     {
-      path: '/detailboard', //:id는 동적 라우트 파라미터
+      path: '/detailboard/:no', //:id는 동적 라우트 파라미터
       name: 'DetailBoard',
       component: DetailView
     },

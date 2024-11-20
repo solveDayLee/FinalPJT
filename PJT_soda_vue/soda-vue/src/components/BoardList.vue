@@ -4,7 +4,7 @@
             <div class="list-header">
                 <div class="header-left">
                     <h2 class="title">전체 글</h2>
-                    <span class="post-count">총 {{ boardList.length }}개의 글</span>
+                    <!-- <span class="post-count">총 {{ boardList.length() }}개의 글</span> -->
                 </div>
                 <RouterLink :to="{ name: 'Write' }">
                     <button class="write-button">
@@ -60,36 +60,15 @@
 
 <script setup>
 import { RouterLink } from "vue-router";
+import { useBoardStore } from "@/stores/board";
+import { onMounted } from "vue";
 
-const boardList = [
-    {
-        boardNo: 1,
-        category: "발레",
-        title: "첫 번째 게시글",
-        userId: "콩순이",
-        regDate: "2024.11.01",
-        viewCnt: 12,
-        likes: 3,
-    },
-    {
-        boardNo: 2,
-        category: "음악",
-        title: "두 번째 게시글",
-        userId: "보리",
-        regDate: "2024.11.02",
-        viewCnt: 30,
-        likes: 10,
-    },
-    {
-        boardNo: 3,
-        category: "여행",
-        title: "세 번째 게시글",
-        userId: "빵이",
-        regDate: "2024.11.03",
-        viewCnt: 45,
-        likes: 8,
-    },
-];
+const store = useBoardStore();
+
+onMounted(()=>{
+    store.getBoardList
+})
+
 </script>
 
 <style scoped>

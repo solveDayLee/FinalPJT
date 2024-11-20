@@ -37,7 +37,7 @@
       </div>
 
       <div class="footer-bottom">
-        <p>주소 : 삼성화재연수원 유성캠퍼스</p>
+        <p>주소 : 삼성연수원</p>
         <div class="logo-wrapper">
           <RouterLink :to="{name:'Home'}">
           <div class="logo-background">

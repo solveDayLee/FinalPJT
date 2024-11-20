@@ -2,6 +2,7 @@ import BoardView from '@/views/BoardView.vue'
 import DetailView from '@/views/DetailView.vue'
 import JoinView from '@/views/JoinView.vue'
 import LoginView from '@/views/LoginView.vue'
+import MainPageView from '@/views/MainPageView.vue'
 import WriteView from '@/views/WriteView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -10,8 +11,8 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'Main',
-      component: () => import('@/views/MainPageView.vue')
+      name: 'Home',
+      component: MainPageView
     },
     {
       path: '/board',

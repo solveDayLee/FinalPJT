@@ -7,7 +7,7 @@ import com.ssafy.soda.model.dto.SearchCondition;
 
 public interface AdminBoardService {
 
-	void deleteBoard(int no);
+	boolean deleteBoard(int no);
 
 	List<Board> getSearchedBoardlist(SearchCondition searchCondition);
 
@@ -26,5 +26,9 @@ public interface AdminBoardService {
 	List<Character> getReportStatusList();
 
 	Board getReportBoardByNo(int no);
+
+	void writeBoard(Board board);
+
+	void updateBoard(Board board);
 
 }

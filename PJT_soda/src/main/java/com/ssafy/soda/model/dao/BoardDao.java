@@ -27,5 +27,11 @@ public interface BoardDao {
 
 	Board sellectReportedByNo(int no);
 
+	void insertBoard(Board board);
+
+	void updateBoard(Board board);
+
+	
+
 
 }

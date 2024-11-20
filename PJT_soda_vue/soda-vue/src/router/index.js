@@ -1,14 +1,11 @@
+import MainPageView from '@/views/MainPageView.vue'
 import BoardView from '@/views/BoardView.vue'
-import DetailView from '@/views/DetailView.vue'
-import JoinView from '@/views/JoinView.vue'
-import LoginView from '@/views/LoginView.vue'
-import MainPageView from '@/views/MainPageView.vue'
 import WriteView from '@/views/WriteView.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import JoinView from '@/views/JoinView.vue'
 import DetailView from '@/views/DetailView.vue'
 import LoginView from '@/views/LoginView.vue'
-import Home from '@/components/Home.vue'
-import MainPageView from '@/views/MainPageView.vue'
+import { createRouter, createWebHistory } from 'vue-router'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

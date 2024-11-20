@@ -21,12 +21,16 @@
 		WHERE board_no = #{no}
 	</select>
 
-	<!-- <update id="update" parameterType="User"> UPDATE user SET password 
-		= #{password}, name = #{name}, email = #{email}, phone_number = #{phoneNumber}, 
-		birth_date = #{birthDate}, gender= #{gender}, address= #{address}, detail_address 
-		= #{detailAddress} ,zonecode = #{zonecode} WHERE user_no = #{userNo} </update> 
-		<delete id="delete" parameterType="int"> DELETE from user WHERE user_no = 
-		#{no} </delete> -->
+	<update id="updateBoard" parameterType="Board">
+		UPDATE board SET 
+		title = #{title}, 
+		writer = #{writer}, 
+		content = #{content}, 
+		category = #{category}
+		WHERE board_no = #{boardNo}
+		
+	</update>
+	
 	<select id="selectBoardSearched" resultType="Board"
 		parameterType="SearchCondition">
 		SELECT *
@@ -48,6 +52,11 @@
 		WHERE
 		board_no = #{no}
 	</delete>
+	<insert id="insertBoard" parameterType="Board">
+		insert into board (title, writer, content, category, user_no)
+		values (#{title}, #{writer}, #{content}, #{category}, #{userNo});
+	</insert>
+	
 	<select id="allLikesCount" resultType="int">
 		SELECT
 		COALESCE(COUNT(l.board_no), 0) as like_count
@@ -106,11 +115,13 @@
 		u.user_id as "user.userId",
 		u.user_no as "user.userNo",
 		r.report_status as "boardReport.reportStatus",
-		r.report_reason as "boardReport.reportReason",
+		r.report_reason as
+		"boardReport.reportReason",
 		r.report_date as "boardReport.reportDate"
 		FROM board b
 		LEFT JOIN user u ON b.user_no = u.user_no
-		LEFT JOIN board_report r ON b.board_no = r.board_no
+		LEFT JOIN
+		board_report r ON b.board_no = r.board_no
 		WHERE b.board_no = #{boardNo}
 	</select>
 

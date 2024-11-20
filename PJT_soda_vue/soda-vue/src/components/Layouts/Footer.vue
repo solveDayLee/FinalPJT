@@ -13,23 +13,23 @@
 
         <div class="footer-nav">
           <nav class="nav-menu">
-            <div class="nav-item">Home</div>
+            <RouterLink :to="{name: 'Home'}"><div class="nav-item">Home</div></RouterLink>
             <RouterLink :to="{name: 'Board'}"><div class="nav-item">Category</div></RouterLink>
-            <RouterLink to="/detailboard"><div class="nav-item">About</div></RouterLink>
+            <div class="nav-item">About</div>
             <div class="nav-item">Contact</div>
           </nav>
 
           <div class="social-links">
-            <a href="#" class="social-link">
+            <a href="https://www.facebook.com/" class="social-link">
               <i class="bi bi-facebook"></i>
             </a>
-            <a href="#" class="social-link">
+            <a href="https://www.facebook.com/" class="social-link">
               <i class="bi bi-twitter"></i>
             </a>
-            <a href="#" class="social-link">
+            <a href="https://www.instagram.com/" class="social-link">
               <i class="bi bi-instagram"></i>
             </a>
-            <a href="#" class="social-link">
+            <a href="https://www.youtube.com/" class="social-link">
               <i class="bi bi-youtube"></i>
             </a>
           </div>
@@ -37,14 +37,18 @@
       </div>
 
       <div class="footer-bottom">
-        <p class="copyright">© 2024 다영 소운 제작함</p>
+        <p>주소 : 삼성화재연수원 유성캠퍼스</p>
         <div class="logo-wrapper">
+          <RouterLink :to="{name:'Home'}">
           <div class="logo-background">
             <img :src="logo" alt="logo" class="logo-container">
           </div>
+        </RouterLink>
         </div>
-        <a href="#" class="legal-link">법률</a>
+       
+        <a href="#" class="legal-link">법률자문</a>
       </div>
+      <p class="copyright">© 2024 다영 소운 제작</p>
     </div>
   </footer>
 </template>
@@ -214,6 +218,8 @@ footer {
   height: 40px;
   object-fit: contain;
   transition: transform 0.3s ease;
+  background-color: rgb(220, 237, 255);
+    border-radius: 30%;
 }
 
 .logo-container:hover {

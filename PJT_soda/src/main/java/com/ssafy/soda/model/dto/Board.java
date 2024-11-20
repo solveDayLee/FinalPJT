@@ -8,7 +8,7 @@ public class Board {
 	private String regDate;
 	private int viewCnt;
 	private String category;
-	private int userNo;
+	private Integer userNo;
 
 	///// --- 유저와 보드 연결 소운 실험 코드------------
 	private User user;
@@ -28,11 +28,7 @@ public class Board {
 
 	
 	public Likes getLikes() {
-		if (likes != null) {
-			return likes;
-		} else {
-			return null;
-		}
+		return likes;
 	}
 	
 	public Board(User user) {
@@ -46,21 +42,13 @@ public class Board {
 	
 
 	public User getUser() {
-		if (user != null) {
-			return user;
-		} else {
-			return null;
-		}
+		return user;
 	}
 
 	// 유저 번호를 불러올 수 있도록 함.
 	public Integer getUserNo() {
-		// 유저가 삭제된 경우 null 이 뜰 수도 있음
-		if (user != null) {
-			return userNo;
-		} else {
-			return null;
-		}
+		// 유저가 삭제된 경우 null 이 뜰 수도 있음 -> 아님. myBatis 가 0으로 바꿔줌. 
+		return userNo;
 	}
 
 	// 유저 아이디 가져오기

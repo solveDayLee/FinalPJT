@@ -113,6 +113,15 @@
 		LEFT JOIN board_report r ON b.board_no = r.board_no
 		WHERE b.board_no = #{boardNo}
 	</select>
+	
+	<insert id="create" parameterType="Board">
+		INSERT INTO board
+		(title, content, category, user_no) values (#{title}, #{content}, #{category}, #{userNo})
+	</insert>
 
+	<update id="update">
+		UPDATE board SET title =  #{title}, content= #{content}, category= #{category}
+		WHERE board_no = #{boardNo}
+	</update>
 
 </mapper>

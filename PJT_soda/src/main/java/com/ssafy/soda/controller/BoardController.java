@@ -38,6 +38,7 @@ public class BoardController {
 		Board board = adminBoardService.getBoard(no);
 
 		int likesCount = adminBoardService.getLikesCount(no);
+		board.
 
 		if (board.getUser() != null) {
 			String userId = board.getUser().getUserId();

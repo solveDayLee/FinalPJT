@@ -1,67 +1,89 @@
+<!-- BoardView.vue -->
 <template>
-  <Banner/>
-  <div class="layout-container">
-    <div class="sidebar-area">
-      <Sidebar/>
-    </div>
-    <div class="main-content">
-      <BoardList/>
+  <div class="page-container">
+    <Banner />
+    <div class="content-container">
+      <div class="content-wrapper">
+        <Sidebar class="sidebar-container"/>
+        <div class="board-content">
+          <BoardList />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import BoardList from '@/components/BoardList.vue';
 import Banner from '@/components/Layouts/Banner.vue';
 import Sidebar from '@/components/Layouts/Sidebar.vue';
+import BoardList from '@/components/BoardList.vue';
 </script>
 
-<style scoped>
-.layout-container {
-  display: flex;
-  background-color: #FBF8EF;
-  min-height: calc(100vh - 120px);
+<style>
+.page-container {
   width: 100%;
-  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.sidebar-area {
-  width: 250px;
-  position: fixed;
-  left: 0;
-  top: 120px; /* Banner 높이만큼 조정 */
-  bottom: 0;
-  overflow-y: auto;
-  padding: 2rem 0;
-  background-color: #FBF8EF;
-  z-index: 10;
+.content-container {
+  width: 100%;
+  max-width: 2000px; /* 배너와 동일하게 수정 */
+  /* padding: 0 40px; 좌우 패딩 증가 */
+  padding-bottom: 40px;
+  margin: 0 auto;
 }
 
-.main-content {
+.content-wrapper {
+  display: flex;
+  gap: 60px; /* 사이드바와 본문 사이 간격 증가 */
+  margin-top: -30px;
+}
+
+.sidebar-container {
+  width: 400px !important; /* 사이드바 너비 증가 */
+  flex-shrink: 0; /* 사이드바 크기 고정 */
+}
+
+.board-content {
   flex: 1;
-  margin-left: 250px; /* sidebar 너비만큼 */
-  padding: 2rem;
-  width: calc(100% - 250px);
-  max-width: 1200px;
-  margin-right: auto;
-  position: relative;
+  min-width: 0; /* flexbox 오버플로우 방지 */
 }
 
-@media (max-width: 768px) {
-  .layout-container {
+/* 반응형 디자인 */
+@media (max-width: 1600px) {
+  .content-container {
+    padding: 0 30px;
+  }
+  
+  .content-wrapper {
+    gap: 40px;
+  }
+  
+  .sidebar-container {
+    width: 350px !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .content-wrapper {
+    gap: 30px;
+  }
+  
+  .sidebar-container {
+    width: 300px !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .content-wrapper {
     flex-direction: column;
   }
 
-  .sidebar-area {
-    position: static;
-    width: 100%;
-    padding: 1rem;
-  }
-
-  .main-content {
-    margin-left: 0;
-    width: 100%;
-    padding: 1rem;
+  .sidebar-container {
+    width: 100% !important;
   }
 }
-</style>R
+</style>

@@ -1,190 +1,137 @@
 <template>
-    <div class="sidebar-container">
-        <div class="sidebar-inner">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="main-link">
-                            <a class="flex items-center gap-2">
-                                <span class="icon">📑</span>전체글
-                            </a>
-                        </th>
-                    </tr>
-                    <tr class="divider"><td></td></tr>
-                    <tr>
-                        <th class="section-title">커뮤니티</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(category, index) in categories" :key="index">
-                        <th>
-                            <a class="category-link">
-                                <span class="icon">{{ getCategoryIcon(index) }}</span>
-                                {{ category }}
-                            </a>
-                        </th>
-                    </tr>
-                </tbody>
-                <tr class="divider"><td></td></tr>
-                <thead>
-                    <tr>
-                        <th class="section-title">에디터 게시판</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(editorCategory, index) in editorCategories" :key="index">
-                        <th>
-                            <a class="category-link">
-                                <span class="icon">{{ getEditorIcon(index) }}</span>
-                                {{ editorCategory }}
-                            </a>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <h3><a><i class="icon fas fa-globe"></i> 전체글</a></h3>
+      </div>
+      <hr>
+      <div class="sidebar-section">
+        <h3><i class="icon fas fa-comments"></i> 커뮤니티</h3>
+        <ul>
+          <li v-for="category in categories" :key="category">
+            <a><i class="icon fas fa-chevron-right"></i> {{ category }}</a>
+          </li>
+        </ul>
+      </div>
+      <hr>
+      <div class="sidebar-section">
+        <h3><i class="icon fas fa-edit"></i> 에디터 게시판</h3>
+        <ul>
+          <li v-for="editorCategory in editorCategories" :key="editorCategory">
+            <a><i class="icon fas fa-chevron-right"></i> {{ editorCategory }}</a>
+          </li>
+        </ul>
+      </div>
     </div>
-</template>
-
-<script setup>
-const categories = [
+  </template>
+  
+  <script setup>
+  const categories = [
     "Best 인기글(실시간)",
-    "Best 인기글(명예의 전당)", 
+    "Best 인기글(명예의 전당)",
     "수구 talk",
     "발레 talk"
-]
-
-const editorCategories = [
+  ];
+  
+  const editorCategories = [
     "에디터 Best",
     "에디터 뉴스",
     "에디터 talk",
-    "에디터 column"
-]
-
-const getCategoryIcon = (index) => {
-    const icons = ['🔥', '👑', '🏊‍♂️', '💃']
-    return icons[index]
-}
-
-const getEditorIcon = (index) => {
-    const icons = ['⭐', '📰', '💭', '✒️']
-    return icons[index]
-}
-</script>
-
-<style scoped>
-.sidebar-container {
-    margin-left: 2rem;
-    padding: 1.5rem;
-    background: linear-gradient(to bottom right, #ffffff, #f8fafc);
+    "에디터 talk"
+  ];
+  </script>
+  
+  <style scoped>
+  .sidebar {
+    background-color: #FBF8EF;
+    padding: 40px; /* 패딩 증가 */
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    width: 250px;
-    border: 1px solid #e5eef9;
-}
-
-.sidebar-inner {
-    position: sticky;
-    top: 2rem;
-}
-
-table {
-    width: 100%;
-    text-align: left;
-    border-collapse: collapse;
-}
-
-.section-title {
-    color: #2E64A0;
-    font-size: 1.1rem;
-    font-weight: 600;
-    padding: 0.75rem 0;
-}
-
-.main-link {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #1a56db;
-}
-
-th {
-    padding: 0.6rem 0;
-    font-weight: normal;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.category-link {
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    width: 100%; /* 부모 컨테이너에 맞춤 */
+  }
+  
+  .sidebar-section {
+    margin-bottom: 35px; /* 섹션 간격 증가 */
+  }
+  
+  h3 {
+    font-size: 24px; /* 제목 크기 증가 */
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #007bff;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    color: #4b5563;
-    font-size: 0.95rem;
-    padding: 0.5rem;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-}
-
-.category-link:hover {
-    background-color: rgba(46, 100, 160, 0.08);
-    color: #2E64A0;
-    transform: translateX(4px);
-}
-
-.divider td {
-    height: 1px;
-    background-color: #E5EEF9;
+  }
+  
+  .icon {
+    margin-right: 15px;
+    color: #007bff;
+    font-size: 20px; /* 아이콘 크기 증가 */
+  }
+  
+  ul {
+    list-style-type: none;
     padding: 0;
-    margin: 0.75rem 0;
-}
-
-.icon {
-    font-size: 1.2rem;
-    min-width: 1.5rem;
-}
-
-a {
-    color: inherit;
+    margin: 0;
+  }
+  
+  li {
+    margin-bottom: 15px;
+  }
+  
+  a {
+    color: #333;
     text-decoration: none;
-    display: block;
-    width: 100%;
-}
-
-@media (max-width: 768px) {
-    .sidebar-container {
-        margin-left: 1rem;
-        margin-right: 1rem;
-        width: auto;
-        max-width: 250px;
-    }
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-    .sidebar-container {
-        background: linear-gradient(to bottom right, #1a1a1a, #262626);
-        border-color: #333;
-    }
-    
-    .section-title {
-        color: #60a5fa;
-    }
-    
-    .main-link {
-        color: #60a5fa;
+    font-size: 20px; /* 링크 텍스트 크기 증가 */
+    display: flex;
+    align-items: center;
+    transition: color 0.3s, transform 0.2s;
+    padding: 8px 0; /* 클릭 영역 증가 */
+  }
+  
+  a:hover {
+    color: #007bff;
+    transform: translateX(10px);
+  }
+  
+  hr {
+    border: none;
+    border-top: 2px solid #e9ecef;
+    margin: 30px 0; /* 구분선 여백 증가 */
+  }
+  
+  /* 반응형 디자인 */
+  @media (max-width: 1600px) {
+    .sidebar {
+      padding: 35px;
     }
     
-    .category-link {
-        color: #d1d5db;
+    h3 {
+      font-size: 22px;
     }
     
-    .category-link:hover {
-        background-color: rgba(96, 165, 250, 0.1);
-        color: #60a5fa;
+    a {
+      font-size: 18px;
+    }
+  }
+  
+  @media (max-width: 1200px) {
+    .sidebar {
+      padding: 30px;
     }
     
-    .divider td {
-        background-color: #333;
+    h3 {
+      font-size: 20px;
     }
-}
-</style>
+    
+    a {
+      font-size: 16px;
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    .sidebar {
+      padding: 25px;
+    }
+  }
+  </style>

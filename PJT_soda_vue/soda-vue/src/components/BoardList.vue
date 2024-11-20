@@ -97,15 +97,16 @@ const boardList = [
     display: flex;
     justify-content: center;
     min-height: calc(100vh - 120px);
-    padding: 0 2rem;
+    padding: 2rem;
     background-color: #fbf8ef;
     position: relative;
+    border-radius: 10px;
 }
 
 .board-container {
     flex: 1;
     padding: 2rem;
-    max-width: 1200px;
+    max-width: 100%;
     background-color: white;
     border-radius: 16px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);

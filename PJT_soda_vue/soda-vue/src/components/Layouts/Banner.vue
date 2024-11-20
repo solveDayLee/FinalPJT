@@ -1,4 +1,5 @@
 <!-- Banner.vue -->
+<!-- Banner.vue -->
 <template>
   <div class="banner">
       <div class="rectangle-1"></div>

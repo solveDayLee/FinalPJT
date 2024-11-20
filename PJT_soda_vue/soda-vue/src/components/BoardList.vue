@@ -100,7 +100,7 @@ const boardList = [
     padding: 2rem;
     background-color: #fbf8ef;
     position: relative;
-    border-radius: 16px;
+    border-radius: 10px;
 }
 
 .board-container {

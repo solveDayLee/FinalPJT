@@ -1,26 +1,7 @@
 <template>
   <div class="homepage">
-    <Banner/>
-    <!-- Hero Section -->
-    <!-- <section class="hero-banner">
-      <div class="hero-content">
-        <h1 class="one-more-friend">Hidden Gems in Sports</h1>
-        <h2 class="thousands-more-fun">Discover Unique Communities!</h2>
-        <p class="hero-description">
-          Beyond mainstream sports lies a world of extraordinary athleticism and passionate communities. Join us to explore, share, and celebrate the amazing world of niche sports. We have 200+ different sports communities waiting for you!
-        </p>
-        <div class="hero-buttons">
-          <button class="btn-primary">
-            View Intro 
-            <i class="bi bi-arrow-right-circle"></i>
-          </button>
-          <button class="btn-secondary">
-            Explore Now 
-            <i class="bi bi-play-circle"></i>
-          </button>
-        </div>
-      </div>
-    </section> -->
+    <Banner />
+
 
     <!-- 실제 사용자 게시글 섹션 -->
     <section class="community-posts">
@@ -107,7 +88,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import Banner from './Layouts/Banner.vue';
+import Banner from '@/components/Layouts/Banner.vue'
 
 const router = useRouter()
 
@@ -253,6 +234,7 @@ const goToArticle = (id) => {
 <style scoped>
 .homepage {
   width: 100%;
+  background-color: #FBF8EF;
 }
 
 /* Hero Section */

@@ -35,8 +35,20 @@ export const useBoardStore = defineStore('board', ()=>{
             })
 
     }
+    const getBoardListByCategory = function(category, detailCategory = null){
+        console.log(detailCategory);
+        axios.get(`${REST_API_URL}/category/${category}`, {
+            params: { detailCategory: detailCategory }
+        })
+        .then((response) =>{
+            boardList.value = response.data
+        })
+        .catch(()=>{
+            console.log("카테고리별로 보드 가져오기 실패...")
+        })
+    }
 
 
-    return {boardList, getBoardList, getBoardByNo, board, writeBoard}
+    return {boardList, getBoardList, getBoardByNo, board, writeBoard, getBoardListByCategory}
 
 })

@@ -48,7 +48,7 @@
                                 <span class="view-count">{{ board.viewCnt }}</span>
                             </td>
                             <td class="likes-cell">
-                                <span class="likes-count">{{ board.likes }}</span>
+                                <span class="likes-count">{{ board.likesCnt }}</span>
                             </td>
                         </tr>
                     </tbody>
@@ -59,15 +59,23 @@
 </template>
 
 <script setup>
-import { RouterLink } from "vue-router";
+import { RouterLink, useRoute } from "vue-router";
 import { useBoardStore } from "@/stores/board";
 import { onMounted } from "vue";
 
 const store = useBoardStore();
+const route = useRoute();
 
-onMounted(()=>{
-    store.getBoardList();
-})
+onMounted(() => {
+    if (route.params.category) {
+        console.log("카테고리 메서드 실행한다!")
+        store.getBoardListByCategory(route.params.category, route.query.detailCategory || null);
+    } else {
+        store.getBoardList();
+    }
+});
+
+
 
 </script>
 

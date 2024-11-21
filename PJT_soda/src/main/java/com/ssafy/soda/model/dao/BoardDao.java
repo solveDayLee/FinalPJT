@@ -15,13 +15,7 @@ public interface BoardDao {
 
 	List<Board> selectBoardSearched(SearchCondition searchCondition);
 
-	List<Integer> allLikesCount();
-
-	int likesCount(int no);
-
 	List<Board> sellectAllReported();
-
-	List<Integer> allReportLikesCount();
 
 	List<Character> allResportStatus();
 
@@ -30,6 +24,8 @@ public interface BoardDao {
 	int create(Board board);
 
 	int update(Board board);
+
+	List<Board> selectByCategory(Board board);
 
 
 }

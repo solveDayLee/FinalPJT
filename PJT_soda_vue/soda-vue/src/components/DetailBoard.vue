@@ -26,7 +26,7 @@
               :class="{ 'liked': isLiked }"
               @click="handleLike"
             >
-              ❤️ {{ store.board.likes }}
+              ❤️ {{ store.board.likesCnt }}
             </button>
           </div>
         </div>

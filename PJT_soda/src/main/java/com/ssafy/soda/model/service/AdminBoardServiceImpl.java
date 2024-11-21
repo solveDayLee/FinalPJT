@@ -47,34 +47,11 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	}
 
 
-
-	@Override
-	public List<Integer> likesListCount() {
-		return boardDao.allLikesCount();
-	}
-
-
-
-	@Override
-	public int getLikesCount(int no) {
-		return boardDao.likesCount(no);
-	}
-
-
-
 	@Override
 	public List<Board> getReportBoardlist() {
 		return boardDao.sellectAllReported();
 		
 	}
-
-
-
-	@Override
-	public List<Integer> reportlikesListCount() {
-		return boardDao.allReportLikesCount();
-	}
-
 
 
 	@Override
@@ -107,6 +84,13 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 			return true;
 		}
 		return false;
+	}
+
+
+
+	@Override
+	public List<Board> getBoardlistByCatagory(Board board) {
+		return boardDao.selectByCategory(board);
 	}
 
 

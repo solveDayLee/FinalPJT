@@ -39,6 +39,12 @@ const router = createRouter({
       name: 'Login',
       component: LoginView
     },
+    {
+      path: '/board/category/:category/:detailCategory?',
+      name: 'BoardCategory',
+      component: BoardView,
+    },
+    
 
   ],
 

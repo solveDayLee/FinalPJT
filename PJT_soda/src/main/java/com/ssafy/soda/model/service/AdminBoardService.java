@@ -15,13 +15,7 @@ public interface AdminBoardService {
 
 	Board getBoard(int no);
 
-	List<Integer> likesListCount();
-
-	int getLikesCount(int no);
-
 	List<Board> getReportBoardlist();
-
-	List<Integer> reportlikesListCount();
 
 	List<Character> getReportStatusList();
 
@@ -30,5 +24,7 @@ public interface AdminBoardService {
 	boolean writeBoard(Board board);
 
 	boolean updateBoard(Board board);
+
+	List<Board> getBoardlistByCatagory(Board board);
 
 }

@@ -42,10 +42,11 @@ const router = createRouter({
       component: LoginView
     },
     {
-      path: '/detailboard/update/:no',
-      name: 'UpdateBoard',
-      component: UpdateView
+      path: '/board/category/:category/:detailCategory?',
+      name: 'BoardCategory',
+      component: BoardView,
     },
+    
 
   ],
 

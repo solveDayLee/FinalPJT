@@ -15,20 +15,17 @@ public interface AdminBoardService {
 
 	Board getBoard(int no);
 
-	List<Integer> likesListCount();
-
-	int getLikesCount(int no);
-
 	List<Board> getReportBoardlist();
-
-	List<Integer> reportlikesListCount();
 
 	List<Character> getReportStatusList();
 
 	Board getReportBoardByNo(int no);
 
-	void writeBoard(Board board);
+	boolean writeBoard(Board board);
 
-	void updateBoard(Board board);
+	boolean updateBoard(Board board);
+
+	List<Board> getBoardlistByCatagory(Board board);
+
 
 }

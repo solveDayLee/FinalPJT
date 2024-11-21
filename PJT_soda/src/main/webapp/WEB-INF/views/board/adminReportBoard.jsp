@@ -130,8 +130,8 @@
 								<td>${board.category}</td>
 								<td>${board.regDate}</td>
 								<td>${board.viewCnt}</td>
-								<td>${likes[state.index]}</td>
-								<td>${reportStatus[state.index]}</td>
+								<td>${board.likesCnt}</td>
+								<td>${board.getBoardReport().reportStatus}</td>
 							</tr>
 						</c:forEach>
 					</tbody>

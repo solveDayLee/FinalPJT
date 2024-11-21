@@ -1,7 +1,3 @@
 INDEX VERSION 1.134
 C:\SSAFY\FinalPJT\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2393958652.index
 \PJT_soda\src\main\java
-C:\SSAFY\FinalPJT\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1592315597.index
-\PJT_soda\src\main\java
-C:\SSAFY\FinalPJT\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3901203594.index
-\PJT_soda\src\main\java

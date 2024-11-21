@@ -234,7 +234,7 @@ const goToArticle = (id) => {
 <style scoped>
 .homepage {
   width: 100%;
-  background-color: #FBF8EF;
+  background-color: #ffffff;
 }
 
 /* Hero Section */

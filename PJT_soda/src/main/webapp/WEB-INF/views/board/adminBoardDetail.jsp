@@ -51,7 +51,7 @@
 				</tr>
 				<tr>
 					<th>좋아요 수</th>
-					<td>${likesCount}</td>
+					<td>${board.likesCnt}</td>
 				</tr>
 			</table>
 

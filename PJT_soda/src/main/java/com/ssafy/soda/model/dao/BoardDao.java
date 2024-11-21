@@ -15,23 +15,25 @@ public interface BoardDao {
 
 	List<Board> selectBoardSearched(SearchCondition searchCondition);
 
-	List<Integer> allLikesCount();
-
-	int likesCount(int no);
-
 	List<Board> sellectAllReported();
-
-	List<Integer> allReportLikesCount();
 
 	List<Character> allResportStatus();
 
 	Board sellectReportedByNo(int no);
 
+<<<<<<< HEAD
 	void insertBoard(Board board);
 
 	void updateBoard(Board board);
 
 	
+=======
+	int create(Board board);
+
+	int update(Board board);
+
+	List<Board> selectByCategory(Board board);
+>>>>>>> ef5a32448034bafba9068181eaa8548a451e0d52
 
 
 }

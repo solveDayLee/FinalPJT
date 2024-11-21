@@ -7,7 +7,7 @@
                 <div class="input-group">
                     <label>게시판</label>
                     <div class="category-wrapper">
-                        <select v-model="board.Category" class="category" @change="handleMainCategoryChange">
+                        <select v-model="board.category" class="category" @change="handleMainCategoryChange">
                             <option value="" disabled>게시판을 선택해주세요</option>
                             <option v-for="sport in sports" :key="sport.code" :value="sport.code"
                                 :disabled="sport.code === 'EDITOR'">
@@ -16,7 +16,7 @@
                         </select>
 
                         <!-- 서브 카테고리 선택 -->
-                        <select v-if="board.Category && showSubCategory" v-model="board.detailCategory"
+                        <select v-if="board.category && showSubCategory" v-model="board.detailCategory"
                             class="category sub-category">
                             <option value="" disabled>세부 카테고리를 선택해주세요</option>
                             <option v-for="menu in sportMenus" :key="menu.code" :value="menu.code">{{ menu.name }}
@@ -69,7 +69,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter()
 const store = useBoardStore()
 const board = ref({
-    Category: '',
+    category: '',
     detailCategory: '',
     title: '',
     writer: '',
@@ -107,7 +107,7 @@ const handleMainCategoryChange = () => {
 }
 
 const showSubCategory = computed(() => {
-  return board.value.Category !== 'COMMUNITY'
+  return board.value.category !== 'COMMUNITY'
 });
 
 </script>

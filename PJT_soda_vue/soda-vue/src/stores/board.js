@@ -1,48 +1,41 @@
-import { defineStore } from "pinia";
-import axios from "axios";
+import { ref, computed } from 'vue'
+import { defineStore } from 'pinia'
+import axios from 'axios'
 import router from '@/router'
-import {ref} from 'vue'
 
 const REST_API_URL = `http://localhost:8080/etco/board`
 
-export const useBoardStore= defineStore('board', () => {
+export const useBoardStore = defineStore('board', ()=>{
     const boardList = ref([])
-
-    //전체조회
-    const getBoardList = function() {
+    const getBoardList = function(){
         axios.get(REST_API_URL)
-        .then((response) => {
+        .then((response)=>{
             boardList.value = response.data
         })
     }
 
-    //상세조회
     const board = ref({})
-    const getBoard = function(no) {
+    const getBoardByNo = function(no){
         axios.get(`${REST_API_URL}/${no}`)
-        .then((response)=> {
-            board.value=response.data
-
+        .then((response) =>{
+            board.value = response.data
         })
     }
-
-    //등록
-    const createBoard = function(board) {
+    const createBoard = function(board){
         axios({
             url: REST_API_URL,
             method: 'POST',
-            data:board
+            data: board
         })
-        .then(() => {
-            console.log("등록성공")
-            router.push({name: 'Board'})
-        })
-        .catch(()=> {
-            console.log("등록실패")
-        });
+            .then(()=>{
+                router.push({name: 'Board'})
+            })
+            .catch(()=>{
+                console.log("보드 등록 실패..")
+            })
 
     }
-
+    
     //수정
     const updateBoard = function() {
         axios.put(REST_API_URL, board.value)
@@ -51,9 +44,21 @@ export const useBoardStore= defineStore('board', () => {
         })
     }
 
+    const getBoardListByCategory = function(category, detailCategory = null){
+        console.log(detailCategory);
+        axios.get(`${REST_API_URL}/category/${category}`, {
+            params: { detailCategory: detailCategory }
+        })
+        .then((response) =>{
+            boardList.value = response.data
+        })
+        .catch(()=>{
+            console.log("카테고리별로 보드 가져오기 실패...")
+        })
+    }
 
-    // 삭제
+
+    return {boardList, getBoardList, getBoardByNo, board, createBoard, getBoardListByCategory, updateBoard}
 
 
-    return { boardList, getBoardList, getBoard, board, createBoard }
 })

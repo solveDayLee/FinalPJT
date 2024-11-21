@@ -4,10 +4,10 @@
       <div class="category-wrapper">
         <h2 class="category">{{ store.board.category }}</h2>
       </div>
-
       <div class="detail-content">
         <div class="title-section">
           <div class="title">{{ store.board.title }}</div>
+      
           <div class="meta-info">
             <span class="writer">{{ store.board.writer }}</span>
             <span class="date">{{ formatDate(store.board.regDate) }}</span>
@@ -19,6 +19,7 @@
         </div>
 
         <div class="main-content">
+          <div class="text-content">{{ store.board.content }}</div>
           <div class="text-content">{{ store.board.content }}</div>
           <div class="like-section">
             <button class="like-button" :class="{ 'liked': isLiked }" @click="handleLike">
@@ -60,7 +61,7 @@ const route = useRoute()
 const router = useRouter()
 
 onMounted(() => {
-  store.getBoard(route.params.no)
+  store.getBoardByNo(route.params.no)
 })
 
 const deleteBoard = async () => {

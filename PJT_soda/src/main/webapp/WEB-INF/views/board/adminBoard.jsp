@@ -126,7 +126,7 @@
                                 <td>${board.category}</td>
                                 <td>${board.regDate}</td>
                                 <td>${board.viewCnt}</td>
-                                <td>${likes[state.index]}</td>
+                                <td>${board.likesCnt}</td>
                                 <!-- <td><i class="bi bi-three-dots"></i></td> -->
                             </tr>
                         </c:forEach>

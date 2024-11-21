@@ -17,4 +17,9 @@ public interface UserDao {
 
 	List<User> selectSearched(SearchCondition searchCondition);
 
+	User findById(String userId);	
+
+	void save(User user);
+
+
 }

@@ -35,11 +35,9 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 
 	@Override
 	public boolean deleteBoard(int no) {
-		boardDao.delete(no);
-		return true;
-	}
-
-
+		if (boardDao.delete(no) == 1 ) return true;
+			return false; 
+		}
 
 	@Override
 	public List<Board> getSearchedBoardlist(SearchCondition searchCondition) {
@@ -47,34 +45,11 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	}
 
 
-
-	@Override
-	public List<Integer> likesListCount() {
-		return boardDao.allLikesCount();
-	}
-
-
-
-	@Override
-	public int getLikesCount(int no) {
-		return boardDao.likesCount(no);
-	}
-
-
-
 	@Override
 	public List<Board> getReportBoardlist() {
 		return boardDao.sellectAllReported();
 		
 	}
-
-
-
-	@Override
-	public List<Integer> reportlikesListCount() {
-		return boardDao.allReportLikesCount();
-	}
-
 
 
 	@Override
@@ -92,18 +67,27 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 
 
 	@Override
-	public void writeBoard(Board board) {
-		boardDao.insertBoard(board);
-		
+	public boolean writeBoard(Board board) {
+		if( boardDao.insertBoard(board) == 1) {
+			return true;
+		}
+		return false;
 	}
 
 
 
 	@Override
-	public void updateBoard(Board board) {
-		boardDao.updateBoard(board);
+	public boolean updateBoard(Board board) {
+		if( boardDao.updateBoard(board) == 1) {
+			return true;
+		}
+		return false;
 	}
 
 
+	@Override
+	public List<Board> getBoardlistByCatagory(Board board) {
+		return boardDao.selectByCategory(board);
+	}
 
 }

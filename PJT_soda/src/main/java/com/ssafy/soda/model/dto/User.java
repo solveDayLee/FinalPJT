@@ -17,6 +17,9 @@ public class User {
 	private String zonecode;
 	private LocalDate userRegDate;
 
+	//토큰 추가
+	private String token;
+	
 	public User() {
 	}
 
@@ -37,6 +40,14 @@ public class User {
 		this.detailAddress = detailAddress;
 		this.zonecode = zonecode;
 		this.userRegDate = userRegDate;
+	}
+	//토큰 추가
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	public int getUserNo() {

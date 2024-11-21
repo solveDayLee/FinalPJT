@@ -6,6 +6,8 @@ import router from '@/router'
 const REST_API_URL = `http://localhost:8080/etco/board`
 
 export const useBoardStore = defineStore('board', ()=>{
+
+    const selectedCategory = ref('WATERPOLO')
     const boardList = ref([])
     const getBoardList = function(){
         axios.get(REST_API_URL)
@@ -35,6 +37,7 @@ export const useBoardStore = defineStore('board', ()=>{
             })
 
     }
+
     
     //수정
     const updateBoard = function() {
@@ -56,9 +59,12 @@ export const useBoardStore = defineStore('board', ()=>{
             console.log("카테고리별로 보드 가져오기 실패...")
         })
     }
+    const setSelectedCategory = function(category) {
+        selectedCategory.value = category
+    }
 
 
-    return {boardList, getBoardList, getBoardByNo, board, createBoard, getBoardListByCategory, updateBoard}
+    return {boardList, getBoardList, getBoardByNo, board, createBoard, getBoardListByCategory, updateBoard, setSelectedCategory}
 
 
 })

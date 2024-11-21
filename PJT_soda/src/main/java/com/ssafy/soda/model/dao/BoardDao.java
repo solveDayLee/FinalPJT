@@ -21,19 +21,12 @@ public interface BoardDao {
 
 	Board sellectReportedByNo(int no);
 
-<<<<<<< HEAD
-	void insertBoard(Board board);
 
-	void updateBoard(Board board);
+	int insertBoard(Board board);
 
-	
-=======
-	int create(Board board);
-
-	int update(Board board);
+	int updateBoard(Board board);
 
 	List<Board> selectByCategory(Board board);
->>>>>>> ef5a32448034bafba9068181eaa8548a451e0d52
 
 
 }

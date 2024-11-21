@@ -115,7 +115,7 @@ const formatDate = (date) => {
 
 onMounted(() => {
   console.log('Store board 데이터:', store.board) // 디버깅용 로그
-  store.getBoard(route.params.no)
+  store.getBoardByNo(route.params.no)
   board.value = {
 
     category: store.board.category,

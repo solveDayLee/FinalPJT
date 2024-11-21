@@ -57,7 +57,6 @@ import { ref, onMounted, computed } from 'vue'
 import { useBoardStore } from '@/stores/board';
 import axios from 'axios';
 
-const isLiked = ref(false)
 const store = useBoardStore()
 const route = useRoute()
 const router = useRouter()
@@ -115,7 +114,7 @@ const formatDate = (date) => {
 
 onMounted(() => {
   console.log('Store board 데이터:', store.board) // 디버깅용 로그
-  store.getBoard(route.params.no)
+  store.getBoardByNo(route.params.no)
   board.value = {
 
     category: store.board.category,
@@ -127,6 +126,7 @@ onMounted(() => {
 //수정 시
 const handleSubmit = async () => {
   try {
+    console.log(board.value)
     await axios.put(`http://localhost:8080/etco/board/${route.params.no}`, board.value)
     alert('수정이 완료되었습니다.')
     router.push(`/detailboard/${route.params.no}`)

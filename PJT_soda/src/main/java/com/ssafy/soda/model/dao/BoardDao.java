@@ -11,21 +11,21 @@ public interface BoardDao {
 
 	Board selectByNo(int no);
 
-	void delete(int no);
+	int delete(int no);
 
 	List<Board> selectBoardSearched(SearchCondition searchCondition);
 
-	List<Integer> allLikesCount();
-
-	int likesCount(int no);
-
 	List<Board> sellectAllReported();
-
-	List<Integer> allReportLikesCount();
 
 	List<Character> allResportStatus();
 
 	Board sellectReportedByNo(int no);
+
+	int create(Board board);
+
+	int update(Board board);
+
+	List<Board> selectByCategory(Board board);
 
 
 }

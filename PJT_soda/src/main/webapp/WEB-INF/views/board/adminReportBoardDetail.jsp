@@ -51,7 +51,21 @@
 				</tr>
 				<tr>
 					<th>좋아요 수</th>
-					<td>${likesCount}</td>
+					<td>${reportedBoard.likesCnt}</td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<th>신고처리 유무</th>
+					<td>${reportedBoard.getBoardReport().reportStatus}</td>
+				</tr>
+ 				<tr>
+					<th>신고사유</th>
+					<td>${reportedBoard.getBoardReport().reportReason}</td>
+				</tr>
+				<tr>
+					<th>신고 날짜</th>
+					<td>${reportedBoard.getBoardReport().reportDate}</td>
 				</tr>
 			</table>
 

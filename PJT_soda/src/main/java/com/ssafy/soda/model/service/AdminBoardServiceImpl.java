@@ -34,9 +34,10 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 
 
 	@Override
-	public void deleteBoard(int no) {
-		boardDao.delete(no);
-	}
+	public boolean deleteBoard(int no) {
+		if (boardDao.delete(no) == 1 ) return true;
+			return false; 
+		}
 
 
 
@@ -46,34 +47,11 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	}
 
 
-
-	@Override
-	public List<Integer> likesListCount() {
-		return boardDao.allLikesCount();
-	}
-
-
-
-	@Override
-	public int getLikesCount(int no) {
-		return boardDao.likesCount(no);
-	}
-
-
-
 	@Override
 	public List<Board> getReportBoardlist() {
 		return boardDao.sellectAllReported();
 		
 	}
-
-
-
-	@Override
-	public List<Integer> reportlikesListCount() {
-		return boardDao.allReportLikesCount();
-	}
-
 
 
 	@Override
@@ -88,6 +66,32 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 		return boardDao.sellectReportedByNo(no);
 	}
 
+
+
+	@Override
+	public boolean writeBoard(Board board) {
+		if( boardDao.create(board) == 1) {
+			return true;
+		}
+		return false;
+	}
+
+
+
+	@Override
+	public boolean updateBoard(Board board) {
+		if( boardDao.update(board) == 1) {
+			return true;
+		}
+		return false;
+	}
+
+
+
+	@Override
+	public List<Board> getBoardlistByCatagory(Board board) {
+		return boardDao.selectByCategory(board);
+	}
 
 
 }

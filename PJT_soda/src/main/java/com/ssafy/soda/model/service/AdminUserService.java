@@ -17,4 +17,5 @@ public interface AdminUserService {
 
 	List<User> getSearchedUserlist(SearchCondition searchCondition);
 
+	
 }

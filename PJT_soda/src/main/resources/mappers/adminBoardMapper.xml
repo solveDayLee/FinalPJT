@@ -26,7 +26,8 @@
 		title = #{title}, 
 		writer = #{writer}, 
 		content = #{content}, 
-		category = #{category}
+		category = #{category},
+		detail_category = #{detailCategory}
 		WHERE board_no = #{boardNo}
 		
 	</update>

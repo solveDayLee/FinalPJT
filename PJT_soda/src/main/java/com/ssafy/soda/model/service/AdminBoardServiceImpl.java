@@ -36,7 +36,7 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	@Override
 	public boolean deleteBoard(int no) {
 		boardDao.delete(no);
-		return false;
+		return true;
 	}
 
 

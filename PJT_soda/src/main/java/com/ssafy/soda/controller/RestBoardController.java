@@ -38,9 +38,9 @@ public class RestBoardController {
 		
 	}
 	//상세조회
-	@GetMapping("/board/{id}")
-	public ResponseEntity<Board> detail(@PathVariable("id") int id) {
-		Board board = adminBoardService.getBoard(id);
+	@GetMapping("/board/{no}")
+	public ResponseEntity<Board> detail(@PathVariable("no") int no) {
+		Board board = adminBoardService.getBoard(no);
 		System.out.println(board);
 		if(board != null) {
 			return ResponseEntity.ok(board);
@@ -62,10 +62,9 @@ public class RestBoardController {
 	
 	
 	//삭제
-	@DeleteMapping("/board/{id}")
-	public ResponseEntity<String> delete(@PathVariable("id") int id) {
-		boolean isDeleted = adminBoardService.deleteBoard(id);
-		
+	@DeleteMapping("/board/{no}")
+	public ResponseEntity<String> delete(@PathVariable("no") int no) {
+		boolean isDeleted = adminBoardService.deleteBoard(no);
 		if(isDeleted) {
 			return ResponseEntity.status(HttpStatus.OK).body("Board delete");
 		}
@@ -73,9 +72,9 @@ public class RestBoardController {
 	}
 	
 	//수정
-	@PutMapping("/board/{id}")
-	public ResponseEntity<Void> update(@PathVariable("id") int id, @RequestBody Board board) {
-		board.setBoardNo(id);
+	@PutMapping("/board/{no}")
+	public ResponseEntity<Void> update(@PathVariable("no") int no, @RequestBody Board board) {
+		board.setBoardNo(no);
 		adminBoardService.updateBoard(board);
 		System.out.println(board);
 		return ResponseEntity.status(HttpStatus.OK).build();

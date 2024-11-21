@@ -5,6 +5,7 @@ import JoinView from '@/views/JoinView.vue'
 import DetailView from '@/views/DetailView.vue'
 import LoginView from '@/views/LoginView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import UpdateView from '@/views/UpdateView.vue'
 
 
 const router = createRouter({
@@ -39,6 +40,11 @@ const router = createRouter({
       path: '/login',
       name: 'Login',
       component: LoginView
+    },
+    {
+      path: '/detailboard/update/:no',
+      name: 'UpdateBoard',
+      component: UpdateView
     },
 
   ],

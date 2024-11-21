@@ -11,7 +11,7 @@ public interface BoardDao {
 
 	Board selectByNo(int no);
 
-	void delete(int no);
+	int delete(int no);
 
 	List<Board> selectBoardSearched(SearchCondition searchCondition);
 

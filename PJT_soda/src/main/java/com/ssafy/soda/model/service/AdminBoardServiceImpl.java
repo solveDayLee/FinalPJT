@@ -71,7 +71,7 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 
 	@Override
 	public boolean writeBoard(Board board) {
-		if( boardDao.create(board) == 1) {
+		if( boardDao.insertBoard(board) == 1) {
 			return true;
 		}
 		return false;
@@ -81,7 +81,7 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 
 	@Override
 	public boolean updateBoard(Board board) {
-		if( boardDao.update(board) == 1) {
+		if( boardDao.updateBoard(board) == 1) {
 			return true;
 		}
 		return false;

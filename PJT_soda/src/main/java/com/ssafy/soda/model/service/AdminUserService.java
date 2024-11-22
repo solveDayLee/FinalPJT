@@ -17,4 +17,8 @@ public interface AdminUserService {
 
 	List<User> getSearchedUserlist(SearchCondition searchCondition);
 
+	
+	// 유저 관련 메서드들 
+	User userLogin(User user);
+
 }

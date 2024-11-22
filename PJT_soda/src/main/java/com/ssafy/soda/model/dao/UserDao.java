@@ -17,4 +17,6 @@ public interface UserDao {
 
 	List<User> selectSearched(SearchCondition searchCondition);
 
+	User login(User user);
+
 }

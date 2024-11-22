@@ -16,11 +16,20 @@ public class User {
 	private String detailAddress;
 	private String zonecode;
 	private LocalDate userRegDate;
+	private String role;
 
 	//토큰 추가
 	private String token;
 	
 	public User() {
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public User(int userNo, String userId, String userNickname, String password, String name, String email,

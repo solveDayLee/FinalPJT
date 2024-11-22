@@ -1,5 +1,6 @@
 package com.ssafy.soda.controller;
 
+import java.security.interfaces.RSAKey;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class ClientUserController {
 		this.jwtUtil = jwtUtil;
 	}
 	
-	@GetMapping("/users")
+	@GetMapping("/user")
 	public ResponseEntity<?> userList() {
 		List<User> list = userService.getUserList();
 		if(list == null || list.size() == 0)
@@ -50,11 +51,23 @@ public class ClientUserController {
 		User loginUser = userService.login(user.getUserId(), user.getPassword());
 		
 		if(loginUser != null) {
+			//role 정보 포함하여 토큰 생성 (관리자, 사용자 역할)
+			String role = loginUser.getRole() != null ? loginUser.getRole() : "USER"; //기본값
+			
 			result.put("message", "login성공"); //상태 메시지 저장
-			result.put("access-token", jwtUtil.createToken(loginUser.getName())); // JWT 토큰 저장
+			//jwtUtil.createToken()을 호출할 때 role 파라미터를 함께 전달
+			result.put("access-token", jwtUtil.createToken(loginUser.getName(), role)); // JWT 토큰 저장
+			result.put("role", role); //클라이언트에게 role 정보 저장
+			
+			if("ADMIN".equals(role)) {
+				result.put("adminUrl", "http://localhost:8080/admin/main"); 
+			}
+			
 			return new ResponseEntity<>(result, HttpStatus.ACCEPTED);  // 저장된 메시지와 토큰을 클라이언트에게 전송
 		}
-		return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+		result.put("message", "login실패");
+//		return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED); // 401 상태코드로 변경. "인증 실패" 를 의미
 	}
 	
 	

@@ -2,7 +2,7 @@
   <div class="sidebar">
     <div class="sidebar-logo">
       <i class="bi bi-person-walking"></i>
-      <span>Sports Community</span>
+      <router-link to="/board/"><span>Sports Community</span></router-link>
     </div>
 
     <div class="sidebar-section">
@@ -86,8 +86,8 @@ import { ref } from 'vue'
 import { storeToRefs } from 'pinia';
 import { useBoardStore } from '@/stores/board';
 
-const store = useMainStore()
-const { selectedCategory } = storeToRefs(store);
+const store = useBoardStore()
+// const { selectedCategory } = storeToRefs(store);
 
 const sports = [
   { code: 'WATERPOLO', name: '수구' },
@@ -107,6 +107,8 @@ const sportMenus = [
   { code: 'MARKET', name: '중고장터', icon: 'bi-shop' },
   { code: 'CLUB', name: '동호회/모임', icon: 'bi-people' }
 ]
+
+// 화면이 바로 안 넘어가는 문제를 해결하기 위한 코드: 
 const router = useRouter();
 const selectedSport = ref(sports[0].code);
 
@@ -115,12 +117,12 @@ const toggleNotice = () => {
   isNoticeOpen.value = !isNoticeOpen.value
 }
 
-router.beforeEach((to, from, next) =>{
-  if (to.params.sportCode) {
-    selectedSport.value = to.params.sportCode
-  }
-  next()
-})
+// router.beforeEach((to, from, next) =>{
+//   if (to.params.sportCode) {
+//     selectedSport.value = to.params.sportCode
+//   }
+//   next()
+// })
 
 </script>
 

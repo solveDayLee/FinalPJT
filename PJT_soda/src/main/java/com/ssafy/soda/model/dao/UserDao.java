@@ -17,9 +17,11 @@ public interface UserDao {
 
 	List<User> selectSearched(SearchCondition searchCondition);
 
-	User findById(String userId);	
+	User login(User user);	
 
-	void save(User user);
+	int save(User user);
+
+	User findById(String userId);
 
 
 }

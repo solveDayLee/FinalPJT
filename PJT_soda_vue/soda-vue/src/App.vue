@@ -11,12 +11,15 @@
 
 <script setup>
 
+import { onMounted } from 'vue';
 import Footer from './components/Layouts/Footer.vue';
 import Header from './components/Layouts/Header.vue';
 import { useCounterStore } from './stores/counter';
 
-const store = useCounterStore()
-
+const userStore = useCounterStore()
+onMounted(()=> {
+      userStore.initializeUser()
+})
 
 </script>
 

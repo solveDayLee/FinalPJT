@@ -51,6 +51,7 @@ const router = createRouter({
       name: 'UpdateBoard',
       component: UpdateView
     },
+    
 
   ],
 

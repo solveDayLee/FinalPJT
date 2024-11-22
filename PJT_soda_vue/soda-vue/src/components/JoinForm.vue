@@ -82,6 +82,51 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useUserStore } from '@/stores/user'
+const userStore = useUserStore()
+
+
+// 폼 전체 유효성 검사
+const isFormValid = computed(() => {
+    return isRequiredFieldsFilled.value && isPasswordMatch.value
+})
+
+const handleSubmit = () => {
+    // 제출 전 모든 필드 다시 체크
+    checkAllFields()
+
+    if (!isFormValid.value) {
+        return
+    }
+
+    // 폼 제출 로직
+    console.log('폼 제출 성공!')
+    //서버에 데이터 전송하기 
+    const user = {
+        name: name.value,
+        email: email.value,
+        phoneNumber: phone.value,
+        birthDate: birthDate.value,
+        gender: gender.value,
+        address: address.value,
+        userNickname: nickname.value,
+        userId: userId.value,
+        password: password.value
+    }
+    // console.log({
+    //    name: name.value,
+    //     email: email.value,
+    //     phoneNumber: phone.value,
+    //     birthDate: birthDate.value,
+    //     gender: gender.value,
+    //     address: address.value,
+    //     userNickname: nickname.value,
+    //     userId: userId.value,
+    //     password: password.value
+    // })
+
+    userStore.join(user);
+}
 
 // 폼 데이터
 const name = ref('')
@@ -179,34 +224,6 @@ const isRequiredFieldsFilled = computed(() => {
     )
 })
 
-// 폼 전체 유효성 검사
-const isFormValid = computed(() => {
-    return isRequiredFieldsFilled.value && isPasswordMatch.value
-})
-
-const handleSubmit = () => {
-    // 제출 전 모든 필드 다시 체크
-    checkAllFields()
-
-    if (!isFormValid.value) {
-        return
-    }
-
-    // 폼 제출 로직
-    console.log('폼 제출 성공!')
-    //서버에 데이터 전송하기 
-    console.log({
-        name: name.value,
-        email: email.value,
-        phone: phone.value,
-        birthDate: birthDate.value,
-        gender: gender.value,
-        address: address.value,
-        nickname: nickname.value,
-        userId: userId.value,
-        password: password.value
-    })
-}
 </script>
 
 <style scoped>

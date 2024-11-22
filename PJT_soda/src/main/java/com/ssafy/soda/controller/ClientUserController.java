@@ -39,6 +39,7 @@ public class ClientUserController {
 	
 	@PostMapping("/signup")
 	public ResponseEntity<String> write(@RequestBody User user) {
+		System.out.println(user);
 		if(userService.signup(user)) {
 			return ResponseEntity.status(HttpStatus.CREATED).body("사용자 회원 추가 성공");
 		}

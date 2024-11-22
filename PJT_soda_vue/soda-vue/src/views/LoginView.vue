@@ -24,10 +24,13 @@
 <script setup>
 import { ref } from 'vue'
 import {useRouter} from 'vue-router'
+import { useUserStore } from '@/stores/user'
 
 const router = useRouter()
 const userId = ref('')
 const password = ref('')
+const userStore = useUserStore()
+
 
 const handleLogin = async() => {
     try {
@@ -36,8 +39,12 @@ const handleLogin = async() => {
             alert('아이디와 비밀번호 모두 입력해주세요.')
             return
         }
-        //로그인 성공 시 메인 페이지 이동
-        router.push('/')
+        // store의 userLogin 함수 호출 추가
+        await userStore.userLogin(userId.value, password.value)
+        
+        //store에서 처리
+        // //로그인 성공 시 메인 페이지 이동
+        // router.push('/')
 
     } catch(error) {
 
@@ -47,7 +54,12 @@ const handleLogin = async() => {
 }
 
 const goToSignup = () => {
-    router.push('/join')
+  const user = {
+    userId: userId.value,
+    password: password.value
+  }
+  userStore.userLogin(user) 
+  router.push('/join')
 }
 
 

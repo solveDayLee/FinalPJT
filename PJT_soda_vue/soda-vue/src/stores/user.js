@@ -9,14 +9,40 @@ const REST_API_URL = `http://localhost:8080/etco`
 export const useUserStore = defineStore('user', () => {
     const loginUser = ref(null)
 
+        //새로고침해도 로그인 상태 유지 함수. app.vue에서 이 함수 호출해줌
+        // 여기에 initializeUser 함수 추가
+        const initializeUser = () => {
+            const token = localStorage.getItem('access-token')
+            const role = localStorage.getItem('role')
+            const storedUserId = localStorage.getItem('userId')
+    
+            if (token && role && storedUserId) {
+                loginUser.value = {
+                    userId: storedUserId,
+                    role: role
+                }
+            }
+        }
+
+
     //로그인
     const userLogin = function(userId, password) {
         axios.post(`${REST_API_URL}/login`, {
-            userId, 
+            userId,
             password,
         })
         .then((res) => { //로그인 성공하면
-            console.log(res)
+            console.log(res.data)
+
+            //로그인 유저 정보 저장
+            loginUser.value = {
+                userId: userId,
+                userNickname: res.data.userNickname,
+                role: res.data.role,
+            }
+
+
+
             //토큰 저장
             localStorage.setItem('access-token', res.data['access-token'])
             localStorage.setItem('role', res.data.role)
@@ -29,7 +55,7 @@ export const useUserStore = defineStore('user', () => {
         })
 
         .catch((err) => { //로그인 실패시
-            console.log(err)
+            console.log('로그인 에러:', err)
             alert('로그인 실패')
             router.push({name: 'Login'})
         })
@@ -46,12 +72,13 @@ export const useUserStore = defineStore('user', () => {
 
     //회원가입
     const join = function(user) {
+        console.log('전송할 회원가입 데이터:', user)
         axios.post(`${REST_API_URL}/signup`,user)
         .then(()=> {
             alert('회원가입 성공')
-            router.push({name:Login})
+            router.push({name:'Login'})
         })
-        .then((err)=> {
+        .catch((err)=> {
             console.log(err)
             alert('회원가입 실패')
         })
@@ -60,5 +87,5 @@ export const useUserStore = defineStore('user', () => {
 
 
 
-  return { loginUser,userLogin,userLogout, join}
+  return { loginUser,userLogin,userLogout, join, initializeUser}
 })

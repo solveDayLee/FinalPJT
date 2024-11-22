@@ -28,6 +28,17 @@
 		WHERE b.board_no = #{no}
 	</select>
 
+	<update id="updateBoard" parameterType="Board">
+		UPDATE board SET 
+		title = #{title}, 
+		writer = #{writer}, 
+		content = #{content}, 
+		category = #{category},
+		detail_category = #{detailCategory}
+		WHERE board_no = #{boardNo}
+		
+	</update>
+	
 	<select id="selectBoardSearched" resultType="Board"
 		parameterType="SearchCondition">
 		SELECT *
@@ -49,12 +60,32 @@
 		WHERE
 		board_no = #{no}
 	</delete>
-	<!-- <select id="allLikesCount" resultType="int"> SELECT COALESCE(COUNT(l.board_no), 
-		0) as like_count FROM board b LEFT JOIN likes l ON b.board_no = l.board_no 
-		GROUP BY b.board_no ORDER BY b.board_no DESC; </select> <select id="likesCount" 
-		resultType="int" parameterType="int"> SELECT COUNT(l.board_no) FROM board 
-		b LEFT JOIN likes l ON b.board_no = l.board_no WHERE b.board_no = #{no} GROUP 
-		BY b.board_no; </select> -->
+
+	<insert id="insertBoard" parameterType="Board">
+		insert into board (title, writer, content, category, detail_category, user_no)
+		values (#{title}, #{writer}, #{content}, #{category}, #{detailCategory}, #{userNo});
+	</insert>
+	
+	<select id="allLikesCount" resultType="int">
+		SELECT
+		COALESCE(COUNT(l.board_no), 0) as like_count
+		FROM board b
+		LEFT JOIN
+		likes l ON b.board_no = l.board_no
+		GROUP BY b.board_no
+		ORDER BY
+		b.board_no DESC;
+	</select>
+	<select id="likesCount" resultType="int" parameterType="int">
+		SELECT
+		COUNT(l.board_no)
+		FROM board b
+		LEFT JOIN likes l ON b.board_no =
+		l.board_no
+		WHERE b.board_no = #{no}
+		GROUP BY b.board_no;
+	</select>
+	
 	<!-- 신고처리 -->
 	<select id="sellectAllReported" resultType="Board">
 		SELECT
@@ -70,10 +101,7 @@
 		) r ON b.board_no = r.board_no
 		ORDER BY b.board_no DESC
 	</select>
-	<!-- <select id="allReportLikesCount" resultType="int"> SELECT COALESCE(COUNT(l.board_no), 
-		0) as like_count FROM board b RIGHT JOIN board_report r ON b.board_no = r.board_no 
-		LEFT JOIN likes l ON b.board_no = l.board_no GROUP BY b.board_no ORDER BY 
-		b.board_no DESC; </select> -->
+
 	<select id="allResportStatus" resultType="char">
 		SELECT report_status
 		FROM board_report r
@@ -102,19 +130,6 @@
 		r.board_no
 		WHERE b.board_no = #{boardNo}
 	</select>
-
-	<insert id="create" parameterType="Board">
-		INSERT INTO board
-		(title,
-		content, category, user_no) values (#{title}, #{content}, #{category},
-		#{userNo})
-	</insert>
-
-	<update id="update">
-		UPDATE board SET title = #{title}, content=
-		#{content}, category= #{category}
-		WHERE board_no = #{boardNo}
-	</update>
 
 	<select id="selectByCategory" parameterType="Board" resultType="Board">
 		SELECT b.*, count(l.board_no) as likesCnt

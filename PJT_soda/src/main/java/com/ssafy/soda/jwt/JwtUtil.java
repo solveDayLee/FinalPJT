@@ -27,10 +27,11 @@ public class JwtUtil {
 	    }
 	    
 	    // 토큰 생성
-	    public String createToken(String name) {
+	    public String createToken(String name, String role) {
 	        return Jwts.builder()
 	                .setHeaderParam("typ", "JWT")  // header() 대신 setHeaderParam 사용
 	                .claim("name", name)
+	                .claim("role", role)
 	                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60))
 	                .signWith(secretKey)
 	                .compact();
@@ -44,5 +45,14 @@ public class JwtUtil {
 	                .parseClaimsJws(token);  // parseSignedClaims 대신 parseClaimsJws 사용
 	    }
 	    
+	    //role정보 가져오는 메서드 추가
+	    public String getRole(String token) {
+	    	Claims claims = Jwts.parserBuilder()
+	    			.setSigningKey(secretKey)
+	    			.build()
+	    			.parseClaimsJws(token)
+	    			.getBody();
+	    	return claims.get("role", String.class);
+	    }
 	    
 }

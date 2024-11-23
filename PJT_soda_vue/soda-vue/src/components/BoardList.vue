@@ -1,6 +1,6 @@
 <template>
     <div class="page-layout">
-        <div v-if="isReady" class="board-container">
+        <div v-if="isReady && boardList.length > 0" class="board-container">
             <div class="list-header">
                 <div class="header-left">
                     <h2 class="title">{{boardList[0].category}}</h2>

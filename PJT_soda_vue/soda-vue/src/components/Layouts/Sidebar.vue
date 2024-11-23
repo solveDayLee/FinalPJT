@@ -2,7 +2,7 @@
   <div class="sidebar">
     <div class="sidebar-logo">
       <i class="bi bi-person-walking"></i>
-      <router-link to="/board/"><span>Sports Community</span></router-link>
+      <router-link to="/board"><span>Sports Community</span></router-link>
     </div>
 
     <div class="sidebar-section">

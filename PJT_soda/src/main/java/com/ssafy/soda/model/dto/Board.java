@@ -1,7 +1,7 @@
 package com.ssafy.soda.model.dto;
 
 public class Board {
-	private int boardNo;
+	private Integer boardNo;
 	private String title;
 	private String writer;
 	private String content;
@@ -13,10 +13,11 @@ public class Board {
 	private int likesCnt;
 	private User user;
 	private BoardReport boardReport;
-	public int getBoardNo() {
+	
+	public Integer getBoardNo() {
 		return boardNo;
 	}
-	public void setBoardNo(int boardNo) {
+	public void setBoardNo(Integer boardNo) {
 		this.boardNo = boardNo;
 	}
 	public String getTitle() {

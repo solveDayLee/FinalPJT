@@ -148,12 +148,18 @@ export const useBoardStore = defineStore('board', () => {
     const getBoardListByCategory = async function(category, detailCategory = null) {
         try {
             isLoading.value = true
+            console.log('요청 URL:', `${REST_API_URL}/category/${category}`)
+            console.log('카테고리:', category)
+            console.log('상세카테고리:', detailCategory)
+             // 현재 URL 구조: http://localhost:8080/etco/board/category/카테고리명?detailCategory=상세카테고리
             const response = await axios.get(`${REST_API_URL}/category/${category}`, {
                 params: { detailCategory }
             })
-            boardList.value = response.data
+            boardList.value = response.data || [] //데이터가 없을 경우를 대비해 빈 배열 할당
         } catch (error) {
-            console.error("카테고리별 게시글 조회 실패:", error)
+            console.error("상세 에러 정보:", error.response?.data)
+            // console.error("카테고리별 게시글 조회 실패:", error)
+            boardList.value = [] //에러 발생 시 빈 배열로 초기화
         } finally {
             isLoading.value = false
         }

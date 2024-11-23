@@ -113,3 +113,4 @@ build/
 .DS_Store
 Thumbs.db
 /.metadata/
+.metadata/

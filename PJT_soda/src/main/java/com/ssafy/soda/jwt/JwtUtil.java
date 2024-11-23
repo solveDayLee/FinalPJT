@@ -26,8 +26,15 @@ public class JwtUtil {
 	        secretKey = Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8));
 	    }
 	    
+	    
+	    
 	    // 토큰 생성
 	    public String createToken(String name, String role) {
+	    	  if (role!= null && !role.startsWith("ROLE_")) {
+	    	        role = "ROLE_" + role;
+	    	    }
+	    	
+	    	
 	        return Jwts.builder()
 	                .setHeaderParam("typ", "JWT")  // header() 대신 setHeaderParam 사용
 	                .claim("name", name)

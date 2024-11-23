@@ -4,7 +4,19 @@ import axios from 'axios'
 import router from '@/router'
 
 const REST_API_URL = `http://localhost:8080/etco`
-
+// axios 인터셉터 설정
+axios.interceptors.request.use(
+    config => {
+        const token = localStorage.getItem('access-token');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    error => {
+        return Promise.reject(error);
+    }
+);
 
 export const useUserStore = defineStore('user', () => {
     const loginUser = ref(null)
@@ -37,7 +49,7 @@ export const useUserStore = defineStore('user', () => {
             //로그인 유저 정보 저장
             loginUser.value = {
                 userId: userId,
-                userNickname: res.data.userNickname,
+                // userNickname: res.data.userNickname,
                 role: res.data.role,
             }
 
@@ -46,10 +58,11 @@ export const useUserStore = defineStore('user', () => {
             //토큰 저장
             localStorage.setItem('access-token', res.data['access-token'])
             localStorage.setItem('role', res.data.role)
+            localStorage.setItem('userId',userId)
 
-            if(res.data.role === 'ADMIN' && res.data.adminUrl) {
-                location.href = res.data.adminUrl
-                return
+            if(res.data.role === 'ADMIN') {
+                location.href = 'http://localhost:8080/admin/main';
+                return;
             }
             router.push({name: 'Home'})
         })
@@ -65,8 +78,10 @@ export const useUserStore = defineStore('user', () => {
     const userLogout = function() {
         localStorage.removeItem('access-token')
         localStorage.removeItem('role')
+        localStorage.removeItem('userId')
         loginUser.value=null
 
+        alert("로그아웃 되었습니다.")
         router.push({name:'Home'})
     }
 
@@ -87,5 +102,5 @@ export const useUserStore = defineStore('user', () => {
 
 
 
-  return { loginUser,userLogin,userLogout, join, initializeUser}
+  return { loginUser,userLogin,userLogout, join, initializeUser  }
 })

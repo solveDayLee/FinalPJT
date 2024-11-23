@@ -18,9 +18,9 @@ import { RouterLink } from 'vue-router';
               <div class="button-l2">
                   <div class="click-here2">View Intro</div>
               </div>
-              <RouterLink to="/api/chat">
+              <RouterLink to="/etco/chat">
               <div class="button-l">
-                  <div class="click-here">Explore Now</div>
+                  <div class="click-here">🕹️Chat Bot🕹️</div>
               </div>
             </RouterLink>
           </div>

@@ -1,16 +1,37 @@
 <template>
-    <div class="min-h-screen bg-black text-green-400 p-8 font-mono">
-      <h1 class="text-3xl mb-8 text-center">AI Assistant</h1>
-      <div class="max-w-4xl mx-auto">
-        <Chat/>
-      </div>
+  <div class="chat-view">
+    <h1 class="title">ETCO Chat</h1>
+    <div class="chat-wrapper">
+      <Chat />
     </div>
-  </template>
+  </div>
+</template>
 
 <script setup>
-import Chat from '@/components/Chat.vue';
+import Chat from '@/components/Chat.vue'
 </script>
 
 <style scoped>
+.chat-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #ffffff;
+  font-family: 'Noto Sans KR', sans-serif;
+  /* margin-top: 30px; */
+}
 
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #495057;
+}
+
+.chat-wrapper {
+  width: 100%;
+  max-width: 600px;
+}
 </style>

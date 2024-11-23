@@ -100,6 +100,7 @@
 
 		<!--Spring Security를 위해 추가-->
 		<!--		<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
@@ -108,7 +109,7 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
--->
+
 		<!--chat gpt api-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

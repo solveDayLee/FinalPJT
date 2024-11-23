@@ -48,12 +48,4 @@ public class AdminUserServiceImpl implements AdminUserService{
 	}
 
 
-	@Override
-	public User userLogin(User user) {
-		return userDao.login(user);
-		
-	}
-
-
-
 }

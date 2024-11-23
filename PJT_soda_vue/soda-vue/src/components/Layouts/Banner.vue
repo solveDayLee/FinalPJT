@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 </script>
 
+=======
+>>>>>>> e79a1cedcc6a4d54bfed3d3d3e481c76dbf00152
 <!-- Banner.vue -->
 <!-- Banner.vue -->
 <template>
@@ -18,11 +21,17 @@ import { RouterLink } from 'vue-router';
               <div class="button-l2">
                   <div class="click-here2">View Intro</div>
               </div>
+<<<<<<< HEAD
               <RouterLink to="/etco/chat">
               <div class="button-l">
                   <div class="click-here">🕹️Chat Bot🕹️</div>
               </div>
             </RouterLink>
+=======
+              <div class="button-l">
+                  <div class="click-here">Explore Now</div>
+              </div>
+>>>>>>> e79a1cedcc6a4d54bfed3d3d3e481c76dbf00152
           </div>
       </div>
   </div>

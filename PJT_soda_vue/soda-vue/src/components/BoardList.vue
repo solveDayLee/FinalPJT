@@ -1,10 +1,10 @@
 <template>
     <div class="page-layout">
-        <div class="board-container">
+        <div v-if="isReady" class="board-container">
             <div class="list-header">
                 <div class="header-left">
-                    <h2 class="title">전체 글</h2>
-                    <span class="post-count">총 {{ store.boardList.length }}개의 글</span>
+                    <h2 class="title">{{boardList[0].category}}</h2>
+                    <span class="post-count">총 {{ boardList.length }}개의 글</span>
                 </div>
                 <RouterLink :to="{ name: 'Write' }">
                     <button class="write-button">
@@ -28,7 +28,7 @@
                     </thead>
                     <tbody>
                         <tr
-                            v-for="board in store.boardList"
+                            v-for="board in boardList"
                             :key="board.boardNo"
                             @click="$router.push({ name: 'DetailBoard', params: { no: board.boardNo } })"
                             class="table-row"
@@ -55,25 +55,72 @@
                 </table>
             </div>
         </div>
+        <div v-else class="loading-container">
+            <div class="empty-container">
+            <div class="empty-circle">
+            <span class="empty-text">텅</span>
+            </div>
+            <p class="empty-description">아직 작성된 글이 없습니다</p>
+            </div>
+        </div>
     </div>
 </template>
 
 <script setup>
 import { RouterLink, useRoute } from "vue-router";
 import { useBoardStore } from "@/stores/board";
-import { onMounted } from "vue";
+import { ref, onBeforeMount, watch, onMounted } from "vue";
+import { storeToRefs } from "pinia";
 
 const store = useBoardStore();
 const route = useRoute();
+const { boardList } = storeToRefs(store); //바로 boardList 를 추출해서 씀! 그래서 store.boardList 라고 안 써도 됨. 
+const isReady = ref(false);
 
-onMounted(() => {
-    if (route.params.category) {
-        console.log("카테고리 메서드 실행한다!")
-        store.getBoardListByCategory(route.params.category, route.query.detailCategory || null);
-    } else {
-        store.getBoardList();
+
+const loadBoardData = async () => {
+    isReady.value = false;
+    try{
+        const category = route.params.category
+        const detailCategory = route.params.detailCategory
+
+        if(category){
+            await store.getBoardListByCategory(category, detailCategory)
+            isReady.value = true
+        }else{
+            await store.getBoardList()
+            isReady.value = true
+        }
+
+    }catch(error){
+        console.error('데이터 로딩 장렬히 실패:', error)
     }
-});
+} 
+
+
+watch(
+    () => route.params,
+    async () =>{
+        await loadBoardData()
+    },
+    {immediate: true}
+)
+
+onBeforeMount(async () => {
+    await loadBoardData()
+})
+
+
+// onMounted(() => {
+//     if (route.params.category) {
+//         console.log("카테고리 메서드 실행한다!")
+//         store.getBoardListByCategory(route.params.category, route.query.detailCategory || null);  ///바로 받지 말고 받은 값을 잠시 저장한 다음에 promise 이용하기. 렌더링 전에 화면에서 쓰도록 하기 
+//     } else {
+//         store.getBoardList();
+//     }
+// });
+
+
 
 
 
@@ -207,5 +254,37 @@ onMounted(() => {
 
 .table-row:hover .category-tag {
     background-color: #b4d3f1;
+}
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+}
+
+.empty-circle {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #e6f3ff 0%, #ffffff 100%);
+  border: 2px solid #e1f0ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.empty-text {
+  font-size: 2.5rem;
+  color: #4a90e2;
+  font-weight: bold;
+}
+
+.empty-description {
+  color: #78909c;
+  font-size: 1rem;
+  margin: 0;
 }
 </style>

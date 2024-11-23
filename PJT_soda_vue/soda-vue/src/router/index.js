@@ -6,6 +6,9 @@ import DetailView from '@/views/DetailView.vue'
 import LoginView from '@/views/LoginView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import UpdateView from '@/views/UpdateView.vue'
+import { useBoardStore } from '@/stores/board'
+import SupportView from '@/views/SupportView.vue'
+import ChatView from '@/views/ChatView.vue'
 
 
 const router = createRouter({
@@ -45,19 +48,37 @@ const router = createRouter({
       path: '/board/category/:category/:detailCategory?',
       name: 'BoardCategory',
       component: BoardView,
+      props: true
     },
     {
       path: '/detailboard/update/:no',
       name: 'UpdateBoard',
-      component: UpdateView
+      component: UpdateView,
+    },
+    {
+      path: '/support',
+      name: 'Support',
+      component: SupportView
+    },
+    {
+      path: '/etco/chat',
+      name: 'Chat',
+      component: ChatView
     },
     
-
   ],
 
 
 })
 
+// 전역 가드 설정
+router.beforeEach((to,from,next)=>{
+  if(to.params.category){
+    const store = useBoardStore()
+    store.setSelectedCategory(to.params.category)
+  }
+  next()
+})
 
 
 export default router

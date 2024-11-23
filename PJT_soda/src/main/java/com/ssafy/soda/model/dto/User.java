@@ -17,7 +17,6 @@ public class User {
 	private String zonecode;
 	private String userRegDate;
 	private String role;
-
 	//토큰 추가
 	private String token;
 	
@@ -164,7 +163,6 @@ public class User {
 	public void setToken(String token) {
 		this.token = token;
 	}
-
 	@Override
 	public String toString() {
 		return "User [userNo=" + userNo + ", userId=" + userId + ", userNickname=" + userNickname + ", password="

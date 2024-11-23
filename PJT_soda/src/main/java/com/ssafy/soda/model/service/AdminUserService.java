@@ -16,6 +16,5 @@ public interface AdminUserService {
 	void deleteUser(int no);
 
 	List<User> getSearchedUserlist(SearchCondition searchCondition);
-
 	
 }

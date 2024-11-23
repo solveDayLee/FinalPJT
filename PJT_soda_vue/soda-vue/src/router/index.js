@@ -8,10 +8,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import UpdateView from '@/views/UpdateView.vue'
 import { useBoardStore } from '@/stores/board'
 import SupportView from '@/views/SupportView.vue'
-<<<<<<< HEAD
 import ChatView from '@/views/ChatView.vue'
-=======
->>>>>>> e79a1cedcc6a4d54bfed3d3d3e481c76dbf00152
 
 
 const router = createRouter({
@@ -63,16 +60,12 @@ const router = createRouter({
       name: 'Support',
       component: SupportView
     },
-<<<<<<< HEAD
     {
       path: '/etco/chat',
       name: 'Chat',
       component: ChatView
     },
-    
-=======
 
->>>>>>> e79a1cedcc6a4d54bfed3d3d3e481c76dbf00152
   ],
 
 

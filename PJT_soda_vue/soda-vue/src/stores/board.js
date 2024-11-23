@@ -74,12 +74,8 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import router from '@/router'
 
-<<<<<<< HEAD
-// const REST_API_URL = `http://192.168.210.73:8080/etco/board`
 const REST_API_URL = `http://localhost:8080/etco/board`
-=======
-const REST_API_URL = `http://192.168.210.73:8080/etco/board`
->>>>>>> e79a1cedcc6a4d54bfed3d3d3e481c76dbf00152
+//const REST_API_URL = `http://192.168.210.73:8080/etco/board`
 
 export const useBoardStore = defineStore('board', () => {
     const selectedCategory = ref('WATERPOLO')

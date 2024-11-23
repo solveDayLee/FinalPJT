@@ -42,4 +42,44 @@
         </if>
     	</where>
 	</select>
+	
+	<select id="findById" parameterType="String" resultType="User">
+		select * 
+		from user
+		where user_id = #{userId}
+	</select>
+
+	<insert id="save" parameterType="user">
+	
+	    INSERT INTO user (
+        user_id, 
+        user_nickname,
+        password,
+        name,
+        email,
+        phone_number,
+        birth_date,
+        gender,
+        address,
+        detail_address,
+        zonecode,
+        user_reg_date
+    ) VALUES (
+        #{userId},
+        #{userNickname},
+        #{password},
+        #{name},
+        #{email},
+        #{phoneNumber},
+        #{birthDate},
+        #{gender},
+        #{address},
+        #{detailAddress},
+        #{zonecode},
+        NOW()
+    )
+	
+	</insert>	
+	
+	
 </mapper>

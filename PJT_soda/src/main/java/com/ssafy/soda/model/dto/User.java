@@ -10,19 +10,23 @@ public class User {
 	private String name;
 	private String email;
 	private String phoneNumber;
-	private LocalDate birthDate;
+	private String birthDate;
 	private String gender;
 	private String address;
 	private String detailAddress;
 	private String zonecode;
-	private LocalDate userRegDate;
+	private String userRegDate;
+	private String role;
 
+	//토큰 추가
+	private String token;
+	
 	public User() {
 	}
 
 	public User(int userNo, String userId, String userNickname, String password, String name, String email,
-			String phoneNumber, LocalDate birthDate, String gender, String address, String detailAddress,
-			String zonecode, LocalDate userRegDate) {
+			String phoneNumber, String birthDate, String gender, String address, String detailAddress, String zonecode,
+			String userRegDate, String role, String token) {
 		super();
 		this.userNo = userNo;
 		this.userId = userId;
@@ -37,6 +41,8 @@ public class User {
 		this.detailAddress = detailAddress;
 		this.zonecode = zonecode;
 		this.userRegDate = userRegDate;
+		this.role = role;
+		this.token = token;
 	}
 
 	public int getUserNo() {
@@ -95,11 +101,11 @@ public class User {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public LocalDate getBirthDate() {
+	public String getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(LocalDate birthDate) {
+	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
 
@@ -135,12 +141,28 @@ public class User {
 		this.zonecode = zonecode;
 	}
 
-	public LocalDate getUserRegDate() {
+	public String getUserRegDate() {
 		return userRegDate;
 	}
 
-	public void setUserRegDate(LocalDate userRegDate) {
+	public void setUserRegDate(String userRegDate) {
 		this.userRegDate = userRegDate;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	@Override
@@ -148,8 +170,10 @@ public class User {
 		return "User [userNo=" + userNo + ", userId=" + userId + ", userNickname=" + userNickname + ", password="
 				+ password + ", name=" + name + ", email=" + email + ", phoneNumber=" + phoneNumber + ", birthDate="
 				+ birthDate + ", gender=" + gender + ", address=" + address + ", detailAddress=" + detailAddress
-				+ ", zonecode=" + zonecode + ", userRegDate=" + userRegDate + "]";
+				+ ", zonecode=" + zonecode + ", userRegDate=" + userRegDate + ", role=" + role + ", token=" + token
+				+ "]";
 	}
+
 
 	
 

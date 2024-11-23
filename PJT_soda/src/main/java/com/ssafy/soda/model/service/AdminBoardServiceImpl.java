@@ -39,9 +39,6 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 			return false; 
 		}
 
-
-
-
 	@Override
 	public List<Board> getSearchedBoardlist(SearchCondition searchCondition) {
 		return boardDao.selectBoardSearched(searchCondition);

@@ -4,7 +4,6 @@
       <div class="category-wrapper">
         <h2 class="category">{{ store.board.category }}</h2>
       </div>
-
       <div class="detail-content">
         <div class="title-section">
           <div class="title">{{ store.board.title }}</div>
@@ -60,6 +59,7 @@ const route = useRoute()
 const router = useRouter()
 
 onMounted(() => {
+  store.getBoardByNo(route.params.no)
   store.getBoardByNo(route.params.no)
 })
 

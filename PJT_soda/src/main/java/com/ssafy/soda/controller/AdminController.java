@@ -2,6 +2,7 @@ package com.ssafy.soda.controller;
 
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,9 @@ import com.ssafy.soda.model.service.AdminUserService;
 @RequestMapping("/admin")
 public class AdminController {
 	
-	AdminUserService adminUserService;
+	private final AdminUserService adminUserService;
+	
+	
 	public AdminController(AdminUserService adminUserService) {
 		this.adminUserService = adminUserService;
 	}
@@ -67,22 +70,32 @@ public class AdminController {
 
 	// 로그인 화면으로 넘어가기
 	@GetMapping("/adminLogin")
-	public String adminLogin() {
+	public String adminLogin(Model model, Authentication authentication) {
+		// 이미 로그인된 사용자라면 메인 페이지로 
+		if (authentication != null && authentication.isAuthenticated()
+				&& "admin".equals(authentication.getName())) {
+		        return "redirect:/admin/main";
+		    }
+		
+		System.out.println("되는건가?");
 		return "admin/adminLogin";
 	}
 
-	// 로그인하기
-	@PostMapping("/login")
-	public String adminLogin(User user) {
-		System.out.println("로그인 이름: " + user.getUserId());
-		System.out.println("로그인 비번: " + user.getPassword());
-		
-		if (("admin").equals(user.getUserId()) && ("admin").equals(user.getPassword())) {
-			return "admin/adminMain";
-		} else {
-			return "admin/adminLogin";
-		}
-	}
+	//spring security에서 처리
+	
+//	// 로그인하기
+//	@PostMapping("/login")
+//	public String adminLogin(User user) {
+//		System.out.println("로그인 이름: " + user.getUserId());
+//		System.out.println("로그인 비번: " + user.getPassword());
+//		
+//		if (("admin").equals(user.getUserId()) && ("admin").equals(user.getPassword())) {
+//			return "admin/adminMain";
+//		} else {
+//			System.out.println("왜 안됨?");
+//			return "admin/adminLogin";
+//		}
+//	}
 	
 	@GetMapping("/logout")
 	public String adminLogout() {

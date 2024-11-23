@@ -21,12 +21,10 @@ public interface BoardDao {
 
 	Board sellectReportedByNo(int no);
 
-
 	int insertBoard(Board board);
 
 	int updateBoard(Board board);
 
 	List<Board> selectByCategory(Board board);
-
 
 }

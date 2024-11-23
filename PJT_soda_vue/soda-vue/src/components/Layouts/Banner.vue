@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { RouterLink } from 'vue-router';
+</script>
+
 <!-- Banner.vue -->
 <!-- Banner.vue -->
 <template>
@@ -14,9 +18,11 @@
               <div class="button-l2">
                   <div class="click-here2">View Intro</div>
               </div>
+              <RouterLink to="/etco/chat">
               <div class="button-l">
-                  <div class="click-here">Explore Now</div>
+                  <div class="click-here">🕹️Chat Bot🕹️</div>
               </div>
+            </RouterLink>
           </div>
       </div>
   </div>

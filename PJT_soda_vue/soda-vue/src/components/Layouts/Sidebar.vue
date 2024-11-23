@@ -1,19 +1,16 @@
 <template>
   <div class="sidebar">
-    <!-- 상단 로고 영역 -->
     <div class="sidebar-logo">
       <i class="bi bi-person-walking"></i>
-      <span>Sports Community</span>
+      <router-link to="/board/"><span>Sports Community</span></router-link>
     </div>
 
-    <!-- 공통 게시판 -->
     <div class="sidebar-section">
       <div class="section-title">
         <i class="bi bi-compass"></i>
         <span>커뮤니티</span>
       </div>
       
-      <!-- 공지사항 -->
       <div class="menu-item">
         <a @click="toggleNotice" :class="{ active: isNoticeOpen }">
           <i class="bi bi-megaphone"></i>
@@ -22,23 +19,31 @@
         </a>
         <transition name="slide">
           <ul v-if="isNoticeOpen" class="sub-menu">
-            <li><a><i class="bi bi-arrow-right"></i> 일반공지</a></li>
-            <li><a><i class="bi bi-arrow-right"></i> 이벤트</a></li>
+            <li>
+              <router-link to="/board/category/NOTICE">
+                <i class="bi bi-arrow-right"></i> 일반공지
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/board/category/EVENT">
+                <i class="bi bi-arrow-right"></i> 이벤트
+              </router-link>
+            </li>
           </ul>
         </transition>
       </div>
  
-      <a class="menu-link">
+      <router-link to="/board/category/COMMUNITY" class="menu-link">
         <i class="bi bi-chat-dots"></i>
         <span>자유게시판</span>
-      </a>
-      <a class="menu-link">
+      </router-link>
+      
+      <router-link to="/board/category/EDITOR" class="menu-link">
         <i class="bi bi-pencil-square"></i>
         <span>에디터 칼럼</span>
-      </a>
+      </router-link>
     </div>
  
-    <!-- 종목 선택 -->
     <div class="sidebar-section">
       <div class="section-title">
         <i class="bi bi-trophy"></i>
@@ -53,34 +58,36 @@
         </select>
       </div>
  
-      <!-- 선택된 종목의 하위 메뉴 -->
       <transition-group name="fade" tag="ul" class="sport-menu">
         <li v-for="menu in sportMenus" :key="menu.code">
-          <a class="sport-menu-item">
+          <router-link 
+            :to="`/board/category/${selectedSport}/${menu.code}`" 
+            class="sport-menu-item"
+          >
             <i :class="['bi', menu.icon]"></i>
             <span>{{ menu.name }}</span>
-          </a>
+          </router-link>
         </li>
       </transition-group>
     </div>
  
-    <!-- 관리자 요청 -->
     <div class="sidebar-section">
-      <a class="menu-link support-link">
+      <router-link to="/support" class="menu-link support-link">
         <i class="bi bi-headset"></i>
         <span>관리자 요청/문의</span>
-      </a>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
 import { ref } from 'vue'
+import { storeToRefs } from 'pinia';
+import { useBoardStore } from '@/stores/board';
 
-const isNoticeOpen = ref(false)
-const toggleNotice = () => {
-  isNoticeOpen.value = !isNoticeOpen.value
-}
+const store = useBoardStore()
+// const { selectedCategory } = storeToRefs(store);
 
 const sports = [
   { code: 'WATERPOLO', name: '수구' },
@@ -101,7 +108,22 @@ const sportMenus = [
   { code: 'CLUB', name: '동호회/모임', icon: 'bi-people' }
 ]
 
-const selectedSport = ref(sports[0].code)
+// 화면이 바로 안 넘어가는 문제를 해결하기 위한 코드: 
+const router = useRouter();
+const selectedSport = ref(sports[0].code);
+
+const isNoticeOpen = ref(false)
+const toggleNotice = () => {
+  isNoticeOpen.value = !isNoticeOpen.value
+}
+
+// router.beforeEach((to, from, next) =>{
+//   if (to.params.sportCode) {
+//     selectedSport.value = to.params.sportCode
+//   }
+//   next()
+// })
+
 </script>
 
 <style scoped>
@@ -257,6 +279,7 @@ const selectedSport = ref(sports[0].code)
 .sub-menu li a:hover {
   color: #2563eb;
   transform: translateX(4px);
+  cursor: pointer;
 }
 
 .sidebar-section {

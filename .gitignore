@@ -113,3 +113,7 @@ build/
 .DS_Store
 Thumbs.db
 /.metadata/
+<<<<<<< HEAD
+=======
+.metadata/
+>>>>>>> rest_user2

@@ -21,7 +21,6 @@ public class AdminController {
 	
 	private final AdminUserService adminUserService;
 	
-	
 	public AdminController(AdminUserService adminUserService) {
 		this.adminUserService = adminUserService;
 	}
@@ -96,6 +95,7 @@ public class AdminController {
 //			return "admin/adminLogin";
 //		}
 //	}
+
 	
 	@GetMapping("/logout")
 	public String adminLogout() {

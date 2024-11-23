@@ -1,5 +1,6 @@
 1732087993318	Rename type 'ClientController'
 1732184983054	Delete element
+<<<<<<< HEAD
 1732188820339	Rename type 'RestUserController'
 1732235906727	Copy compilation unit
 1732235920350	Delete element
@@ -9,3 +10,9 @@
 1732238878665	Delete element
 1732238882340	Delete element
 1732239286885	Rename compilation unit 'JwtAuthInterceptor.java'
+=======
+1732279986756	Delete element
+1732280614792	Delete element
+1732280619517	Delete element
+1732280687153	Delete element
+>>>>>>> rest_user2

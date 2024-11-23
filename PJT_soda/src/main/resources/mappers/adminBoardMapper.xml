@@ -62,8 +62,8 @@
 	</delete>
 
 	<insert id="insertBoard" parameterType="Board">
-		insert into board (title, writer, content, category, user_no)
-		values (#{title}, #{writer}, #{content}, #{category}, #{userNo});
+		insert into board (title, writer, content, category, detail_category, user_no)
+		values (#{title}, #{writer}, #{content}, #{category}, #{detailCategory}, #{userNo});
 	</insert>
 	
 	<select id="allLikesCount" resultType="int">
@@ -130,13 +130,6 @@
 		r.board_no
 		WHERE b.board_no = #{boardNo}
 	</select>
-
-	<insert id="create" parameterType="Board">
-		INSERT INTO board
-		(title,
-		content, category, user_no) values (#{title}, #{content}, #{category},
-		#{userNo})
-	</insert>
 
 	<select id="selectByCategory" parameterType="Board" resultType="Board">
 		SELECT b.*, count(l.board_no) as likesCnt

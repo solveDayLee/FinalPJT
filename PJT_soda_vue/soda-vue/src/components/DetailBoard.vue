@@ -3,17 +3,12 @@
     <div class="board-detail">
       <div class="category-wrapper">
         <h2 class="category">{{ store.board.category }}</h2>
-        <h2 class="category">{{ store.board.category }}</h2>
       </div>
-
       <div class="detail-content">
         <div class="title-section">
           <div class="title">{{ store.board.title }}</div>
-          <div class="title">{{ store.board.title }}</div>
+      
           <div class="meta-info">
-            <span class="writer">{{ store.board.writer }}</span>
-            <span class="date">{{ formatDate(store.board.regDate) }}</span>
-            <span class="view-count">조회 {{ store.board.viewCnt }}</span>
             <span class="writer">{{ store.board.writer }}</span>
             <span class="date">{{ formatDate(store.board.regDate) }}</span>
             <span class="view-count">조회 {{ store.board.viewCnt }}</span>
@@ -66,7 +61,7 @@ const route = useRoute()
 const router = useRouter()
 
 onMounted(() => {
-  store.getBoard(route.params.no)
+  store.getBoardByNo(route.params.no)
 })
 
 const deleteBoard = async () => {

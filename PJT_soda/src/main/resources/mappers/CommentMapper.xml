@@ -5,43 +5,68 @@
 
 <mapper namespace="com.ssafy.soda.model.dao.CommentDao">
 
-	<!-- 댓글 입력 -->
-	<insert id="insert" parameterType="Comment">
-		INSERT INTO comment (board_no, p_comment_no, comment_no, user_id, comment,
-		reg_date)
-		VALUES (#{boardNo}, #{pCommentNo}, #{commentNo}, #{userId}, #{comment},
-		NOW());
-
-
-	</insert>
-
-	<select id="getCommentByNo" parameterType="int"
-		resultType="Comment">
-		select *
-		from comment
-		where comment_no = #{commentNo};
-
+	<!-- 게시글에 달린 모든 댓글 조회 -->
+	<select id="selectAll" parameterType="int" resultType="Comment">
+		SELECT
+		comment_no as commentNo,
+		board_no as boardNo,
+		p_comment_no as
+		pCommentNo,
+		user_id as userId,
+		comment,
+		DATE_FORMAT(reg_date, '%Y-%m-%d
+		%H:%i:%s') as regDate
+		FROM
+		comment
+		WHERE
+		board_no = #{boardNo}
+		ORDER BY
+		reg_date DESC
 	</select>
 
+
+	<!-- 댓글 입력 -->
+<insert id="insert" parameterType="Comment" useGeneratedKeys="true" keyProperty="commentNo">
+  INSERT INTO comment (
+    board_no,
+    p_comment_no,
+    user_id,
+    comment,
+    reg_date
+  ) VALUES (
+    #{boardNo},
+    #{pCommentNo},
+    #{userId},
+    #{comment},
+    NOW()
+  )
+</insert>
+
+<!-- 댓글 조회 -->
+<select id="getCommentByNo" parameterType="int" resultType="Comment">
+  SELECT 
+    comment_no as commentNo,
+    board_no as boardNo,
+    p_comment_no as pCommentNo,
+    user_id as userId,
+    comment,
+    reg_date as regDate
+  FROM comment
+  WHERE comment_no = #{commentNo}
+</select>
+
 	<delete id="delete" parameterType="int">
-		delete from comment where comment_no = #{commentNo}
+		delete from comment where
+		comment_no = #{commentNo}
 	</delete>
 
 	<update id="update" parameterType="Comment">
 		update comment
-		set comment = #{comment}
+		set comment =
+		#{comment}
 		where comment_no = #{commentNo}
 
 	</update>
-
-
-
-
-
-
-
-
-
 
 
 </mapper>

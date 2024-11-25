@@ -10,7 +10,6 @@
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RestController"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMapping"/>
     <fullyQualifiedTypeName name="com.ssafy.soda.model.service.CommentService"/>
-    <fullyQualifiedTypeName name="com.ssafy.soda.model.dto.Comment"/>
     <fullyQualifiedTypeName name="java.lang.Integer"/>
     <fullyQualifiedTypeName name="java.lang.String"/>
     <fullyQualifiedTypeName name="com.ssafy.soda.jwt.JwtUtil"/>
@@ -21,4 +20,5 @@
     <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
     <fullyQualifiedTypeName name="com.ssafy.soda.model.dao.BoardDao"/>
     <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
+    <fullyQualifiedTypeName name="com.ssafy.soda.model.dto.Comment"/>
 </qualifiedTypeNameHistroy>

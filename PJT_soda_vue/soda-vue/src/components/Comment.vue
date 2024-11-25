@@ -15,14 +15,14 @@
 
         <!-- 댓글 목록 영역 -->
         <div class="comments-list">
-            <div v-for="item in comments" :key="item?.commentNo || Math.random()" class="comment-item">
+            <div v-for="item in comments" :key="item.commentNo" class="comment-item">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center gap-2">
                         <div class="comment-avatar">
-                            {{ item.userId.charAt(0).toUpperCase() }}
+                            {{ item.userId ? item.userId.charAt(0).toUpperCase() : '?' }}
                         </div>
                         <div>
-                            <div class="comment-writer">{{ item.userId }}</div>
+                            <div class="comment-writer">작성자: {{ item.userId }} (댓글번호: {{ item.commentNo }})</div>
                             <!-- 날짜 표시 방식 formatData 함수 사용 -->
                             <small class="text-muted">{{ formatDate(item.regDate) }}</small>
                         </div>
@@ -76,57 +76,74 @@ const comments = ref([])
 //초기 댓글 목록을 가져오는 함수 - 최초 1회만 실행
 const fetchInitialComments = async () => {
     try {
-        const response = await axios.get(`/etco/comments/${props.boardNo}`)
-        console.log('초기 댓글 목록:', response.data)
-        comments.value = Array.isArray(response.data) ? response.data : []
+        const token = localStorage.getItem('access-token'); // 토큰 가져오기
+        const response = await axios.get(`/etco/comments/${props.boardNo}`, {
+            headers: {
+                'Authorization': token
+            }
+        });
+        console.log('서버에서 받은 댓글 데이터:', response.data);
+        
+        if (Array.isArray(response.data)) {
+            comments.value = response.data;
+        } else {
+            console.error('서버 응답이 배열이 아님:', response.data);
+            comments.value = [];
+        }
     } catch (error) {
-        console.error('초기 댓글 목록 조회 실패:', error)
-        comments.value = [] // 에러 시 빈 배열로 초기화
+        console.error('댓글 목록 조회 실패:', error);
+        if (error.response) {
+            console.error('에러 상세:', error.response.data);
+            console.error('상태 코드:', error.response.status);
+        }
+        comments.value = []; // 에러 시 빈 배열로 초기화
+        // 사용자에게 에러 메시지를 표시하지 않음 (옵션)
     }
 }
 
 // 댓글 작성 함수
 const submitComment = async () => {
     if (!comment.value.trim()) {
-        alert('댓글을 입력해주세요.')
-        return
+        alert('댓글을 입력해주세요.');
+        return;
     }
 
-    const userId = localStorage.getItem('userId')
-    // userId가 없는 경우 처리
-    if (!userId) {
-        alert('로그인이 필요한 서비스입니다.')
-        return
+    const token = localStorage.getItem('access-token');
+    const userId = localStorage.getItem('userId');
+    
+    if (!token || !userId) {
+        alert('로그인이 필요한 서비스입니다.');
+        return;
     }
+
     const commentData = {
         boardNo: props.boardNo,
         pCommentNo: 0,
         userId: userId,
-        comment: comment.value,
-        regDate: new Date().toISOString()
-    }
-
-    console.log('전송할 댓글 데이터:', commentData)
+        comment: comment.value
+    };
 
     try {
-        const response = await axios.post(`/etco/comments`, commentData)
-        console.log('서버 응답:', response.data)
+        const response = await axios.post('/etco/comments', commentData, {
+            headers: {
+                'Authorization': token
+            }
+        });
+        console.log('댓글 작성 응답:', response.data);
 
-        // 새로운 댓글을 배열에 직접 추가
-        // comments.value.unshift(response.data)
         if (response.data) {
-            comments.value = [response.data, ...comments.value]
+            // 새로운 댓글을 목록에 추가
+            comments.value.unshift(response.data);
+            comment.value = '';
+            alert('댓글이 등록되었습니다.');
         }
-        comment.value = ''
-        alert('댓글이 등록되었습니다.')
-
     } catch (error) {
-        console.error('댓글 작성 실패:', error)
-        if (error.response?.status === 401) {
-            alert('로그인이 필요한 서비스입니다.')
-            return
+        console.error('댓글 작성 실패:', error);
+        if (error.response) {
+            console.error('에러 상세:', error.response.data);
+            console.error('상태 코드:', error.response.status);
         }
-        alert('댓글 작성에 실패했습니다.')
+        alert('댓글 작성에 실패했습니다.');
     }
 }
 
@@ -138,52 +155,52 @@ const isCommentOwner = (item) => {
 
 //댓글 삭제 함수
 const deleteComment = async (commentNo) => {
-    if (!confirm('댓글을 삭제하시겠습니까?')) return
+    if (!confirm('댓글을 삭제하시겠습니까?')) return;
 
+    const token = localStorage.getItem('access-token');
+    
     try {
-        await axios.delete(`/etco/comments/${commentNo}`)
+        await axios.delete(`/etco/comments/${commentNo}`, {
+            headers: {
+                'Authorization': token
+            }
+        });
 
-        // 서버 요청 성공 후 로컬 상태 업데이트
-        comments.value = comments.value.filter(comment => comment.commentNo !== commentNo)
-        alert('댓글이 삭제되었습니다.')
-
+        comments.value = comments.value.filter(comment => comment.commentNo !== commentNo);
+        alert('댓글이 삭제되었습니다.');
     } catch (error) {
-        console.error('댓글 삭제 실패:', error)
-        alert('댓글 삭제에 실패했습니다.')
+        console.error('댓글 삭제 실패:', error);
+        alert('댓글 삭제에 실패했습니다.');
     }
 }
 
 // 댓글 수정 함수
 const updateComment = async (commentNo, commentText) => {
+    const token = localStorage.getItem('access-token');
+    
     try {
         const response = await axios.put(`/etco/comments/${commentNo}`, {
             commentNo: commentNo,
             boardNo: props.boardNo,
             pCommentNo: 0,
             userId: localStorage.getItem('userId'),
-            comment: newComment
-        })
+            comment: commentText
+        }, {
+            headers: {
+                'Authorization': token
+            }
+        });
 
-        // 서버 요청 성공 후 로컬 상태 업데이트
-        // const updatedCommentIndex = comments.value.findIndex(c => c.commentNo === commentNo)
-        // if (updatedCommentIndex !== -1) {
-        //     comments.value[updatedCommentIndex] = response.data
-        // }
-        // alert('댓글이 수정되었습니다.')
-
-        const index = comments.value.findIndex(item => item.commentNo === commentNo)
+        const index = comments.value.findIndex(item => item.commentNo === commentNo);
         if (index !== -1) {
-            comments.value[index] = response.data
+            comments.value[index] = response.data;
         }
-        alert('댓글이 수정되었습니다.')
-
-
+        alert('댓글이 수정되었습니다.');
     } catch (error) {
-        console.error('댓글 수정 실패:', error)
-        alert('댓글 수정에 실패했습니다.')
+        console.error('댓글 수정 실패:', error);
+        alert('댓글 수정에 실패했습니다.');
     }
 }
-
 // 댓글 신고 함수 (미구현)
 const reportComment = (commentNo) => {
     alert('댓글이 신고되었습니다.')
@@ -205,12 +222,21 @@ const formatDate = (dateString) => {
 
 // 컴포넌트 마운트 시 실행
 onMounted(() => {
+    // 로그인 상태 확인
+    const token = localStorage.getItem('access-token');
+    const userId = localStorage.getItem('userId');
+    console.log('로그인 상태 확인:', {
+        token: token ? '토큰 있음' : '토큰 없음',
+        userId: userId
+    });
+
     if (userStore.loginUser === null) {
-        userStore.initializeUser()
+        userStore.initializeUser();
     }
-    // 초기 1회만 댓글 목록 로딩
-    fetchInitialComments()
-})
+    
+    // 초기 댓글 목록 로딩
+    fetchInitialComments();
+});
 </script>
 
 <style scoped>

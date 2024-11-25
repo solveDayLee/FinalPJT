@@ -1,5 +1,7 @@
 package com.ssafy.soda.model.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.ssafy.soda.model.dao.CommentDao;
@@ -16,9 +18,14 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public boolean writeComment(Comment comment) {
-		return commentDao.insert(comment);
-	}
+	public Comment writeComment(Comment comment) {
+        // insert 후 새로 생성된 댓글 정보를 바로 조회하여 반환
+        if (commentDao.insert(comment)) {
+            return commentDao.getCommentByNo(comment.getCommentNo());
+        }
+        return null;
+    } 
+	
 
 	@Override
 	public Comment getComment(int commentNo) {
@@ -33,6 +40,11 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public boolean updateComment(Comment comment) {
 		return commentDao.update(comment);
+	}
+
+	@Override
+	public List<Comment> getComments(int boardNo) {
+		return commentDao.selectAll(boardNo);
 	}
 
 }

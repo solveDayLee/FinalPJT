@@ -45,10 +45,9 @@ public class ClientBoardController {
 	//상세 조회
 	@GetMapping("/{no}")
 	public ResponseEntity<Board> detail(@PathVariable("no") int no) {
-		System.out.println("보드 디테일 들고감!");
 		Board board = adminBoardService.getBoard(no);
 		if (board != null) {
-			System.out.println("datail:"+board);
+			System.out.println("보드 디테일 들고감!:" + board);
 			return ResponseEntity.ok(board);
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

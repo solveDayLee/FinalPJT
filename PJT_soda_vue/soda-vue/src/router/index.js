@@ -65,6 +65,12 @@ const router = createRouter({
       name: 'Chat',
       component: ChatView
     },
+    {
+      path: '/admin/*',  // 모든 관리자 경로
+      beforeEnter: () => {
+          window.location.href = 'http://localhost:8080/admin/main'; // 직접 서버로 이동
+      }
+    }
     
   ],
 

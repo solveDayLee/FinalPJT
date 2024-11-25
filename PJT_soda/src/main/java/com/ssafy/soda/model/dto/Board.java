@@ -14,11 +14,11 @@ public class Board {
 	private User user;
 	private BoardReport boardReport;
 	
+	
 	public Board() {
-		// TODO Auto-generated constructor stub
 	}
 	
-	public Integer getBoardNo() {
+	public int getBoardNo() {
 		return boardNo;
 	}
 	public void setBoardNo(Integer boardNo) {

@@ -10,6 +10,7 @@ axios.interceptors.request.use(
         const token = localStorage.getItem('access-token');
         if (token) {
             config.headers.Authorization = token.startsWith('Bearer') ? token : `Bearer ${token}`;
+
         }
         return config;
     },
@@ -56,6 +57,7 @@ export const useUserStore = defineStore('user', () => {
             userId,
             password,
         })
+
         .then((res) => { 
             console.log('로그인 응답:', res.data);
                 
@@ -115,6 +117,7 @@ export const useUserStore = defineStore('user', () => {
                 console.error('토큰 처리 중 에러:', error);
                 throw error;
             }
+
         })
         .catch((err) => {
             console.error('로그인 실패:', err);

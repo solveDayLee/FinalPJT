@@ -23,6 +23,8 @@ public interface UserDao {
 
 	User findById(String userId);
 
+	User findByUserName(String username);
+
 
 
 }

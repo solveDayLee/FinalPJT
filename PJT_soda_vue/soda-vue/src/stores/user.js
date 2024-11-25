@@ -10,6 +10,7 @@ axios.interceptors.request.use(
         const token = localStorage.getItem('access-token');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
+            console.log('토큰 전송:', token); // 디버깅용
         }
         return config;
     },
@@ -44,7 +45,7 @@ export const useUserStore = defineStore('user', () => {
             password,
         })
         .then((res) => { //로그인 성공하면
-            console.log(res.data)
+            console.log('로그인 응답:', res.data) // 디버깅용
 
             //로그인 유저 정보 저장
             loginUser.value = {
@@ -60,10 +61,30 @@ export const useUserStore = defineStore('user', () => {
             localStorage.setItem('role', res.data.role)
             localStorage.setItem('userId',userId)
 
-            if(res.data.role === 'ADMIN') {
-                location.href = 'http://localhost:8080/admin/main';
+            if(res.data.role && res.data.role.includes('ADMIN')) {
+                console.log('관리자 로그인 감지'); // 디버깅용
+
+                // 서버에 직접 관리자 페이지 접근 요청 (JWT 토큰 포함)
+                // axios.get('http://localhost:8080/admin/main')
+                //     .then(response => {
+                //         // 서버에서의 응답이 성공적이라면 페이지 이동
+                //         console.log('관리자 페이지 접근 성공:', response.data);
+                //         // Vue Router를 사용하여 페이지 이동
+                //         router.push({ path: '/admin/main' });
+                //     })
+                //     .catch(error => {
+                //         console.log('관리자 페이지 접근 실패:', error);
+                //         alert('관리자 권한이 없습니다.');
+                //     });
+                // return;
+                console.log('관리자 로그인 감지') // 디버깅용
+                console.log('Redirect URL:', res.data.redirectUrl); // 디버깅용
+                // router.push({ path: '/admin/main' });
+                location.href = "http://localhost:8080/admin/main";
                 return;
             }
+            console.log('일반사용자 로그인 감지') // 디버깅용
+            console.log('관리자였다면 Redirect URL:', res.data.redirectUrl);
             router.push({name: 'Home'})
         })
 

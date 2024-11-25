@@ -2,10 +2,14 @@ package com.ssafy.soda.jwt;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.function.Function;
 
+import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.xml.crypto.AlgorithmMethod;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
@@ -26,10 +30,14 @@ public class JwtUtil {
 	        secretKey = Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8));
 	    }
 	    
+//	    public JwtUtil() {
+//	    	KeyGenerator keyGenerator = KeyGenerator.getInstance("algorithm", "HmacSHA256");
+//	    	secretKey = keyGenerator.generateKey();
+//	    }
 	    
 	    
 	    // 토큰 생성
-	    public String createToken(String name, String role) {
+	    public String createToken(String userId, String role) {
 	    	  if (role!= null && !role.startsWith("ROLE_")) {
 	    	        role = "ROLE_" + role;
 	    	    }
@@ -37,7 +45,8 @@ public class JwtUtil {
 	    	
 	        return Jwts.builder()
 	                .setHeaderParam("typ", "JWT")  // header() 대신 setHeaderParam 사용
-	                .claim("name", name)
+	                .setSubject(userId)  // userId를 subject로 설정
+	                .claim("userId", userId)
 	                .claim("role", role)
 	                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60))
 	                .signWith(secretKey)
@@ -61,5 +70,35 @@ public class JwtUtil {
 	    			.getBody();
 	    	return claims.get("role", String.class);
 	    }
+
+		public String extractUserName(String token) {
+//			return extractClaim(token, Claims::getSubject);
+			Claims claims = extractAllClaims(token);
+			return claims.getSubject();  // subject에서 userId 추출
+		}
+
+		private <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
+			final Claims claims = extractAllClaims(token);
+			return claimResolver.apply(claims);
+		}
+
+		private Claims extractAllClaims(String token) {
+			return Jwts.parserBuilder()
+					.setSigningKey(secretKey)
+					.build().parseClaimsJws(token).getBody();
+		}
+
+		public boolean validateToken(String token, UserDetails userDetails) {
+			final String userName = extractUserName(token);
+			return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
+		}
+
+		private boolean isTokenExpired(String token) {
+			return extractExpiration(token).before(new Date());
+		}
+
+		private Date extractExpiration(String token) {
+			return extractClaim(token, Claims::getExpiration);
+		}
 	    
 }

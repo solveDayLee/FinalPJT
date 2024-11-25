@@ -80,6 +80,10 @@
     )
 	
 	</insert>	
-	
+	<select id="findByUserName" parameterType="String" resultType="User">
+		select * 
+		from user
+		where name = #{name}
+	</select>
 	
 </mapper>

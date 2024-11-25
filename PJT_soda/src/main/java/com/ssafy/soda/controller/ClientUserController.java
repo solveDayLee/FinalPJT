@@ -39,7 +39,7 @@ public class ClientUserController {
 	
 	@PostMapping("/signup")
 	public ResponseEntity<String> write(@RequestBody User user) {
-		System.out.println(user);
+		System.out.println("회원가입: " + user);
 		if(userService.signup(user)) {
 			return ResponseEntity.status(HttpStatus.CREATED).body("사용자 회원 추가 성공");
 		}
@@ -47,38 +47,53 @@ public class ClientUserController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<Map<String, Object>> login(@RequestBody User user) {
-		Map<String, Object> result = new HashMap<>();
-		User loginUser = userService.login(user.getUserId(), user.getPassword());
+	public ResponseEntity<Map<String, Object>> login(@RequestBody User user) {	
+		System.out.println("컨트롤러의 login 진입! user: " + user);
+		boolean isUser = userService.verify(user);
 		
-		if(loginUser != null) {
+		System.out.println("isUser : " + isUser);
+		
+		Map<String, Object> result = new HashMap<>();
+		if(isUser) {
+			User loginUser = userService.getUserById(user.getUserId());
 			
-			System.out.println("로그인성공"+ user.getUserId());
-			//role 정보 포함하여 토큰 생성 (관리자, 사용자 역할)
-			String role = loginUser.getRole() != null ? loginUser.getRole() : "USER"; //기본값
+			System.out.println("로그인 시도 유저: " + loginUser.getUserId());
+	        System.out.println("유저 권한: " + loginUser.getRole());
 			
-			// admin은 Spring Security의 폼 로그인으로 처리
-			if("ADMIN".equals(role)) {
+			String role = loginUser.getRole() != null ? "ROLE_" + loginUser.getRole() : "USER";
+
+//	        // role이 이미 ROLE_로 시작하는지 확인
+//	        String role = loginUser.getRole();
+//	        if (!role.startsWith("ROLE_")) {
+//	            role = "ROLE_" + role;
+//	        }
+	        
+	        System.out.println("최종 권한: " + role);
+			
+			if("ROLE_ADMIN".equals(role)) {
 				result.put("message", "admin login success");
-				result.put("redirectUrl", "/admin/main");
+//				result.put("redirectUrl", "/admin/main");
+				result.put("redirectUrl", "http://localhost:8080/admin/main");
+				result.put("access-token", jwtUtil.createToken(loginUser.getUserId(), role)); // JWT 토큰 저장
 				result.put("role", role);
+				
+				System.out.println("응답 데이터 (관리자): " + result); // 디버깅용
 	            return new ResponseEntity<>(result, HttpStatus.OK);
 			}
-			
-			//일반 사용자는 jwt처리
 			result.put("message", "login성공"); //상태 메시지 저장
-			//jwtUtil.createToken()을 호출할 때 role 파라미터를 함께 전달
-			result.put("access-token", jwtUtil.createToken(loginUser.getName(), role)); // JWT 토큰 저장
+			result.put("redirectUrl", "http://localhost:5173/"); // 그냥 명시해주기
+			jwtUtil.createToken(loginUser.getName(), role);
+			result.put("access-token", jwtUtil.createToken(loginUser.getUserId(), role)); // JWT 토큰 저장
 			result.put("role", role); //클라이언트에게 role 정보 저장
 			
-			
-			return new ResponseEntity<>(result, HttpStatus.ACCEPTED);  // 저장된 메시지와 토큰을 클라이언트에게 전송
+			return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+					
 		}
-		System.out.println("로그인실패"+ user.getUserId());
 		result.put("message", "login실패");
-//		return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
-		return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED); // 401 상태코드로 변경. "인증 실패" 를 의미
+		return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+	
 	}
 	
+		
 	
 }

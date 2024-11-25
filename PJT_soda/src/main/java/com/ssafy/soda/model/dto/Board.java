@@ -13,6 +13,11 @@ public class Board {
 	private int likesCnt;
 	private User user;
 	private BoardReport boardReport;
+	
+	
+	public Board() {
+	}
+	
 	public int getBoardNo() {
 		return boardNo;
 	}

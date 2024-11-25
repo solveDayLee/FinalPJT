@@ -32,7 +32,7 @@ public class WebConfig implements WebMvcConfigurer{
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(jwtInterceptor)
 		.addPathPatterns("/etco/**", "/admin/**") //etco로 시작하는 모든 경로에 인터셉터 적용
-		.excludePathPatterns("/etco/login", "/etco/signup", "/etco/board"); //로그인, 회원가입, 전체리스트 제외
+		.excludePathPatterns("/etco/login", "/etco/signup", "/etco/board", "/admin/*"); //로그인, 회원가입, 전체리스트 제외
 	}
 	
 	

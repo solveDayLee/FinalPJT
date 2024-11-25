@@ -11,6 +11,7 @@ public class Board {
 	private String detailCategory;
 	private Integer userNo;
 	private int likesCnt;
+	
 	private User user;
 	private BoardReport boardReport;
 	

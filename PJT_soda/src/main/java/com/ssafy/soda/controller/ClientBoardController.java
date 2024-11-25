@@ -82,12 +82,7 @@ public class ClientBoardController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
 		}
 		
-		
-		
-		
-	
 	}
-	
 	
 	//삭제 
 	@DeleteMapping("/{no}")

@@ -69,10 +69,10 @@
 
 // })
 
-import { ref, watch } from "/node_modules/.vite/deps/vue.js?v=e026b806"
-import { defineStore } from "/node_modules/.vite/deps/pinia.js?v=e026b806"
-import axios from "/node_modules/.vite/deps/axios.js?v=e026b806"
-import router from "/src/router/index.js"
+import { ref, watch } from "vue" 
+import { defineStore } from "pinia" 
+import axios from "axios" 
+import router from "@/router"
 
 // const REST_API_URL = `http://192.168.210.73:8080/etco/board`
 const REST_API_URL = `http://localhost:8080/etco/board`

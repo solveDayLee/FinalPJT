@@ -2,7 +2,10 @@ package com.ssafy.soda.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +16,7 @@ import com.ssafy.soda.model.dto.Comment;
 import com.ssafy.soda.model.service.CommentService;
 
 @RestController
-@RequestMapping("/comments")
+@RequestMapping("/etco")
 public class CommentController {
 	private final CommentService commentService;
 	private final JwtUtil jwtUtil;
@@ -60,12 +63,80 @@ public class CommentController {
 	}
 	
 	
-	
 	//댓글 삭제
+	@DeleteMapping("/comments/{commentNo}")
+	public ResponseEntity<?> delete(@PathVariable("commentNo") int commentNo, 
+			@RequestHeader("Authorization") String token){
+		try {
+			String actualToken = token.replace("Bearer ", "");
+			String userId = jwtUtil.getUserId(actualToken);
+			
+			//삭제하려는 댓글 정보 가져오기
+			Comment comment = commentService.getComment(commentNo);
+			
+			if(comment == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("삭제할 댓글이 없음");
+			}
+			
+			if(!userId.equals(comment.getUserId())) {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("삭제권한 없음");
+			}
+			
+			//댓글 삭제 실행
+			boolean isDeleted = commentService.deleteComment(commentNo);
+			if(isDeleted) {
+				return ResponseEntity.ok("댓글이 삭제되었습니다");
+			}
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 삭제 실패");
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("에러: " + e.getMessage());
+		}
+	}
 	
 	
 	
-	
+	//댓글 수정
+	@PutMapping("/comments/{commentNo}")
+	public ResponseEntity<?> updateComment(
+	    @PathVariable("commentNo") int commentNo,
+	    @RequestBody Comment comment,
+	    @RequestHeader("Authorization") String token
+	) {
+	    try {
+	        // 1. 토큰에서 사용자 ID 추출
+	        String actualToken = token.replace("Bearer ", "");
+	        String userId = jwtUtil.getUserId(actualToken); // 사용자 ID 가져오기
+	        
+	        // 2. 수정하려는 댓글 정보 가져오기
+	        Comment existingComment = commentService.getComment(commentNo);
+	        
+	        // 3. 댓글 존재 여부 확인
+	        if (existingComment == null) {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("수정할 댓글을 찾을 수 없습니다.");
+	        }
+	        
+	        // 4. 댓글 작성자와 현재 사용자 ID 비교
+	        if (!userId.equals(existingComment.getUserId())) { // 작성자가 아닌 경우
+	            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("수정 권한이 없습니다.");
+	        }
+	        
+	        // 5. 댓글 수정 내용 설정
+	        comment.setCommentNo(commentNo); // 댓글 번호 설정
+	        comment.setUserId(userId); // 현재 사용자 ID 설정
+	        
+	        // 6. 댓글 수정 실행
+	        boolean isUpdated = commentService.updateComment(comment);
+	        if (isUpdated) {
+	            return ResponseEntity.ok("댓글이 성공적으로 수정되었습니다.");
+	        }
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 수정에 실패했습니다.");
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("에러: " + e.getMessage());
+	    }
+	}
+
+
 	//댓글 신고
 	
 	

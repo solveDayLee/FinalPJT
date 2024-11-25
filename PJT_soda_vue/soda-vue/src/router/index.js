@@ -70,7 +70,13 @@ const router = createRouter({
       beforeEnter: () => {
           window.location.href = 'http://localhost:8080/admin/main'; // 직접 서버로 이동
       }
-    }
+    },
+    {
+      path: '/img/upload',
+      name: 'Img',
+      component: BoardView
+    },
+    
     
   ],
 

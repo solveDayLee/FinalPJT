@@ -83,10 +83,10 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { ref } from 'vue'
-import { storeToRefs } from 'pinia';
-import { useBoardStore } from '@/stores/board';
+// import { storeToRefs } from 'pinia';
+//import { useBoardStore } from '@/stores/board';
 
-const store = useBoardStore()
+// const store = useBoardStore()
 // const { selectedCategory } = storeToRefs(store);
 
 const sports = [

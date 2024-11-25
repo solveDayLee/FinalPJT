@@ -19,7 +19,7 @@
         </div>
 
         <div class="main-content">
-          <div class="text-content">{{ store.board.content }}</div>
+          <div class="text-content ql-editor" v-html="sanitizedContent" ></div>
           <div class="like-section">
             <button class="like-button" :class="{ 'liked': isLiked }" @click="handleLike">
               ❤️ {{ store.board.likes }}
@@ -54,6 +54,8 @@ import { ref, onMounted, computed } from 'vue'
 import { useBoardStore } from '@/stores/board';
 import { useUserStore } from '@/stores/user' // 1125 기능추가
 import axios from 'axios';
+import DOMPurify from 'dompurify';
+import 'quill/dist/quill.snow.css';   // Quill 스타일시트
 
 const isLiked = ref(false)
 const store = useBoardStore()
@@ -138,6 +140,10 @@ const formatDate = (date) => {
     minute: '2-digit'
   })
 }
+//quill 추가
+const sanitizedContent = computed(() => {
+  return store.board?.content ? DOMPurify.sanitize(store.board.content) : '';
+});
 </script>
 
 <style scoped>
@@ -204,6 +210,7 @@ const formatDate = (date) => {
   color: #2d3748;
   margin-bottom: 2.5rem;
   font-size: 1.1rem;
+  margin-bottom: 1em;
 }
 
 .like-section {
@@ -408,5 +415,51 @@ const formatDate = (date) => {
   .list-button {
     width: 100%;
   }
+  .text-content {
+  margin: 20px 0;
+  min-height: 200px;
+}
+
+/* Quill 스타일 재정의 */
+.text-content :deep(.ql-editor) {
+  padding: 0;
+}
+
+.text-content :deep(p) {
+  margin-bottom: 1em;
+}
+
+.text-content :deep(img) {
+  max-width: 100%;
+  height: auto;
+  margin: 1em 0;
+}
+
+.text-content :deep(blockquote) {
+  border-left: 4px solid #ccc;
+  margin: 1em 0;
+  padding-left: 16px;
+  color: #666;
+}
+
+.text-content :deep(pre) {
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  padding: 12px;
+  margin: 1em 0;
+  overflow-x: auto;
+}
+
+.text-content :deep(ul), 
+.text-content :deep(ol) {
+  padding-left: 2em;
+  margin: 1em 0;
+}
+
+.text-content :deep(h1),
+.text-content :deep(h2),
+.text-content :deep(h3) {
+  margin: 1em 0 0.5em;
+}
 }
 </style>

@@ -1,318 +1,285 @@
 <template>
     <div class="write-container">
-        <form @submit.prevent="createBoard">
-            <h2 class="form-title">글쓰기</h2>
-
-            <div class="form-content">
-                <div class="input-group">
-                    <label>게시판</label>
-                    <div class="category-wrapper">
-                        <select v-model="board.category" class="category" @change="handleMainCategoryChange">
-                            <option value="" disabled>게시판을 선택해주세요</option>
-                            <option v-for="sport in sports" :key="sport.code" :value="sport.code"
-                                :disabled="sport.code === 'EDITOR'">
-                                {{ sport.name }}
-                            </option>
-                        </select>
-
-                        <!-- 서브 카테고리 선택 -->
-                        <select v-if="board.category && showSubCategory" v-model="board.detailCategory"
-                            class="category sub-category">
-                            <option value="" disabled>세부 카테고리를 선택해주세요</option>
-                            <option v-for="menu in sportMenus" :key="menu.code" :value="menu.code">{{ menu.name }}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="input-group">
-                    <label>제목</label>
-                    <input v-model="board.title" class="form-input" placeholder="제목을 입력해주세요" type="text">
-                </div>
-
-                <div class="write-section">
-                    <textarea v-model="board.content" class="content-textarea" rows="20"
-                        placeholder="여기에 글을 입력해주세요"></textarea>
-                </div>
-
-                <div class="attach-section">
-                    <div class="attach-header">
-                        <div class="attach-left">
-                            <span class="attach-title">첨부파일</span>
-                            <button class="attach-button">
-                                <span class="icon">📎</span>
-                                파일 첨부
-                            </button>
-                        </div>
-                        <span class="attach-size">{{ `${attachBytes}/10.00MB` }}</span>
-                    </div>
-                    <div class="file-list">
-                        <!-- 파일 목록이 여기에 표시됩니다 -->
-                    </div>
-                </div>
-
-                <div class="form-actions">
-                    <button class="cancel-button" type="button">취소</button>
-                    <button class="submit-button" type="submit">완료</button>
-                </div>
+      <form @submit.prevent="createBoard">
+        <h2 class="form-title">글쓰기</h2>
+  
+        <div class="form-content">
+          <!-- 카테고리 선택 -->
+          <div class="input-group">
+            <label>게시판</label>
+            <div class="category-wrapper">
+              <select v-model="board.category" class="category" @change="handleMainCategoryChange">
+                <option value="" disabled>게시판을 선택해주세요</option>
+                <option v-for="sport in sports" :key="sport.code" :value="sport.code"
+                  :disabled="sport.code === 'EDITOR'">
+                  {{ sport.name }}
+                </option>
+              </select>
+  
+              <select v-if="board.category && showSubCategory" v-model="board.detailCategory" class="category sub-category">
+                <option value="" disabled>세부 카테고리를 선택해주세요</option>
+                <option v-for="menu in sportMenus" :key="menu.code" :value="menu.code">{{ menu.name }}</option>
+              </select>
             </div>
-        </form>
+          </div>
+  
+          <!-- 제목 -->
+          <div class="input-group">
+            <label>제목</label>
+            <input
+              v-model="board.title"
+              class="form-input"
+              placeholder="예: 자유게시판에 올릴 제목을 입력하세요"
+              type="text"
+            />
+          </div>
+  
+          <!-- Quill Editor -->
+          <div class="write-section">
+            <label>내용</label>
+            <div id="editor-container" class="quill-editor" placeholder="내용을 입력하세요"></div>
+          </div>
+  
+          <!-- 액션 버튼 -->
+          <div class="form-actions">
+            <button class="cancel-button" type="button" @click="cancelPost">
+              <span>취소</span>
+            </button>
+            <button class="submit-button" type="submit">
+              <span>작성 완료</span>
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
-
-</template>
-
-<script setup>
-import { ref, computed } from 'vue';
-import { useBoardStore } from '@/stores/board';
-import { useRouter } from 'vue-router';
-
-const router = useRouter()
-const store = useBoardStore()
-const board = ref({
+  </template>
+  
+  <script setup>
+  import { ref, computed, onMounted } from 'vue';
+  import Quill from 'quill';
+  import axios from 'axios';
+  import 'quill/dist/quill.snow.css'
+  import { useBoardStore } from '@/stores/board';
+  
+  const board = ref({
     category: '',
     detailCategory: '',
     title: '',
     writer: '',
     content: '',
-
-})
-
-const createBoard = function () {
-    store.createBoard(board.value)
-}
-const attachBytes = ref(0);
-
-const sports = [
-  { code: 'COMMUNITY', name: '자유게시판' },
-  { code: 'WATERPOLO', name: '수구' },
-  { code: 'BALLET', name: '발레' },
-  { code: 'CURLING', name: '컬링' },
-  { code: 'SCUBA', name: '스쿠버다이빙' },
-  { code: 'SAILING', name: '세일링' },
-  { code: 'ARCHERY', name: '양궁' }
-]
-
-const sportMenus = [
-  { code: 'GUIDE', name: '초보자 가이드', icon: 'bi-book' },
-  { code: 'INFO', name: '정보/소식', icon: 'bi-info-circle' },
-  { code: 'QNA', name: 'Q&A', icon: 'bi-question-circle' },
-  { code: 'TIPS', name: '꿀팁 공유', icon: 'bi-lightbulb' },
-  { code: 'LESSON', name: '강습/레슨', icon: 'bi-mortarboard' },
-  { code: 'MARKET', name: '중고장터', icon: 'bi-shop' },
-  { code: 'CLUB', name: '동호회/모임', icon: 'bi-people' }
-]
-
-const handleMainCategoryChange = () => {
-    board.value.detailCategory = ''
-}
-
-const showSubCategory = computed(() => {
-  return board.value.category !== 'COMMUNITY'
+  });
+  
+  const sports = [
+    { code: 'COMMUNITY', name: '자유게시판' },
+    { code: 'WATERPOLO', name: '수구' },
+    { code: 'BALLET', name: '발레' },
+    { code: 'CURLING', name: '컬링' },
+    { code: 'SCUBA', name: '스쿠버다이빙' },
+    { code: 'SAILING', name: '세일링' },
+    { code: 'ARCHERY', name: '양궁' },
+  ];
+  
+  const sportMenus = [
+    { code: 'GUIDE', name: '초보자 가이드' },
+    { code: 'INFO', name: '정보/소식' },
+    { code: 'QNA', name: 'Q&A' },
+    { code: 'TIPS', name: '꿀팁 공유' },
+    { code: 'LESSON', name: '강습/레슨' },
+    { code: 'MARKET', name: '중고장터' },
+    { code: 'CLUB', name: '동호회/모임' },
+  ];
+  
+  const handleMainCategoryChange = () => {
+    board.value.detailCategory = '';
+  };
+  
+  const showSubCategory = computed(() => {
+    return board.value.category !== 'COMMUNITY';
+  });
+  
+  let quillEditor;
+  
+  onMounted(() => {
+  quillEditor = new Quill('#editor-container', {
+    theme: 'snow',
+    placeholder: '내용을 입력해주세요', // 플레이스홀더 추가
+    modules: {
+      toolbar: {
+        container: [
+          ['bold', 'italic', 'underline', 'strike'],
+          ['blockquote', 'code-block'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          ['link', 'image']
+        ],
+        handlers: {
+          image: imageHandler
+        }
+      }
+    }
+  });
 });
 
-</script>
+// 이미지 핸들러 함수
+const imageHandler = () => {
+  const input = document.createElement('input');
+  input.setAttribute('type', 'file');
+  input.setAttribute('accept', 'image/*');
+  input.click();
 
-<style scoped>
-.write-container {
+  input.onchange = async () => {
+    const file = input.files[0];
+    
+    // 여기에 이미지 업로드 로직 추가
+    // 예: FormData를 사용하여 서버에 업로드
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+      
+      // 이미지 업로드 API 호출 (실제 API 엔드포인트로 수정 필요)
+      // const response = await axios.post('/api/upload', formData);
+      // const imageUrl = response.data.url;
+          // 서버로 이미지 업로드
+        const response = await axios.post('http://localhost:8080/img/upload', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+             }
+            });
+        const imageUrl = response.data.url;
+
+      // 에디터에 이미지 삽입
+      const range = quillEditor.getSelection();
+      quillEditor.insertEmbed(range.index, 'image', imageUrl);
+    } catch (error) {
+      console.error('이미지 업로드 실패:', error);
+    }
+  };
+};
+
+
+  const createBoard = async () => {
+    // Quill 에디터 내용 가져오기
+    board.value.content = quillEditor.root.innerHTML;
+  
+    // 게시글 저장 API 호출
+    const store = useBoardStore();
+    await store.createBoard(board.value);
+  };
+  
+  const cancelPost = () => {
+    console.log('취소 버튼 클릭');
+    history.back();
+  };
+
+  </script>
+  
+  <style scoped>
+
+  .write-container {
     width: 100%;
-    max-width: 100%;
-    /* 최대 너비 설정 */
+    max-width: 900px;
+    margin: 0 auto;
     background-color: white;
     border-radius: 16px;
     padding: 2rem 3rem;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-}
-
-.form-title {
-    font-size: 1.75rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* 제목 */
+  .form-title {
+    font-size: 1.8rem;
     font-weight: 700;
-    color: #2E64A0;
-    margin: 0 0 2rem 0;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid #E5EEF9;
-}
-
-.form-content {
+    color: #2e64a0;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  /* 폼 그룹 */
+  .input-group {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-}
-
-.input-group {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-label {
-    min-width: 80px;
-    color: #2E64A0;
+    margin-bottom: 1.5rem;
+  }
+  
+  label {
+    font-size: 1rem;
     font-weight: 600;
-}
-
-.form-select,
-.form-input {
-    flex: 1;
-    padding: 0.6rem 1rem;
-    border: 1px solid #E5EEF9;
+    margin-bottom: 0.5rem;
+    color: #2e64a0;
+  }
+  
+  /* 카테고리 및 제목 */
+  .category,
+  .sub-category,
+  .form-input {
+    padding: 0.8rem 1rem;
+    border: 1px solid #e5eef9;
     border-radius: 6px;
-    font-size: 0.95rem;
-    color: #4A7AAB;
-    background-color: white;
-    transition: all 0.2s ease;
-}
-
-.form-select {
-    max-width: 400px;
-}
-
-.form-select:hover,
-.form-input:hover {
-    border-color: #CEE3F6;
-}
-
-.form-select:focus,
-.form-input:focus {
+    font-size: 1rem;
+    color: #4a7aab;
+    transition: border-color 0.2s;
+  }
+  
+  .category:hover,
+  .sub-category:hover,
+  .form-input:hover {
+    border-color: #cee3f6;
+  }
+  
+  .category:focus,
+  .sub-category:focus,
+  .form-input:focus {
     outline: none;
-    border-color: #2E64A0;
+    border-color: #2e64a0;
     box-shadow: 0 0 0 3px rgba(46, 100, 160, 0.1);
-}
-
-.content-textarea {
-    width: 100%;
-    padding: 1.5rem;
-    border: 1px solid #E5EEF9;
+  }
+  
+  /* Quill 에디터 스타일 */
+  .quill-editor {
+    height: 400px;
+    border: 1px solid #e5eef9;
     border-radius: 8px;
-    font-size: 0.95rem;
-    resize: vertical;
-    min-height: 400px;
-    color: #4A7AAB;
-    transition: all 0.2s ease;
-    line-height: 1.6;
-}
-
-.content-textarea:hover {
-    border-color: #CEE3F6;
-}
-
-.content-textarea:focus {
-    outline: none;
-    border-color: #2E64A0;
-    box-shadow: 0 0 0 3px rgba(46, 100, 160, 0.1);
-}
-
-.attach-section {
-    background-color: #F7F9FC;
-    border-radius: 8px;
-    padding: 1rem 1.5rem;
-}
-
-.attach-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.attach-left {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.attach-title {
-    color: #2E64A0;
-    font-weight: 600;
-}
-
-.attach-size {
-    color: #4A7AAB;
-}
-
-.attach-button {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    padding: 1rem;
     background-color: white;
-    color: #2E64A0;
-    border: 1px solid #CEE3F6;
-    padding: 0.4rem 1rem;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.attach-button:hover {
-    background-color: #CEE3F6;
-}
-
-.file-list {
     margin-top: 1rem;
-    min-height: 40px;
-}
-
-.form-actions {
+  }
+  
+  /* 버튼 섹션 */
+  .form-actions {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     gap: 1rem;
     margin-top: 2rem;
-}
-
-.cancel-button,
-.submit-button {
-    padding: 0.6rem 2.5rem;
-    border-radius: 6px;
+  }
+  
+  .cancel-button,
+  .submit-button {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
     font-weight: 600;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    min-width: 120px;
-}
-
-.cancel-button {
+    transition: background-color 0.3s;
+  }
+  
+  .cancel-button {
     background-color: white;
-    color: #4A7AAB;
-    border: 1px solid #CEE3F6;
-}
-
-.cancel-button:hover {
-    background-color: #F7F9FC;
-}
-
-.submit-button {
-    background-color: #CEE3F6;
-    color: #2E64A0;
+    border: 1px solid #cee3f6;
+    color: #4a7aab;
+  }
+  
+  .cancel-button:hover {
+    background-color: #f7f9fc;
+  }
+  
+  .submit-button {
+    background-color: #2e64a0;
     border: none;
-}
-
-.submit-button:hover {
-    background-color: #B4D3F1;
-}
-
-@media (max-width: 1200px) {
-    .write-container {
-        padding: 2rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .write-container {
-        padding: 1.5rem;
-    }
-
-    .input-group {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-    }
-
-    label {
-        min-width: auto;
-    }
-
-    .form-select {
-        max-width: 100%;
-    }
-}
-</style>
+    color: white;
+  }
+  
+  .submit-button:hover {
+    background-color: #1b4e81;
+  }
+  </style>
+  

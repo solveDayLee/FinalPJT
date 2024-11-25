@@ -20,16 +20,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.soda.jwt.JwtUtil;
 import com.ssafy.soda.model.dto.Board;
 import com.ssafy.soda.model.service.AdminBoardService;
+import com.ssafy.soda.model.service.ImageService;
 
 @RestController
 @RequestMapping("/etco/board")
 public class ClientBoardController {
 	
 	private final AdminBoardService adminBoardService;
+	private final ImageService imageService;
+	
 	private final JwtUtil jwtUtil;
-	public ClientBoardController(AdminBoardService adminBoardService, JwtUtil jwtUtil) {
+	public ClientBoardController(AdminBoardService adminBoardService, JwtUtil jwtUtil, ImageService imageService) {
 		this.adminBoardService = adminBoardService;
 		this.jwtUtil = jwtUtil;
+		this.imageService = imageService;
 	}
 	
 	//전체 조회
@@ -53,39 +57,31 @@ public class ClientBoardController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 	
-	//추가 
 	@PostMapping("")
-	public ResponseEntity<?> write(/* @ModelAttribute */ @RequestBody Board board, @RequestHeader("Authorization") String token) {
-		
-		try {
-			System.out.println(board + " 추가할 보드임. ");
-			
-			 // 토큰에서 사용자 정보 추출
+	public ResponseEntity<?> write(@RequestBody Board board, 
+	                             @RequestHeader("Authorization") String token) {
+	    try {
+	        // 기존 토큰 처리 & 사용자 정보 설정
 	        String actualToken = token.replace("Bearer ", "");
 	        Integer userNo = jwtUtil.getUserNo(actualToken);
-	        String userId = jwtUtil.getUserId(actualToken); // JwtUtil에 getUserId 메서드가 필요합니다
-	        
-	        // 게시글에 작성자 정보 설정
+	        String userId = jwtUtil.getUserId(actualToken);
 	        board.setUserNo(userNo);
 	        board.setWriter(userId);
-			
-			
-			
-			
-			boolean isAdded = adminBoardService.writeBoard(board);
-			System.out.println("isAdded" + isAdded);
-			if(isAdded) {
-				return ResponseEntity.status(HttpStatus.OK).body("Board added");
-			}
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add Board");
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
-		}
-		
-		
-		
-		
-	
+
+	        // 1. 게시글 저장
+	        boolean isAdded = adminBoardService.writeBoard(board);
+	        
+	        // 2. 임시 이미지들 연결 (board.getImageIds()가 있다고 가정)
+	        if(isAdded && board.getImageIds() != null) {
+	            imageService.updateBoardNo(board.getBoardNo(), board.getImageIds());
+	        }
+
+	        return isAdded ? 
+	            ResponseEntity.ok("Board added") : 
+	            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add Board");
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+	    }
 	}
 	
 	

@@ -21,8 +21,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-            		.requestMatchers("/admin/main").authenticated()  // admin 메인 페이지는 인증 필요
-                .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+//            		.requestMatchers("/admin/main").authenticated()  // admin 메인 페이지는 인증 필요
+//                .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers("/login", "/signup", "/etco/**", "/css/**", "/js/**", "/images/**").permitAll()
                 .anyRequest().permitAll()
             )

@@ -20,7 +20,6 @@
 
         <div class="main-content">
           <div class="text-content">{{ store.board.content }}</div>
-          <div class="text-content">{{ store.board.content }}</div>
           <div class="like-section">
             <button class="like-button" :class="{ 'liked': isLiked }" @click="handleLike">
               ❤️ {{ store.board.likes }}
@@ -29,7 +28,7 @@
         </div>
 
         <div class="button-section">
-          <div class="action-buttons">
+          <div class="action-buttons" v-if="isWriter">
             <router-link :to="`/detailboard/update/${route.params.no}`" class="edit-link">
               <span>✏️ 수정</span>
             </router-link>
@@ -51,17 +50,46 @@
 <script setup>
 import Comment from './Comment.vue'
 import { useRoute, useRouter } from 'vue-router'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useBoardStore } from '@/stores/board';
+import { useUserStore } from '@/stores/user' // 1125 기능추가
 import axios from 'axios';
 
 const isLiked = ref(false)
 const store = useBoardStore()
-const route = useRoute()
+const userStore = useUserStore() // 1125 기능추가
+const route = useRoute() 
 const router = useRouter()
 
-onMounted(() => {
-  store.getBoardByNo(route.params.no)
+//1125 기능추가
+// 현재 로그인한 사용자가 게시글 작성자인지 확인하는 computed 속성
+const isWriter = computed(() => {
+  const currentUserNo = localStorage.getItem('userNo')
+  if (!currentUserNo || !store.board) return false
+  
+  console.log('게시글 정보:', store.board)
+  console.log('현재 사용자:', currentUserNo)
+  
+  // store.board.userNo가 null이 아닌 경우에만 비교
+  if (store.board.userNo === null) {
+    // 대체 방법: writer 필드로 비교
+    return store.board.writer === localStorage.getItem('userId')
+  }
+  
+  return store.board.userNo === parseInt(currentUserNo)
+})
+
+
+onMounted(async() => {
+  console.log('게시글 조회 시작')
+  await store.getBoardByNo(route.params.no)
+
+  console.log('조회된 게시글:', store.board)
+  console.log('현재 로그인 정보:', {
+    userNo: localStorage.getItem('userNo'),
+    token: localStorage.getItem('access-token')
+  })
+
 })
 
 const deleteBoard = async () => {

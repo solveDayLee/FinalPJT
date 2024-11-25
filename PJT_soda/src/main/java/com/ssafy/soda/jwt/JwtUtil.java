@@ -29,7 +29,7 @@ public class JwtUtil {
 	    
 	    
 	    // 토큰 생성
-	    public String createToken(String name, String role) {
+	    public String createToken(String name, String role, Integer userNo) {
 	    	  if (role!= null && !role.startsWith("ROLE_")) {
 	    	        role = "ROLE_" + role;
 	    	    }
@@ -39,6 +39,7 @@ public class JwtUtil {
 	                .setHeaderParam("typ", "JWT")  // header() 대신 setHeaderParam 사용
 	                .claim("name", name)
 	                .claim("role", role)
+	                .claim("userNo", userNo) // userNo 추가
 	                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60))
 	                .signWith(secretKey)
 	                .compact();
@@ -61,5 +62,23 @@ public class JwtUtil {
 	    			.getBody();
 	    	return claims.get("role", String.class);
 	    }
+	    
+	    //토큰에서 사용자 이름 추출하는 메서드 추가
+	    public Integer getUserNo(String token) {
+	    	Claims claims = Jwts.parserBuilder()
+	    			.setSigningKey(secretKey)
+	    			.build()
+	    			.parseClaimsJws(token)
+	    			.getBody();
+	    	return claims.get("userNo", Integer.class);
+	    }
+
+
+
+		public String getUserId(String actualToken) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	    
 	    
 }

@@ -69,10 +69,10 @@
 
 // })
 
-import { ref, watch } from 'vue'
-import { defineStore } from 'pinia'
-import axios from 'axios'
-import router from '@/router'
+import { ref, watch } from "/node_modules/.vite/deps/vue.js?v=e026b806"
+import { defineStore } from "/node_modules/.vite/deps/pinia.js?v=e026b806"
+import axios from "/node_modules/.vite/deps/axios.js?v=e026b806"
+import router from "/src/router/index.js"
 
 // const REST_API_URL = `http://192.168.210.73:8080/etco/board`
 const REST_API_URL = `http://localhost:8080/etco/board`
@@ -83,25 +83,16 @@ export const useBoardStore = defineStore('board', () => {
     const board = ref({})
     const isLoading = ref(false)
 
-    // 라우트 파라미터 변경 감지를 위한 watcher 설정
-    watch(() => router.currentRoute.value.params, (newParams) => {
-        if (newParams.category) {
-            setSelectedCategory(newParams.category)
-            if (newParams.detailCategory) {
-                getBoardListByCategory(newParams.category, newParams.detailCategory)
-            } else {
-                getBoardListByCategory(newParams.category)
-            }
-        }
-    }, { immediate: true })
 
     const getBoardList = async function() {
         try {
             isLoading.value = true
             const response = await axios.get(REST_API_URL)
+            console.log('서버 응답:', response.data)  // 응답 데이터 확인용 로그
             boardList.value = response.data
         } catch (error) {
-            console.error("게시글 목록 조회 실패:", error)
+            console.error("상세 에러 정보:", error.response?.data)
+            boardList.value = []  // 에러 시 빈 배열 설정
         } finally {
             isLoading.value = false
         }
@@ -110,10 +101,27 @@ export const useBoardStore = defineStore('board', () => {
     const getBoardByNo = async function(no) {
         try {
             isLoading.value = true
-            const response = await axios.get(`${REST_API_URL}/${no}`)
+            // 토큰을 헤더에 추가
+            const token = localStorage.getItem('access-token')
+            const response = await axios.get(`${REST_API_URL}/${no}`, {
+                headers: {
+                    Authorization: token
+                }
+            })
+            console.log('게시글 상세 데이터:', response.data)
+          
+            // 서버에서 받은 게시글 데이터를 저장
             board.value = response.data
+
+            // 디버깅을 위한 로그 추가
+        console.log('게시글 작성자 번호:', board.value.userNo)
+        console.log('현재 로그인한 사용자 번호:', localStorage.getItem('userNo'))
+
+            return response.data
+
         } catch (error) {
             console.error("게시글 상세 조회 실패:", error)
+            throw error  // 에러를 상위로 전파
         } finally {
             isLoading.value = false
         }
@@ -122,7 +130,23 @@ export const useBoardStore = defineStore('board', () => {
     const createBoard = async function(boardData) {
         try {
             isLoading.value = true
-            await axios.post(REST_API_URL, boardData)
+
+            //localStorage에서 현재 로그인한 사용자의 Id와 user_no를 가져온다.
+            const userId = localStorage.getItem('userId')
+            const userNo = localStorage.getItem('userNo')
+
+            if(!userId || !userNo) {
+                throw new Error('로그인이 필요합니다.')
+            }
+
+            const boardWithUser = {
+                ...boardData,
+                userNo: parseInt(userNo), // 숫자로 변환하여 저장
+                writer: userId  // 작성자 정보도 추가
+            }
+
+
+            await axios.post(REST_API_URL, boardWithUser)
             await router.push({ name: 'Board' })
         } catch (error) {
             console.error("게시글 등록 실패:", error)
@@ -168,6 +192,20 @@ export const useBoardStore = defineStore('board', () => {
     const setSelectedCategory = function(category) {
         selectedCategory.value = category
     }
+
+        // 라우트 파라미터 변경 감지를 위한 watcher 설정
+        watch(() => router.currentRoute.value.params, (newParams) => {
+            if (newParams.category) {
+                setSelectedCategory(newParams.category)
+                if (newParams.detailCategory) {
+                    getBoardListByCategory(newParams.category, newParams.detailCategory)
+                } else {
+                    getBoardListByCategory(newParams.category)
+                }
+            }
+        }, { immediate: true })
+    
+
 
     return {
         boardList,

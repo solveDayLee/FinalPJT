@@ -42,7 +42,7 @@ public class BoardController {
 			model.addAttribute("userId", "*** 삭제된 유저입니다. ***");
 		}
 		model.addAttribute("board", board);
-		return "/board/adminBoardDetail";
+		return "board/adminBoardDetail";
 	}
 
 	// user 삭제하기

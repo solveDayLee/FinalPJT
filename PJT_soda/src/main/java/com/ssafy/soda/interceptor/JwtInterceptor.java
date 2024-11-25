@@ -25,6 +25,8 @@ public class JwtInterceptor implements HandlerInterceptor {
 
 		// 로그인, 회원가입은 토큰 검사 제외
 		String requestURI = rq.getRequestURI();
+		//admin 으로 시작하는 것들은 전부 통과하게 하겠다.
+		if(requestURI.startsWith("/admin")) return true;
 		if (requestURI.equals("/etco/login") || requestURI.equals("/etco/signup")
 				|| requestURI.equals("/etco/board") || requestURI.equals("/admin/login") 
                 || requestURI.equals("/admin/adminLogin")) {  // 게시판 목록 보기 추가

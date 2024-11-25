@@ -49,11 +49,19 @@ public class ClientUserController {
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(@RequestBody User user) {
 		Map<String, Object> result = new HashMap<>();
-		User loginUser = userService.login(user.getUserId(), user.getPassword());
+		User loginUser = userService.login(user.getUserId(), user.getPassword(), user.getUserNo());
+		
+		 // 디버깅 로그 추가
+	    if (loginUser != null) {
+	        System.out.println("로그인 성공: " + loginUser.getUserId());
+	        System.out.println("사용자 번호(userNo): " + loginUser.getUserNo());
+	    } else {
+	        System.out.println("로그인 실패: " + user.getUserId());
+	    }
 		
 		if(loginUser != null) {
 			
-			System.out.println("로그인성공"+ user.getUserId());
+			System.out.println("로그인성공 "+ user.getUserId());
 			//role 정보 포함하여 토큰 생성 (관리자, 사용자 역할)
 			String role = loginUser.getRole() != null ? loginUser.getRole() : "USER"; //기본값
 			
@@ -62,13 +70,21 @@ public class ClientUserController {
 				result.put("message", "admin login success");
 				result.put("redirectUrl", "/admin/main");
 				result.put("role", role);
+				
+				 // 관리자에게도 토큰 생성
+			    String token = jwtUtil.createToken(loginUser.getName(), role, loginUser.getUserNo());
+			    result.put("access-token", token); // 추가
+			    
+				System.out.println(token);
 	            return new ResponseEntity<>(result, HttpStatus.OK);
 			}
+			String token = jwtUtil.createToken(loginUser.getName(), role, loginUser.getUserNo());
 			
 			//일반 사용자는 jwt처리
-			result.put("message", "login성공"); //상태 메시지 저장
+//			result.put("message", "login성공"); //상태 메시지 저장
 			//jwtUtil.createToken()을 호출할 때 role 파라미터를 함께 전달
-			result.put("access-token", jwtUtil.createToken(loginUser.getName(), role)); // JWT 토큰 저장
+			result.put("access-token", token); // JWT 토큰 저장
+			
 			result.put("role", role); //클라이언트에게 role 정보 저장
 			
 			

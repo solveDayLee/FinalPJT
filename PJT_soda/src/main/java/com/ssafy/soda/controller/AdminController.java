@@ -42,14 +42,14 @@ public class AdminController {
 		public String adminUserBoardDetail(@RequestParam("no") int no, Model model) {
 		User user = adminUserService.getUser(no);
 		model.addAttribute("user", user);
-		return "/admin/adminUserDetail";
+		return "admin/adminUserDetail";
 	}
 	@GetMapping("/adminUserUpdateForm")
 	public String adminUserUpdate(@RequestParam("no") int no, Model model) {
 		User user = adminUserService.getUser(no);
 		model.addAttribute("user", user);
 		System.out.println("adminUserUpdateForm 에서 보내주는 유저: " + user);
-		return "/admin/adminUserUpdateForm";
+		return "admin/adminUserUpdateForm";
 	}
 	
 	// user 정보 수정하기

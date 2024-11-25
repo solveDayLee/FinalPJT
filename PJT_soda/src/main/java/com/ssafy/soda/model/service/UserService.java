@@ -10,6 +10,6 @@ public interface UserService {
 
 	boolean signup(User user);
 
-	User login(String userId, String password);
+	User login(String userId, String password, Integer userNo);
 
 }

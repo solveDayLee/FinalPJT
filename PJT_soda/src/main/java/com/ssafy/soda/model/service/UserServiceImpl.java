@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User login(String userId, String password) {
+	public User login(String userId, String password, Integer userNo) {
 		//login 메서드 구현
 		User user = userDao.findById(userId);
 		if(user != null && user.getPassword().equals(password)) {

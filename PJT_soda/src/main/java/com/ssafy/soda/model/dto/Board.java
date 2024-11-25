@@ -14,6 +14,10 @@ public class Board {
 	private User user;
 	private BoardReport boardReport;
 	
+	public Board() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Integer getBoardNo() {
 		return boardNo;
 	}

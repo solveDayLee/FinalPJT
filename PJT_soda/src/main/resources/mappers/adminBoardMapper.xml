@@ -5,7 +5,7 @@
 
 <mapper namespace="com.ssafy.soda.model.dao.BoardDao">
 	<select id="selectAll" resultType="Board">
-		SELECT b.*, count(l.board_no)
+		SELECT b.*, IFNULL(count(l.board_no),0)
 		as likesCnt
 		FROM board b
 		LEFT JOIN likes l ON b.board_no = l.board_no

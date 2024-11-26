@@ -27,5 +27,7 @@ public interface AdminBoardService {
 
 	List<Board> getBoardlistByCatagory(Board board);
 
+	boolean increaseViewCnt(int no);
+
 
 }

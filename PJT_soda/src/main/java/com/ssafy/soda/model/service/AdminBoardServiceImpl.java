@@ -90,4 +90,11 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 		return boardDao.selectByCategory(board);
 	}
 
+
+
+	@Override
+	public boolean increaseViewCnt(int no) {
+		return boardDao.updateViewCnt(no)>0;
+	}
+
 }

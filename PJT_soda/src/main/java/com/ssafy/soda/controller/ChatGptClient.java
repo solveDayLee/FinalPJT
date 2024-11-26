@@ -224,7 +224,7 @@ public class ChatGptClient {
         JSONObject requestBody = new JSONObject();
         requestBody.put("model", "gpt-3.5-turbo");
         requestBody.put("messages", messages);
-        requestBody.put("temperature", 0.3);
+        requestBody.put("temperature", 0.1);
 
         conn.setDoOutput(true);
         try (OutputStream os = conn.getOutputStream()) {

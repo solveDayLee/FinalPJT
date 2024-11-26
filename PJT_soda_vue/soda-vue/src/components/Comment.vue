@@ -5,38 +5,62 @@
                 댓글 작성
             </h6>
             <div class="input-group border-0">
-                <input type="text" class="form-control custom-input" placeholder="댓글을 입력하세요" v-model="comment"
-                    @keyup.enter="submitComment">
-                <button class="btn custom-button" type="button" @click="submitComment" :disabled="!comment.trim()">
+                <input type="text" 
+                       class="form-control custom-input" 
+                       placeholder="댓글을 입력하세요" 
+                       v-model="comment"
+                       @keyup.enter="submitComment"
+                       maxlength="500">
+                <button class="btn custom-button" 
+                        type="button" 
+                        @click="submitComment" 
+                        :disabled="!comment.trim()">
                     등록
                 </button>
             </div>
         </div>
-
+ 
         <!-- 댓글 목록 영역 -->
         <div class="comments-list">
-            <div v-for="item in comments" :key="item.commentNo" class="comment-item">
+            <div v-if="isLoading" class="text-center py-3">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            <div v-else-if="comments.length === 0" class="text-center py-3">
+                댓글이 없습니다.
+            </div>
+            <div v-else v-for="item in comments" 
+                 :key="item.commentNo" 
+                 class="comment-item">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center gap-2">
                         <div class="comment-avatar">
                             {{ item.userId ? item.userId.charAt(0).toUpperCase() : '?' }}
                         </div>
                         <div>
-                            <div class="comment-writer">작성자: {{ item.userId }} (댓글번호: {{ item.commentNo }})</div>
-                            <!-- 날짜 표시 방식 formatData 함수 사용 -->
+                            <div class="comment-writer">
+                                작성자: {{ item.userId }} (댓글번호: {{ item.commentNo }})
+                            </div>
                             <small class="text-muted">{{ formatDate(item.regDate) }}</small>
                         </div>
                     </div>
-                    <!-- 댓글 사용자만 수정/삭제 가능하도록 조건부 렌더링 추가 -->
                     <div class="dropdown" v-if="isCommentOwner(item)">
-                        <button class="btn btn-link btn-sm text-muted border-0 p-0" type="button"
-                            data-bs-toggle="dropdown">
+                        <button class="btn btn-link btn-sm text-muted border-0 p-0" 
+                                type="button"
+                                data-bs-toggle="dropdown">
                             ⋮
                         </button>
                         <ul class="dropdown-menu shadow-sm border-0">
-                            <li><a class="dropdown-item" href="#" @click.prevent="deleteComment(item.commentNo)">삭제</a>
+                            <li>
+                                <a class="dropdown-item" 
+                                   href="#" 
+                                   @click.prevent="deleteComment(item.commentNo)">삭제</a>
                             </li>
-                            <li><a class="dropdown-item" href="#" @click.prevent="reportComment(item.commentNo)">신고</a>
+                            <li>
+                                <a class="dropdown-item" 
+                                   href="#" 
+                                   @click.prevent="reportComment(item.commentNo)">신고</a>
                             </li>
                         </ul>
                     </div>
@@ -47,137 +71,130 @@
             </div>
         </div>
     </div>
-</template>
-
-<script setup>
-// 필요한 모듈들을 import
-import { ref, onMounted } from 'vue'
-import { useUserStore } from '@/stores/user'
-import axios from 'axios'
-
-// Pinia store 초기화
-const userStore = useUserStore()
-
-// axios 기본 URL 설정
-axios.defaults.baseURL = 'http://localhost:8080'
-
-// props 정의 - 부모 컴포넌트에서 게시글 번호를 받아옴
-const props = defineProps({
+ </template>
+ 
+ <script setup>
+ import { ref, onMounted } from 'vue'
+ import { useUserStore } from '@/stores/user'
+ import axios from 'axios'
+ 
+ const userStore = useUserStore()
+ axios.defaults.baseURL = 'http://localhost:8080'
+ 
+ const props = defineProps({
     boardNo: {
         type: Number,
         required: true
     }
-})
-
-// 반응형 변수 선언
-const comment = ref('')
-const comments = ref([])
-
-//초기 댓글 목록을 가져오는 함수 - 최초 1회만 실행
-const fetchInitialComments = async () => {
+ })
+ 
+ const comment = ref('')
+ const comments = ref([])
+ const isLoading = ref(false)
+ 
+ const getAuthHeader = () => {
+    const token = localStorage.getItem('access-token')
+    return token ? { 'Authorization': token } : {}
+ }
+ 
+ const fetchInitialComments = async () => {
+    isLoading.value = true
     try {
-        const token = localStorage.getItem('access-token'); // 토큰 가져오기
+        const token = localStorage.getItem('access-token')
+        if (!token) {
+            console.warn('인증 토큰이 없습니다.')
+            return
+        }
+ 
         const response = await axios.get(`/etco/comments/${props.boardNo}`, {
-            headers: {
-                'Authorization': token
-            }
-        });
-        console.log('서버에서 받은 댓글 데이터:', response.data);
+            headers: getAuthHeader()
+        })
         
-        if (Array.isArray(response.data)) {
-            comments.value = response.data;
-        } else {
-            console.error('서버 응답이 배열이 아님:', response.data);
-            comments.value = [];
-        }
+        comments.value = Array.isArray(response.data) ? response.data : []
     } catch (error) {
-        console.error('댓글 목록 조회 실패:', error);
-        if (error.response) {
-            console.error('에러 상세:', error.response.data);
-            console.error('상태 코드:', error.response.status);
-        }
-        comments.value = []; // 에러 시 빈 배열로 초기화
-        // 사용자에게 에러 메시지를 표시하지 않음 (옵션)
+        console.error('댓글 목록 조회 실패:', error?.response?.data || error.message)
+        comments.value = []
+    } finally {
+        isLoading.value = false
     }
-}
-
-// 댓글 작성 함수
+ }
+ 
+ // Comment.vue의 submitComment 함수 수정
 const submitComment = async () => {
     if (!comment.value.trim()) {
         alert('댓글을 입력해주세요.');
         return;
     }
 
-    const token = localStorage.getItem('access-token');
-    const userId = localStorage.getItem('userId');
-    
-    if (!token || !userId) {
-        alert('로그인이 필요한 서비스입니다.');
-        return;
-    }
-
-    const commentData = {
-        boardNo: props.boardNo,
-        pCommentNo: 0,
-        userId: userId,
-        comment: comment.value
-    };
-
     try {
+        const token = localStorage.getItem('access-token');
+        const userId = localStorage.getItem('userId');
+        
+        if (!token || !userId) {
+            alert('로그인이 필요한 서비스입니다.');
+            return;
+        }
+
+        // Comment DTO 구조에 맞게 데이터 구성
+        const commentData = {
+            boardNo: Number(props.boardNo),     // int
+            pCommentNo: 0,                      // int - 대댓글 아닌 경우 0
+            commentNo: 0,                       // int - 자동 생성될 번호
+            userId: userId,                     // String
+            comment: comment.value.trim(),      // String
+            regDate: null                       // String - 서버에서 설정
+        };
+
+        console.log('전송할 댓글 데이터:', commentData); // 데이터 확인용
+
         const response = await axios.post('/etco/comments', commentData, {
             headers: {
-                'Authorization': token
+                'Authorization': token,
+                'Content-Type': 'application/json'
             }
         });
-        console.log('댓글 작성 응답:', response.data);
 
         if (response.data) {
-            // 새로운 댓글을 목록에 추가
+            // 서버로부터 받은 새로운 댓글 정보를 목록에 추가
             comments.value.unshift(response.data);
-            comment.value = '';
+            comment.value = ''; // 입력창 초기화
             alert('댓글이 등록되었습니다.');
+        } else {
+            alert('댓글 등록에 실패했습니다.');
         }
     } catch (error) {
-        console.error('댓글 작성 실패:', error);
-        if (error.response) {
-            console.error('에러 상세:', error.response.data);
-            console.error('상태 코드:', error.response.status);
-        }
-        alert('댓글 작성에 실패했습니다.');
+        console.error('댓글 작성 실패:', {
+            message: error.message,
+            response: error.response?.data,
+            status: error.response?.status
+        });
+        alert('댓글 작성에 실패했습니다. 다시 시도해 주세요.');
     }
-}
+};
 
-// 댓글 작성자 확인 함수
-const isCommentOwner = (item) => {
+ 
+ const isCommentOwner = (item) => {
     const currentUserId = localStorage.getItem('userId')
     return item.userId === currentUserId
-}
-
-//댓글 삭제 함수
-const deleteComment = async (commentNo) => {
-    if (!confirm('댓글을 삭제하시겠습니까?')) return;
-
-    const token = localStorage.getItem('access-token');
-    
+ }
+ 
+ const deleteComment = async (commentNo) => {
+    if (!confirm('댓글을 삭제하시겠습니까?')) return
+ 
     try {
         await axios.delete(`/etco/comments/${commentNo}`, {
-            headers: {
-                'Authorization': token
-            }
-        });
-
-        comments.value = comments.value.filter(comment => comment.commentNo !== commentNo);
-        alert('댓글이 삭제되었습니다.');
+            headers: getAuthHeader()
+        })
+ 
+        comments.value = comments.value.filter(comment => comment.commentNo !== commentNo)
+        alert('댓글이 삭제되었습니다.')
     } catch (error) {
-        console.error('댓글 삭제 실패:', error);
-        alert('댓글 삭제에 실패했습니다.');
+        console.error('댓글 삭제 실패:', error?.response?.data || error.message)
+        alert('댓글 삭제에 실패했습니다.')
     }
-}
-
-// 댓글 수정 함수
-const updateComment = async (commentNo, commentText) => {
-    const token = localStorage.getItem('access-token');
-    
+ }
+ 
+ const updateComment = async (commentNo, commentText) => {
     try {
         const response = await axios.put(`/etco/comments/${commentNo}`, {
             commentNo: commentNo,
@@ -186,77 +203,88 @@ const updateComment = async (commentNo, commentText) => {
             userId: localStorage.getItem('userId'),
             comment: commentText
         }, {
-            headers: {
-                'Authorization': token
-            }
-        });
-
-        const index = comments.value.findIndex(item => item.commentNo === commentNo);
+            headers: getAuthHeader()
+        })
+ 
+        const index = comments.value.findIndex(item => item.commentNo === commentNo)
         if (index !== -1) {
-            comments.value[index] = response.data;
+            comments.value[index] = response.data
         }
-        alert('댓글이 수정되었습니다.');
+        alert('댓글이 수정되었습니다.')
     } catch (error) {
-        console.error('댓글 수정 실패:', error);
-        alert('댓글 수정에 실패했습니다.');
+        console.error('댓글 수정 실패:', error?.response?.data || error.message)
+        alert('댓글 수정에 실패했습니다.')
     }
-}
-// 댓글 신고 함수 (미구현)
-const reportComment = (commentNo) => {
+ }
+ 
+ const reportComment = (commentNo) => {
     alert('댓글이 신고되었습니다.')
-}
-
-
-// 날짜 포맷팅 함수
+ }
+ 
+// 날짜 포맷팅 함수도 regDate 형식에 맞게 수정
 const formatDate = (dateString) => {
-    if (!dateString) return '';  // null 체크 추가
-    const date = new Date(dateString)
-    return date.toLocaleDateString('ko-KR', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
-    })
-}
+    if (!dateString) return '';
+    try {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return dateString; // 유효하지 않은 날짜는 원본 반환
 
-// 컴포넌트 마운트 시 실행
-onMounted(() => {
-    // 로그인 상태 확인
-    const token = localStorage.getItem('access-token');
-    const userId = localStorage.getItem('userId');
-    console.log('로그인 상태 확인:', {
-        token: token ? '토큰 있음' : '토큰 없음',
-        userId: userId
-    });
-
+        return new Intl.DateTimeFormat('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        }).format(date);
+    } catch {
+        return dateString; // 에러 발생 시 원본 반환
+    }
+};
+ 
+ onMounted(() => {
+    const token = localStorage.getItem('access-token')
+    const userId = localStorage.getItem('userId')
+    
+    if (process.env.NODE_ENV === 'development') {
+        console.log('로그인 상태:', {
+            token: token ? '토큰 있음' : '토큰 없음',
+            userId
+        })
+    }
+ 
     if (userStore.loginUser === null) {
-        userStore.initializeUser();
+        userStore.initializeUser()
     }
     
-    // 초기 댓글 목록 로딩
-    fetchInitialComments();
-});
-</script>
+    fetchInitialComments()
+ })
+ </script>
 
 <style scoped>
 .comment-wrapper {
     font-family: 'Noto Sans KR', sans-serif;
-    margin-top: 20px;
+    padding: 1rem 0;
 }
 
 .comment-input-section {
     background-color: #f8f9fa;
-    margin-bottom: 20px;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
 }
 
 .section-title {
     color: #495057;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
+    font-weight: 500;
 }
 
 .custom-input {
-    border-radius: 4px 0 0 4px;
+    border: none !important;
+    border-radius: 20px 0 0 20px !important;
+    background-color: white !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    padding: 0.8rem 1.2rem;
 }
 
 .custom-input:focus {
@@ -264,9 +292,12 @@ onMounted(() => {
 }
 
 .custom-button {
-    border-radius: 0 4px 4px 0;
-    background-color: #007bff;
-    color: white;
+    border: none !important;
+    border-radius: 0 20px 20px 0 !important;
+    background-color: #CEE3F6 !important;
+    color: #333;
+    padding: 0.8rem 1.5rem;
+    font-weight: 500;
 }
 
 .custom-button:hover:not(:disabled) {
@@ -274,7 +305,8 @@ onMounted(() => {
 }
 
 .custom-button:disabled {
-    background-color: #ccc;
+    background-color: #e9ecef !important;
+    opacity: 0.7;
 }
 
 .comments-list {
@@ -284,8 +316,10 @@ onMounted(() => {
 }
 
 .comment-item {
-    padding: 15px;
-    border-bottom: 1px solid #eee;
+    padding: 1.2rem;
+    border-radius: 12px;
+    background-color: #f8f9fa;
+    transition: transform 0.2s ease;
 }
 
 .comment-item:hover {
@@ -293,23 +327,29 @@ onMounted(() => {
 }
 
 .comment-avatar {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background-color: #e9ecef;
+    background-color: #CEE3F6;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .comment-writer {
-    font-weight: 600;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: #333;
 }
 
 .comment-content {
-    margin-top: 8px;
-    margin-left: 42px;
+    font-size: 0.95rem;
+    color: #495057;
+    padding: 0.8rem 0 0 3rem;
+    line-height: 1.5;
 }
 
 .dropdown-menu {

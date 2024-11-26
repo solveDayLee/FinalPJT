@@ -7,6 +7,8 @@ public class Comment {
 	private String userId;
 	private String comment;
 	private String regDate;
+	
+	
 	public Comment() {
 		// TODO Auto-generated constructor stub
 	}

@@ -32,7 +32,7 @@ public class CommentController {
 	
 	@GetMapping("/comments/{boardNo}")
 	public ResponseEntity<?> getComments(
-	    @PathVariable int boardNo,
+	    @PathVariable("boardNo") int boardNo,
 	    @RequestHeader("Authorization") String token
 	) {
 	    try {
@@ -57,21 +57,38 @@ public class CommentController {
 	
 	//댓글 추가
 	@PostMapping("/comments")
-	public ResponseEntity<?> writeComment(@RequestBody Comment comment, @RequestHeader("Authorization") String token) {
+	public ResponseEntity<?> writeComment(
+	    @RequestBody Comment comment, 
+	    @RequestHeader("Authorization") String token
+	) {
 	    try {
+	        // 토큰 검증
 	        String actualToken = token.replace("Bearer ", "");
 	        String userId = jwtUtil.getUserId(actualToken);
 	        
+	        // 필수 데이터 검증
+	        if (comment.getBoardNo() <= 0) {
+	            return ResponseEntity.badRequest().body("게시글 번호가 유효하지 않습니다.");
+	        }
+	        if (comment.getComment() == null || comment.getComment().trim().isEmpty()) {
+	            return ResponseEntity.badRequest().body("댓글 내용을 입력해주세요.");
+	        }
+	        
+	        // 사용자 ID 설정
 	        comment.setUserId(userId);
 	        
+	        // 댓글 저장
 	        Comment savedComment = commentService.writeComment(comment);
 	        if (savedComment != null) {
 	            return ResponseEntity.status(HttpStatus.CREATED).body(savedComment);
+	        } else {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                               .body("댓글 저장에 실패했습니다.");
 	        }
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-	        
 	    } catch (Exception e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("에러: " + e.getMessage());
+	        e.printStackTrace(); // 로깅
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                           .body("서버 오류: " + e.getMessage());
 	    }
 	}
 	

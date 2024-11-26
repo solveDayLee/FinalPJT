@@ -41,9 +41,9 @@
 		#{boardNo}
 
 	</update>
-	<update id="updateViewCount" parameterType="int">
+	<update id="updateViewCnt" parameterType="int">
 		UPDATE board
-		SET view_count = view_count + 1
+		SET view_cnt = view_cnt + 1
 		WHERE board_no = #{no}
 	</update>
 

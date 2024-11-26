@@ -50,7 +50,9 @@ public class ClientBoardController {
 	@GetMapping("/{no}")
 	public ResponseEntity<Board> detail(@PathVariable("no") int no) {
 
+		adminBoardService.increaseViewCnt(no);
 		Board board = adminBoardService.getBoard(no);
+		
 		if (board != null) {
 			System.out.println("보드 디테일 들고감!:" + board);
 			return ResponseEntity.ok(board);

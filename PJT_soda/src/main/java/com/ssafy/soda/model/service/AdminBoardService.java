@@ -3,6 +3,7 @@ package com.ssafy.soda.model.service;
 import java.util.List;
 
 import com.ssafy.soda.model.dto.Board;
+import com.ssafy.soda.model.dto.Likes;
 import com.ssafy.soda.model.dto.SearchCondition;
 
 public interface AdminBoardService {
@@ -28,6 +29,7 @@ public interface AdminBoardService {
 	List<Board> getBoardlistByCatagory(Board board);
 
 	boolean increaseViewCnt(int no);
+	boolean addLike(Likes likes);
 
 
 }

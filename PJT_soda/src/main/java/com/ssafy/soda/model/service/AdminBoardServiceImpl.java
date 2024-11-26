@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.soda.model.dao.BoardDao;
 import com.ssafy.soda.model.dto.Board;
+import com.ssafy.soda.model.dto.Likes;
 import com.ssafy.soda.model.dto.SearchCondition;
 @Service
 @Primary
@@ -101,6 +102,12 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	@Override
 	public boolean increaseViewCnt(int no) {
 		return boardDao.updateViewCnt(no)>0;
+	}
+	public boolean addLike(Likes likes) {
+		if( boardDao.addLike(likes) == 1) {
+			return true;
+		}
+		return false;
 	}
 
 }

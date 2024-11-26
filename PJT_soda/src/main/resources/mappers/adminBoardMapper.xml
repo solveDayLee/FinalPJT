@@ -163,4 +163,7 @@
 		GROUP BY b.board_no
 		ORDER BY b.board_no DESC
 	</select>
+	<insert id="addLike" parameterType="Likes">
+		INSERT INTO likes (user_no, board_no) VALUES (#{userNo}, #{boardNo})
+	</insert>
 </mapper>

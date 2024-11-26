@@ -127,7 +127,7 @@ onMounted(() => {
 const handleSubmit = async () => {
   try {
     console.log(board.value)
-    await axios.put(`http://localhost:8080/etco/board/${route.params.no}`, board.value)
+    await axios.put(`http://192.168.210.73:8080/etco/board/${route.params.no}`, board.value)
     alert('수정이 완료되었습니다.')
     router.push(`/detailboard/${route.params.no}`)
 

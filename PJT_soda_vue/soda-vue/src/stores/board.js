@@ -74,8 +74,8 @@ import { defineStore } from "pinia"
 import axios from "axios" 
 import router from "@/router"
 
-// const REST_API_URL = `http://192.168.210.73:8080/etco/board`
-const REST_API_URL = `http://localhost:8080/etco/board`
+const REST_API_URL = `http://192.168.210.73:8080/etco/board`
+// const REST_API_URL = `http://localhost:8080/etco/board`
 
 export const useBoardStore = defineStore('board', () => {
     const selectedCategory = ref('WATERPOLO')
@@ -120,6 +120,7 @@ export const useBoardStore = defineStore('board', () => {
             return response.data
 
         } catch (error) {
+            alert("게시글을 보기 위해 로그인해 주세요.")
             console.error("게시글 상세 조회 실패:", error)
             throw error  // 에러를 상위로 전파
         } finally {
@@ -136,6 +137,7 @@ export const useBoardStore = defineStore('board', () => {
             const userNo = localStorage.getItem('userNo')
 
             if(!userId || !userNo) {
+                alert('로그인이 필요한 서비스입니다.')
                 throw new Error('로그인이 필요합니다.')
             }
 
@@ -204,7 +206,7 @@ export const useBoardStore = defineStore('board', () => {
                 }
             }
         }, { immediate: true })
-    
+
 
 
     return {

@@ -9,6 +9,7 @@ import UpdateView from '@/views/UpdateView.vue'
 import { useBoardStore } from '@/stores/board'
 import SupportView from '@/views/SupportView.vue'
 import ChatView from '@/views/ChatView.vue'
+import ContactPage from '@/views/ContactPage.vue'
 
 
 const router = createRouter({
@@ -68,7 +69,7 @@ const router = createRouter({
     {
       path: '/admin/*',  // 모든 관리자 경로
       beforeEnter: () => {
-          window.location.href = 'http://localhost:8080/admin/main'; // 직접 서버로 이동
+          window.location.href = 'http://192.168.210.73:8080/admin/main'; // 직접 서버로 이동
       }
     },
     {
@@ -76,7 +77,12 @@ const router = createRouter({
       name: 'Img',
       component: BoardView
     },
-    
+    {
+      path: '/contact',
+      name: 'Contact',
+      component: ContactPage
+    },
+
     
   ],
 

@@ -100,6 +100,9 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 
 
 	@Override
+	public boolean increaseViewCnt(int no) {
+		return boardDao.updateViewCnt(no)>0;
+	}
 	public boolean addLike(Likes likes) {
 		if( boardDao.addLike(likes) == 1) {
 			return true;

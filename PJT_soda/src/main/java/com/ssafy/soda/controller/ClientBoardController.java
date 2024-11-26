@@ -24,18 +24,19 @@ import com.ssafy.soda.model.service.ImageService;
 @RestController
 @RequestMapping("/etco/board")
 public class ClientBoardController {
-	
+
 	private final AdminBoardService adminBoardService;
 	private final ImageService imageService;
-	
+
 	private final JwtUtil jwtUtil;
+
 	public ClientBoardController(AdminBoardService adminBoardService, JwtUtil jwtUtil, ImageService imageService) {
 		this.adminBoardService = adminBoardService;
 		this.jwtUtil = jwtUtil;
 		this.imageService = imageService;
 	}
-	
-	//전체 조회
+
+	// 전체 조회
 	@GetMapping("")
 	public ResponseEntity<List<Board>> list() {
 		List<Board> list = adminBoardService.getBoardlist();
@@ -45,10 +46,14 @@ public class ClientBoardController {
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
-	//상세 조회
+
+	// 상세 조회
 	@GetMapping("/{no}")
 	public ResponseEntity<Board> detail(@PathVariable("no") int no) {
+
+		adminBoardService.increaseViewCnt(no);
 		Board board = adminBoardService.getBoard(no);
+		
 		if (board != null) {
 			System.out.println("보드 디테일 들고감!:" + board);
 			return ResponseEntity.ok(board);
@@ -115,71 +120,65 @@ public class ClientBoardController {
 			if(isDeleted) {
 				return ResponseEntity.status(HttpStatus.OK).body("Board deleted");
 			}
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete Board");	
-		
-			
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete Board");
+
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("error" + e.getMessage());
 		}
 	}
-	
-	//수정 (유저가 같다면)
-	// 수정 메서드 수정
-    @PutMapping("/{no}")
-    public ResponseEntity<?> update(@PathVariable("no") int no,
-                                  @RequestBody Board board,
-                                  @RequestHeader("Authorization") String token) {
-        try {
-            // Bearer 토큰에서 실제 토큰 추출
-            String actualToken = token.replace("Bearer ", "");
-            
-            // 토큰에서 userNo 추출
-            Integer userNo = jwtUtil.getUserNo(actualToken);
-            
-            // 기존 게시글 조회
-            Board existingBoard = adminBoardService.getBoard(no);
-            
-            // 게시글이 존재하지 않는 경우
-            if (existingBoard == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("게시글을 찾을 수 없습니다.");
-            }
-            
-            // 작성자와 현재 사용자가 다른 경우
-            if (!userNo.equals(existingBoard.getUserNo())) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body("수정 권한이 없습니다.");
-            }
-            
-            // 게시글 번호 설정
-            board.setBoardNo(no);
-            board.setUserNo(userNo);  // 현재 사용자 번호 설정
-            
-            // 수정 실행
-            boolean isUpdated = adminBoardService.updateBoard(board);
-            if (isUpdated) {
-                return ResponseEntity.ok("Board updated");
-            }
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Failed to update Board");
-            
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Error: " + e.getMessage());
-        }
-    }
 
-	
+	// 수정 (유저가 같다면)
+	// 수정 메서드 수정
+	@PutMapping("/{no}")
+	public ResponseEntity<?> update(@PathVariable("no") int no, @RequestBody Board board,
+			@RequestHeader("Authorization") String token) {
+		try {
+			// Bearer 토큰에서 실제 토큰 추출
+			String actualToken = token.replace("Bearer ", "");
+
+			// 토큰에서 userNo 추출
+			Integer userNo = jwtUtil.getUserNo(actualToken);
+
+			// 기존 게시글 조회
+			Board existingBoard = adminBoardService.getBoard(no);
+
+			// 게시글이 존재하지 않는 경우
+			if (existingBoard == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("게시글을 찾을 수 없습니다.");
+			}
+
+			// 작성자와 현재 사용자가 다른 경우
+			if (!userNo.equals(existingBoard.getUserNo())) {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("수정 권한이 없습니다.");
+			}
+
+			// 게시글 번호 설정
+			board.setBoardNo(no);
+			board.setUserNo(userNo); // 현재 사용자 번호 설정
+
+			// 수정 실행
+			boolean isUpdated = adminBoardService.updateBoard(board);
+			if (isUpdated) {
+				return ResponseEntity.ok("Board updated");
+			}
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update Board");
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+		}
+	}
+
 	@GetMapping("/category/{category}")
-	public ResponseEntity<List<Board>> catagory(@PathVariable("category") String category, @RequestParam(value = "detailCategory", required = false) String detailCategory, Board board) {
+	public ResponseEntity<List<Board>> catagory(@PathVariable("category") String category,
+			@RequestParam(value = "detailCategory", required = false) String detailCategory, Board board) {
 		System.out.println("컨트롤러에서 카테고리 검색 메서드 실행!");
 		board.setCategory(category);
 		if (detailCategory != null) {
-			board.setDetailCategory(detailCategory);			
+			board.setDetailCategory(detailCategory);
 		}
-		
+
 		System.out.println("검색으로 쓰일 보드: " + board);
-		
+
 		List<Board> list = adminBoardService.getBoardlistByCatagory(board);
 		if (list != null) {
 			return ResponseEntity.ok(list);

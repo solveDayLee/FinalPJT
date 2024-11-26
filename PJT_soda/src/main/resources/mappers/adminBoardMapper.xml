@@ -5,10 +5,12 @@
 
 <mapper namespace="com.ssafy.soda.model.dao.BoardDao">
 	<select id="selectAll" resultType="Board">
-		SELECT b.*, IFNULL(count(l.board_no),0)
+		SELECT b.*,
+		IFNULL(count(l.board_no),0)
 		as likesCnt
 		FROM board b
-		LEFT JOIN likes l ON b.board_no = l.board_no
+		LEFT JOIN likes l ON
+		b.board_no = l.board_no
 		GROUP BY
 		b.board_no
 		ORDER BY
@@ -29,16 +31,24 @@
 	</select>
 
 	<update id="updateBoard" parameterType="Board">
-		UPDATE board SET 
-		title = #{title}, 
-		writer = #{writer}, 
-		content = #{content}, 
+		UPDATE board SET
+		title = #{title},
+		writer = #{writer},
+		content = #{content},
 		category = #{category},
 		detail_category = #{detailCategory}
-		WHERE board_no = #{boardNo}
-		
+		WHERE board_no =
+		#{boardNo}
+
 	</update>
-	
+	<update id="updateViewCnt" parameterType="int">
+		UPDATE board
+		SET view_cnt = view_cnt + 1
+		WHERE board_no = #{no}
+	</update>
+
+
+
 	<select id="selectBoardSearched" resultType="Board"
 		parameterType="SearchCondition">
 		SELECT *
@@ -62,10 +72,12 @@
 	</delete>
 
 	<insert id="insertBoard" parameterType="Board">
-		insert into board (title, writer, content, category, detail_category, user_no)
-		values (#{title}, #{writer}, #{content}, #{category}, #{detailCategory}, #{userNo});
+		insert into board (title,
+		writer, content, category, detail_category, user_no)
+		values (#{title},
+		#{writer}, #{content}, #{category}, #{detailCategory}, #{userNo});
 	</insert>
-	
+
 	<select id="allLikesCount" resultType="int">
 		SELECT
 		COALESCE(COUNT(l.board_no), 0) as like_count
@@ -85,18 +97,20 @@
 		WHERE b.board_no = #{no}
 		GROUP BY b.board_no;
 	</select>
-	
+
 	<!-- 신고처리 -->
 	<select id="sellectAllReported" resultType="Board">
 		SELECT
 		b.*,
-		(SELECT COUNT(*) FROM likes l WHERE l.board_no = b.board_no) as likesCnt,
+		(SELECT
+		COUNT(*) FROM likes l WHERE l.board_no = b.board_no) as likesCnt,
 		r.report_status as "boardReport.reportStatus"
 		FROM board b
 		RIGHT JOIN (
 		SELECT board_no, report_status
 		FROM board_report
-		GROUP BY board_no, report_status
+		GROUP BY board_no,
+		report_status
 		ORDER BY board_no DESC
 		) r ON b.board_no = r.board_no
 		ORDER BY b.board_no DESC
@@ -131,16 +145,19 @@
 		WHERE b.board_no = #{boardNo}
 	</select>
 
-	<select id="selectByCategory" parameterType="Board" resultType="Board">
+	<select id="selectByCategory" parameterType="Board"
+		resultType="Board">
 		SELECT b.*, count(l.board_no) as likesCnt
 		FROM board b
-		LEFT JOIN likes l ON b.board_no = l.board_no
+		LEFT JOIN likes l
+		ON b.board_no = l.board_no
 		<where>
 			<if test="detailCategory == null">
 				b.category = #{category}
 			</if>
 			<if test="detailCategory != null">
-				b.category = #{category} AND b.detail_category = #{detailCategory}
+				b.category = #{category} AND b.detail_category =
+				#{detailCategory}
 			</if>
 		</where>
 		GROUP BY b.board_no

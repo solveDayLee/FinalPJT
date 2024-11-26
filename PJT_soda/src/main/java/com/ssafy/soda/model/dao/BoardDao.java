@@ -29,6 +29,7 @@ public interface BoardDao {
 
 	List<Board> selectByCategory(Board board);
 
+	int updateViewCnt(int no);
 	int addLike(Likes likes);
 
 }

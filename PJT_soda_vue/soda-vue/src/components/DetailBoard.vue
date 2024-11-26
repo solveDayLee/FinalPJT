@@ -83,6 +83,32 @@ const isWriter = computed(() => {
   
   return store.board.userNo === parseInt(currentUserNo)
 })
+// 조회수 증가 함수 추가
+const increaseViewCnt = async (boardNo) => {
+  try {
+    await api.put(`/board/${boardNo}/view-count`)
+  } catch(err) {
+    console.error('조회수 증가 처리 오류', err)
+  }
+}
+// 게시글 로딩 함수 수정
+const loadBoard = async () => {
+  try {
+    loading.value = true
+    error.value = null
+    
+    // 조회수 증가 처리 후 게시글 정보 조회
+    await increaseViewCnt(route.params.no)
+    await store.getBoardByNo(route.params.no)
+    
+    console.log('게시글 로딩 완료:', store.board)
+  } catch (err) {
+    error.value = '게시글을 불러오는 중 오류가 발생했습니다.'
+    console.error('게시글 로딩 오류:', err)
+  } finally {
+    loading.value = false
+  }
+}
 
 
 onMounted(async() => {

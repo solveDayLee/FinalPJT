@@ -28,15 +28,17 @@
         </div>
 
         <div class="auth-links">
-          <!-- 로그인된 경우 표시될 UI -->
-          <div v-if="isLoggedIn" class="user-info">
+         <!-- 로그인된 경우 표시될 UI -->
 
-            <!-- ?는 옵셔널 체이닝(Optional Chaining) 연산자입니다. 이는 loginUser가 null이나 undefined일 때 에러를 방지하기 위해 사용됩니다. -->
-            <span class="welcome-message">{{ loginUser?.userId }}님 반가워요!</span>
-            <a @click="handleLogout" class="auth-link logout-btn">
-              <i class="bi bi-box-arrow-right"></i>
-              로그아웃</a>
-          </div>
+<div v-if="isLoggedIn" class="user-info">
+  <RouterLink :to="{ name: 'MyPage' }" class="welcome-message">
+    {{ loginUser?.userId }}님 반가워요!
+  </RouterLink>
+  <a @click="handleLogout" class="auth-link logout-btn">
+    <i class="bi bi-box-arrow-right"></i>
+    로그아웃
+  </a>
+</div>
 
           <div v-else class="auth-links">
   <RouterLink to="/login" class="auth-link">
@@ -60,6 +62,8 @@ import logo from '@/assets/etco-logo.gif'
 import { RouterLink } from 'vue-router';
 import { useUserStore } from '@/stores/user';
 import { computed } from 'vue';
+
+
 
 //store 인스턴스 생성
 const userStore = useUserStore()

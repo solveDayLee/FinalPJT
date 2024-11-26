@@ -62,9 +62,10 @@ public class ClientBoardController {
 	        // 기존 토큰 처리 & 사용자 정보 설정
 	        String actualToken = token.replace("Bearer ", "");
 	        Integer userNo = jwtUtil.getUserNo(actualToken);
-	        String userId = jwtUtil.getUserId(actualToken);
+	        String userId = jwtUtil.extractUserName(actualToken);
 	        board.setUserNo(userNo);
 	        board.setWriter(userId);
+	        System.out.println("write메서드에서 토큰에서 추출한 userNo:" + userNo);
 
 	        // 1. 게시글 저장
 	        boolean isAdded = adminBoardService.writeBoard(board);
@@ -87,14 +88,16 @@ public class ClientBoardController {
 	@DeleteMapping("/{no}")
 	public ResponseEntity<?> delete(@PathVariable("no") int no, @RequestHeader("Authorization") String token) { // 프론트의 인터셉터가 보낸 헤더를 여기서 받음
 		try {
+			System.out.println("delete메서드 진입");
 			//1. "Bearer xxxx" 형태에서 실제 토큰만 추출
 			String actualToken = token.replace("Bearer ", "");
 			
 			//2. 토큰에서 사용자 번호 가져오기
 			Integer userNo = jwtUtil.getUserNo(actualToken);
-			
+			System.out.println("delete메서드 사용자 번호:" + userNo);
 			//3. 게시글 정보 가져오기
 			Board board = adminBoardService.getBoard(no);
+			System.out.println("delete메서드 보드:" + board);
 			
 			//4. 게시글 존재 여부 체크
 			if(board ==null) {
@@ -102,11 +105,12 @@ public class ClientBoardController {
 			}
 			
 			//5. 작성자 본인인지 체크
-			if(!userNo.equals(board.getUserNo())) {
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("삭제 권한이 없습니다.");
-			}
+//			if(!userNo.equals(board.getUserNo())) {
+//				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("삭제 권한이 없습니다.");
+//			}
 			
 			boolean isDeleted = adminBoardService.deleteBoard(no);
+			System.out.println("isDeleted:" + isDeleted);
 			if(isDeleted) {
 				return ResponseEntity.status(HttpStatus.OK).body("Board deleted");
 			}

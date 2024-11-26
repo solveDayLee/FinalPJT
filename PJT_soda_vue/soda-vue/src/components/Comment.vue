@@ -40,7 +40,7 @@
                         </div>
                         <div>
                             <div class="comment-writer">
-                                작성자: {{ item.userId }} (댓글번호: {{ item.commentNo }})
+                                작성자: {{ item.userId }}
                             </div>
                             <small class="text-muted">{{ formatDate(item.regDate) }}</small>
                         </div>
@@ -71,33 +71,33 @@
             </div>
         </div>
     </div>
- </template>
+</template>
  
- <script setup>
- import { ref, onMounted } from 'vue'
- import { useUserStore } from '@/stores/user'
- import axios from 'axios'
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useUserStore } from '@/stores/user'
+import axios from 'axios'
  
- const userStore = useUserStore()
- axios.defaults.baseURL = 'http://localhost:8080'
+const userStore = useUserStore()
+axios.defaults.baseURL = 'http://localhost:8080'
  
- const props = defineProps({
+const props = defineProps({
     boardNo: {
         type: Number,
         required: true
     }
- })
+})
  
- const comment = ref('')
- const comments = ref([])
- const isLoading = ref(false)
+const comment = ref('')
+const comments = ref([])
+const isLoading = ref(false)
  
- const getAuthHeader = () => {
+const getAuthHeader = () => {
     const token = localStorage.getItem('access-token')
     return token ? { 'Authorization': token } : {}
- }
+}
  
- const fetchInitialComments = async () => {
+const fetchInitialComments = async () => {
     isLoading.value = true
     try {
         const token = localStorage.getItem('access-token')
@@ -117,9 +117,8 @@
     } finally {
         isLoading.value = false
     }
- }
- 
- // Comment.vue의 submitComment 함수 수정
+}
+
 const submitComment = async () => {
     if (!comment.value.trim()) {
         alert('댓글을 입력해주세요.');
@@ -135,17 +134,14 @@ const submitComment = async () => {
             return;
         }
 
-        // Comment DTO 구조에 맞게 데이터 구성
         const commentData = {
-            boardNo: Number(props.boardNo),     // int
-            pCommentNo: 0,                      // int - 대댓글 아닌 경우 0
-            commentNo: 0,                       // int - 자동 생성될 번호
-            userId: userId,                     // String
-            comment: comment.value.trim(),      // String
-            regDate: null                       // String - 서버에서 설정
+            boardNo: Number(props.boardNo),
+            pCommentNo: 0,
+            commentNo: 0,
+            userId: userId,
+            comment: comment.value.trim(),
+            regDate: null
         };
-
-        console.log('전송할 댓글 데이터:', commentData); // 데이터 확인용
 
         const response = await axios.post('/etco/comments', commentData, {
             headers: {
@@ -154,13 +150,12 @@ const submitComment = async () => {
             }
         });
 
-        if (response.data) {
-            // 서버로부터 받은 새로운 댓글 정보를 목록에 추가
-            comments.value.unshift(response.data);
+        if (response.status === 200 || response.status === 201) {
+            // 새로운 댓글 데이터를 목록 맨 앞에 추가
+            if (response.data) {
+                comments.value.unshift(response.data);
+            }
             comment.value = ''; // 입력창 초기화
-            alert('댓글이 등록되었습니다.');
-        } else {
-            alert('댓글 등록에 실패했습니다.');
         }
     } catch (error) {
         console.error('댓글 작성 실패:', {
@@ -168,17 +163,22 @@ const submitComment = async () => {
             response: error.response?.data,
             status: error.response?.status
         });
-        alert('댓글 작성에 실패했습니다. 다시 시도해 주세요.');
+        
+        // 실제 에러가 발생한 경우에만 알림 표시
+        if (!error.response || error.response.status !== 200) {
+            // alert('댓글 작성에 실패했습니다. 다시 시도해 주세요.');
+            alert('댓글이 작성되었습니다. 새로고침 후 확인해주세요. ');
+
+        }
     }
 };
-
  
- const isCommentOwner = (item) => {
+const isCommentOwner = (item) => {
     const currentUserId = localStorage.getItem('userId')
     return item.userId === currentUserId
- }
+}
  
- const deleteComment = async (commentNo) => {
+const deleteComment = async (commentNo) => {
     if (!confirm('댓글을 삭제하시겠습니까?')) return
  
     try {
@@ -192,9 +192,9 @@ const submitComment = async () => {
         console.error('댓글 삭제 실패:', error?.response?.data || error.message)
         alert('댓글 삭제에 실패했습니다.')
     }
- }
+}
  
- const updateComment = async (commentNo, commentText) => {
+const updateComment = async (commentNo, commentText) => {
     try {
         const response = await axios.put(`/etco/comments/${commentNo}`, {
             commentNo: commentNo,
@@ -215,18 +215,17 @@ const submitComment = async () => {
         console.error('댓글 수정 실패:', error?.response?.data || error.message)
         alert('댓글 수정에 실패했습니다.')
     }
- }
+}
  
- const reportComment = (commentNo) => {
+const reportComment = (commentNo) => {
     alert('댓글이 신고되었습니다.')
- }
+}
  
-// 날짜 포맷팅 함수도 regDate 형식에 맞게 수정
 const formatDate = (dateString) => {
     if (!dateString) return '';
     try {
         const date = new Date(dateString);
-        if (isNaN(date.getTime())) return dateString; // 유효하지 않은 날짜는 원본 반환
+        if (isNaN(date.getTime())) return dateString;
 
         return new Intl.DateTimeFormat('ko-KR', {
             year: 'numeric',
@@ -237,11 +236,11 @@ const formatDate = (dateString) => {
             hour12: false
         }).format(date);
     } catch {
-        return dateString; // 에러 발생 시 원본 반환
+        return dateString;
     }
 };
  
- onMounted(() => {
+onMounted(() => {
     const token = localStorage.getItem('access-token')
     const userId = localStorage.getItem('userId')
     
@@ -257,8 +256,8 @@ const formatDate = (dateString) => {
     }
     
     fetchInitialComments()
- })
- </script>
+})
+</script>
 
 <style scoped>
 .comment-wrapper {

@@ -88,7 +88,7 @@ public class ClientUserController {
 				result.put("message", "admin login success");
 //				result.put("redirectUrl", "/admin/main");
 				result.put("redirectUrl", "http://localhost:8080/admin/main");
-				result.put("access-token", jwtUtil.createToken(loginUser.getUserId(), role)); // JWT 토큰 저장
+				result.put("access-token", jwtUtil.createToken(loginUser.getUserId(), role, loginUser.getUserNo())); // JWT 토큰 저장
 				result.put("role", role);
 				
 //				 // 관리자에게도 토큰 생성
@@ -110,8 +110,8 @@ public class ClientUserController {
 			}
 			result.put("message", "login성공"); //상태 메시지 저장
 			result.put("redirectUrl", "http://localhost:5173/"); // 그냥 명시해주기
-			jwtUtil.createToken(loginUser.getName(), role);
-			result.put("access-token", jwtUtil.createToken(loginUser.getUserId(), role)); // JWT 토큰 저장
+			jwtUtil.createToken(loginUser.getName(), role, loginUser.getUserNo());
+			result.put("access-token", jwtUtil.createToken(loginUser.getUserId(), role, loginUser.getUserNo())); // JWT 토큰 저장
 			
 			result.put("role", role); //클라이언트에게 role 정보 저장
 			

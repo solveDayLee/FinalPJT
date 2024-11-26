@@ -10,6 +10,7 @@ import { useBoardStore } from '@/stores/board'
 import SupportView from '@/views/SupportView.vue'
 import ChatView from '@/views/ChatView.vue'
 import ContactPage from '@/views/ContactPage.vue'
+import MyPageView from '@/views/MyPageView.vue'
 
 
 const router = createRouter({
@@ -82,8 +83,11 @@ const router = createRouter({
       name: 'Contact',
       component: ContactPage
     },
-
-    
+    {
+  path: '/mypage',
+  name: 'MyPage',
+  component: MyPageView,
+    },
   ],
 
 

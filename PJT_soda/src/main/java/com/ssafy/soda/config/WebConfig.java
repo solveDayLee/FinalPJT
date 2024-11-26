@@ -3,6 +3,7 @@ package com.ssafy.soda.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.ssafy.soda.interceptor.JwtInterceptor;
@@ -34,7 +35,11 @@ public class WebConfig implements WebMvcConfigurer{
 		.addPathPatterns("/etco/**", "/admin/**") //etco로 시작하는 모든 경로에 인터셉터 적용
 		.excludePathPatterns("/etco/login", "/etco/signup", "/etco/board", "/admin/*"); //로그인, 회원가입, 전체리스트 제외
 	}
-	
+	 @Override
+	    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	        registry.addResourceHandler("/uploads/**")
+	                .addResourceLocations("file:src/main/resources/static/uploads/");
+	    }
 	
 }
 

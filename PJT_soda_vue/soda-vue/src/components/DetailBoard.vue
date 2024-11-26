@@ -19,7 +19,7 @@
         </div>
 
         <div class="main-content">
-          <div class="text-content">{{ store.board.content }}</div>
+          <div class="text-content ql-editor" v-html="sanitizedContent" ></div>
           <div class="like-section">
             <button class="like-button" :class="{ 'liked': isLiked }" @click="handleLike">
               ❤️ {{ store.board.likes }}
@@ -55,6 +55,8 @@ import { ref, onMounted, computed } from 'vue'
 import { useBoardStore } from '@/stores/board';
 import { useUserStore } from '@/stores/user' // 1125 기능추가
 import axios from 'axios';
+import DOMPurify from 'dompurify';
+import 'quill/dist/quill.snow.css';   // Quill 스타일시트
 
 const isLiked = ref(false)
 const store = useBoardStore()
@@ -79,6 +81,32 @@ const isWriter = computed(() => {
   
   return store.board.userNo === parseInt(currentUserNo)
 })
+// 조회수 증가 함수 추가
+const increaseViewCnt = async (boardNo) => {
+  try {
+    await api.put(`/board/${boardNo}/view-count`)
+  } catch(err) {
+    console.error('조회수 증가 처리 오류', err)
+  }
+}
+// 게시글 로딩 함수 수정
+const loadBoard = async () => {
+  try {
+    loading.value = true
+    error.value = null
+    
+    // 조회수 증가 처리 후 게시글 정보 조회
+    await increaseViewCnt(route.params.no)
+    await store.getBoardByNo(route.params.no)
+    
+    console.log('게시글 로딩 완료:', store.board)
+  } catch (err) {
+    error.value = '게시글을 불러오는 중 오류가 발생했습니다.'
+    console.error('게시글 로딩 오류:', err)
+  } finally {
+    loading.value = false
+  }
+}
 
 
 onMounted(async() => {
@@ -139,6 +167,10 @@ const formatDate = (date) => {
     minute: '2-digit'
   })
 }
+//quill 추가
+const sanitizedContent = computed(() => {
+  return store.board?.content ? DOMPurify.sanitize(store.board.content) : '';
+});
 </script>
 
 <style scoped>
@@ -205,6 +237,7 @@ const formatDate = (date) => {
   color: #2d3748;
   margin-bottom: 2.5rem;
   font-size: 1.1rem;
+  margin-bottom: 1em;
 }
 
 .like-section {
@@ -409,5 +442,51 @@ const formatDate = (date) => {
   .list-button {
     width: 100%;
   }
+  .text-content {
+  margin: 20px 0;
+  min-height: 200px;
+}
+
+/* Quill 스타일 재정의 */
+.text-content :deep(.ql-editor) {
+  padding: 0;
+}
+
+.text-content :deep(p) {
+  margin-bottom: 1em;
+}
+
+.text-content :deep(img) {
+  max-width: 100%;
+  height: auto;
+  margin: 1em 0;
+}
+
+.text-content :deep(blockquote) {
+  border-left: 4px solid #ccc;
+  margin: 1em 0;
+  padding-left: 16px;
+  color: #666;
+}
+
+.text-content :deep(pre) {
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  padding: 12px;
+  margin: 1em 0;
+  overflow-x: auto;
+}
+
+.text-content :deep(ul), 
+.text-content :deep(ol) {
+  padding-left: 2em;
+  margin: 1em 0;
+}
+
+.text-content :deep(h1),
+.text-content :deep(h2),
+.text-content :deep(h3) {
+  margin: 1em 0 0.5em;
+}
 }
 </style>

@@ -68,9 +68,9 @@
 
 <script setup>
 import { RouterLink, useRoute } from "vue-router";
+import { storeToRefs } from "pinia";
 import { useBoardStore } from "@/stores/board";
 import { ref, onBeforeMount, watch, onMounted } from "vue";
-import { storeToRefs } from "pinia";
 
 const store = useBoardStore();
 const route = useRoute();

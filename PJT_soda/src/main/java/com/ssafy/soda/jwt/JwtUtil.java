@@ -37,8 +37,8 @@ public class JwtUtil {
 	    
 	    
 	    // 토큰 생성
-//	    public String createToken(String name, String role, Integer userNo) {
-	    public String createToken(String userId, String role) {
+	    public String createToken(String userId, String role, Integer userNo) {
+//	    public String createToken(String userId, String role) {
 	    	  if (role!= null && !role.startsWith("ROLE_")) {
 	    	        role = "ROLE_" + role;
 	    	    }
@@ -49,8 +49,8 @@ public class JwtUtil {
 	                .setSubject(userId)  // userId를 subject로 설정
 	                .claim("userId", userId)
 	                .claim("role", role)
-//	                .claim("userNo", userNo) // userNo 추가
-	                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60))
+	                .claim("userNo", userNo) // userNo 추가
+	                .setExpiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000L))
 	                .signWith(secretKey)
 	                .compact();
 	    }
@@ -115,10 +115,10 @@ public class JwtUtil {
 
 
 
-		public String getUserId(String actualToken) {
-			// TODO Auto-generated method stub
-			return null;
-		}
+//		public String getUserId(String actualToken) {
+//			// TODO Auto-generated method stub
+//			return null;
+//		}
 	    
 	    
 }

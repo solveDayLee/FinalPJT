@@ -40,7 +40,7 @@ public class CommentController {
 	        String actualToken = token.replace("Bearer ", "");
 	        
 	        // 토큰 유효성 검증 및 사용자 정보 추출
-	        String userId = jwtUtil.getUserId(actualToken);
+	        String userId = jwtUtil.extractUserName(actualToken);
 	        
 	        // 댓글 목록 조회
 	        List<Comment> comments = commentService.getComments(boardNo);
@@ -64,7 +64,8 @@ public class CommentController {
 	    try {
 	        // 토큰 검증
 	        String actualToken = token.replace("Bearer ", "");
-	        String userId = jwtUtil.getUserId(actualToken);
+	        String userId = jwtUtil.extractUserName(actualToken);
+	        System.out.println("토큰에 담긴 아이디:"+ userId);
 	        
 	        // 필수 데이터 검증
 	        if (comment.getBoardNo() <= 0) {
@@ -99,7 +100,7 @@ public class CommentController {
 			@RequestHeader("Authorization") String token){
 		try {
 			String actualToken = token.replace("Bearer ", "");
-			String userId = jwtUtil.getUserId(actualToken);
+			String userId = jwtUtil.extractUserName(actualToken);
 			
 			//삭제하려는 댓글 정보 가져오기
 			Comment comment = commentService.getComment(commentNo);
@@ -136,7 +137,7 @@ public class CommentController {
 	    try {
 	        // 1. 토큰에서 사용자 ID 추출
 	        String actualToken = token.replace("Bearer ", "");
-	        String userId = jwtUtil.getUserId(actualToken); // 사용자 ID 가져오기
+	        String userId = jwtUtil.extractUserName(actualToken); // 사용자 ID 가져오기
 	        
 	        // 2. 수정하려는 댓글 정보 가져오기
 	        Comment existingComment = commentService.getComment(commentNo);

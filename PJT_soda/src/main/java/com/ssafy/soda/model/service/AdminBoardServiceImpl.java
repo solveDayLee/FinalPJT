@@ -35,9 +35,15 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 
 	@Override
 	public boolean deleteBoard(int no) {
-		if (boardDao.delete(no) == 1 ) return true;
-			return false; 
+		System.out.println("deleteBoard 서비스 도착. 삭제할 보드: " + no);
+		if (boardDao.delete(no) == 1 ) {
+			System.out.println("서비스 deleteBoard true 반환");
+			return true;
+		}else {
+			System.out.println("서비스 deleteBoard false 반환");
+			return false; 			
 		}
+	}
 
 	@Override
 	public List<Board> getSearchedBoardlist(SearchCondition searchCondition) {
@@ -88,6 +94,13 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	@Override
 	public List<Board> getBoardlistByCatagory(Board board) {
 		return boardDao.selectByCategory(board);
+	}
+
+
+
+	@Override
+	public boolean increaseViewCnt(int no) {
+		return boardDao.updateViewCnt(no)>0;
 	}
 
 }

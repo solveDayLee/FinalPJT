@@ -1,5 +1,7 @@
 package com.ssafy.soda.model.dto;
 
+import java.util.Arrays;
+
 public class Board {
 	private Integer boardNo;
 	private String title;
@@ -14,11 +16,23 @@ public class Board {
 	
 	private User user;
 	private BoardReport boardReport;
+	private Long[] imageIds;    
 	
 	
 	public Board() {
 	}
 	
+	
+	public Long[] getImageIds() {
+		return imageIds;
+	}
+
+
+	public void setImageIds(Long[] imageIds) {
+		this.imageIds = imageIds;
+	}
+
+
 	public int getBoardNo() {
 		return boardNo;
 	}
@@ -91,8 +105,9 @@ public class Board {
 	public void setBoardReport(BoardReport boardReport) {
 		this.boardReport = boardReport;
 	}
-	public Board(int boardNo, String title, String writer, String content, String regDate, int viewCnt, String category,
-			String detailCategory, Integer userNo, int likesCnt, User user, BoardReport boardReport) {
+	public Board(Integer boardNo, String title, String writer, String content, String regDate, int viewCnt,
+			String category, String detailCategory, Integer userNo, int likesCnt, User user, BoardReport boardReport,
+			Long[] imageIds) {
 		super();
 		this.boardNo = boardNo;
 		this.title = title;
@@ -106,14 +121,19 @@ public class Board {
 		this.likesCnt = likesCnt;
 		this.user = user;
 		this.boardReport = boardReport;
+		this.imageIds = imageIds;
 	}
+
+
 	@Override
 	public String toString() {
 		return "Board [boardNo=" + boardNo + ", title=" + title + ", writer=" + writer + ", content=" + content
 				+ ", regDate=" + regDate + ", viewCnt=" + viewCnt + ", category=" + category + ", detailCategory="
 				+ detailCategory + ", userNo=" + userNo + ", likesCnt=" + likesCnt + ", user=" + user + ", boardReport="
-				+ boardReport + "]";
+				+ boardReport + ", imageIds=" + Arrays.toString(imageIds) + "]";
 	}
+
+
 
 	
 

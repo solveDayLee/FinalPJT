@@ -225,4 +225,8 @@ footer {
 .logo-container:hover {
   transform: scale(1.05);
 }
+a {
+  text-decoration: none; /* 밑줄 제거 */
+  color: inherit; /* 기본 글자 색상 상속 */
+}
 </style>

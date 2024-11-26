@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.soda.jwt.JwtUtil;
 import com.ssafy.soda.model.dto.Board;
+import com.ssafy.soda.model.dto.Likes;
 import com.ssafy.soda.model.service.AdminBoardService;
 import com.ssafy.soda.model.service.ImageService;
 
@@ -186,21 +187,34 @@ public class ClientBoardController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 	
-	//댓글 추가
-//	@PostMapping("/comments")
-//	public ResponseEntity<?> writeComment(@RequestBody Comment commnet, @RequestHeader("Authorization") String token) {
-//		
-//	}
-	
-	
-	
-	//댓글 삭제
-	
-	
-	
-	
-	//댓글 신고
-	
+	@PostMapping("/like/{no}")
+	public ResponseEntity<?> likeAdd(@PathVariable("no") int boardNo, @RequestHeader("Authorization") String token) {
+		Likes likes = new Likes();
+		System.out.println("받아온 likes:" + likes);
+		try {
+	            // Bearer 토큰에서 실제 토큰 추출
+	            String actualToken = token.replace("Bearer ", "");
+	            
+	            // 토큰에서 userNo 추출
+	            Integer userNo = jwtUtil.getUserNo(actualToken);
+	            
+	            likes.setBoardNo(boardNo);
+	            likes.setUserNo(userNo);
+	            
+	           boolean addedLike = adminBoardService.addLike(likes);
+	            
+	           if(addedLike) {
+	        	   return ResponseEntity.ok("like added");
+	           }else {
+	        	   return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                       .body("Failed to add like");
+	           }
+	            
+		 }catch(Exception e){
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+		                .body("Error: " + e.getMessage());
+		 }
+	}
 	
 	
 	

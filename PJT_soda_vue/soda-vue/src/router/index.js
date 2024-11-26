@@ -9,6 +9,7 @@ import UpdateView from '@/views/UpdateView.vue'
 import { useBoardStore } from '@/stores/board'
 import SupportView from '@/views/SupportView.vue'
 import ChatView from '@/views/ChatView.vue'
+import ContactPage from '@/views/ContactPage.vue'
 
 
 const router = createRouter({
@@ -76,7 +77,12 @@ const router = createRouter({
       name: 'Img',
       component: BoardView
     },
-    
+    {
+      path: '/contact',
+      name: 'Contact',
+      component: ContactPage
+    },
+
     
   ],
 

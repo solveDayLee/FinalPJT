@@ -165,7 +165,7 @@ const submitComment = async () => {
         });
         
         // 실제 에러가 발생한 경우에만 알림 표시
-        if (!error.response || error.response.status !== 200) {
+        if (!error.response || error.response.status !== 200 ) {
             // alert('댓글 작성에 실패했습니다. 다시 시도해 주세요.');
             alert('댓글이 작성되었습니다. 새로고침 후 확인해주세요. ');
 

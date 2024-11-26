@@ -16,7 +16,7 @@
           <div class="nav-item">Category</div>
         </RouterLink>
         <div class="nav-item">About</div>
-        <div class="nav-item">Contact</div>
+        <RouterLink :to="{ name: 'Contact' }"><div class="nav-item">Contact</div></RouterLink>
       </nav>
 
       <div class="user-actions">
@@ -38,20 +38,16 @@
               로그아웃</a>
           </div>
 
-          <div v-else>
-            <RouterLink to="/login">
-              <a href="#" class="auth-link">
-                <i class="bi bi-person-circle"></i>
-                로그인
-              </a>
-            </RouterLink>
-            <RouterLink :to="{ name: 'Join' }">
-              <a href="#" class="auth-link">
-                <i class="bi bi-person-plus"></i>
-                회원가입
-              </a>
-            </RouterLink>
-          </div>
+          <div v-else class="auth-links">
+  <RouterLink to="/login" class="auth-link">
+    <i class="bi bi-person-circle"></i>
+    로그인
+  </RouterLink>
+  <RouterLink :to="{ name: 'Join' }" class="auth-link">
+    <i class="bi bi-person-plus"></i>
+    회원가입
+  </RouterLink>
+</div>
         </div>
       </div>
     </div>
@@ -206,17 +202,21 @@ header {
   align-items: center;
   gap: 1.5rem;
   margin-left: auto;
+  flex-wrap: nowrap;
 }
 
 .auth-links {
   display: flex;
+  flex-direction: row; /* 가로 배치를 위해 추가 */
   gap: 1.5rem;
+  align-items: center; /* 세로 중앙 정렬을 위해 추가 */
 }
 
 .auth-link {
   display: flex;
+  flex-direction: row; /* 버튼을 가로로 배치 */
   align-items: center;
-  gap: 0.4rem;
+  gap: 1.5rem;
   color: #FFFFFF;
   text-decoration: none;
   font-weight: 500;
@@ -248,5 +248,9 @@ header {
 
 .logout-btn {
   cursor: pointer;
+}
+a {
+  text-decoration: none; /* 밑줄 제거 */
+  color: inherit; /* 기본 글자 색상 상속 */
 }
 </style>

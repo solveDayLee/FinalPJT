@@ -22,7 +22,7 @@
           <div class="text-content ql-editor" v-html="sanitizedContent" ></div>
           <div class="like-section">
             <button class="like-button" :class="{ 'liked': isLiked }" @click="handleLike">
-              ❤️ {{ store.board.likes }}
+              ❤️ {{ store.board.likesCnt }}
             </button>
           </div>
         </div>
@@ -63,6 +63,8 @@ const store = useBoardStore()
 const userStore = useUserStore() // 1125 기능추가
 const route = useRoute() 
 const router = useRouter()
+// const [likeCount, setLikeCount] = useState(boardDetail.likeCount);
+// setLikeCount(liked ? likeCount - 1 : likeCount + 1);
 
 //1125 기능추가
 // 현재 로그인한 사용자가 게시글 작성자인지 확인하는 computed 속성
@@ -122,9 +124,29 @@ const goToList = function () {
 
 
 const handleLike = async () => {
-  await toggleLike(board.value.id)
-  isLiked.value = !isLiked.value
+  try {
+    const token = localStorage.getItem('token');
+    console.log("토큰:", token); // 토큰 값 확인
+    
+    const response = await axios.post(
+      `http://localhost:8080/etco/board/like/${route.params.no}`, 
+      null, 
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      }
+    );
+    console.log("응답:", response.data); // 응답 확인
+    router.push(`/detailboard/${route.params.no}`);
+  } catch (error) {
+    console.error("에러 details:", error.response); // 자세한 에러 정보 확인
+    alert('이미 좋아요를 누른 게시글입니다.');
+  }
 }
+
+
+
 
 const handleReport = () => {
   if (confirm('이 게시글을 신고하시겠습니까?')) {

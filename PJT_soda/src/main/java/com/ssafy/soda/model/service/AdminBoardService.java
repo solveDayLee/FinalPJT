@@ -3,6 +3,7 @@ package com.ssafy.soda.model.service;
 import java.util.List;
 
 import com.ssafy.soda.model.dto.Board;
+import com.ssafy.soda.model.dto.Likes;
 import com.ssafy.soda.model.dto.SearchCondition;
 
 public interface AdminBoardService {
@@ -26,6 +27,8 @@ public interface AdminBoardService {
 	boolean updateBoard(Board board);
 
 	List<Board> getBoardlistByCatagory(Board board);
+
+	boolean addLike(Likes likes);
 
 
 }

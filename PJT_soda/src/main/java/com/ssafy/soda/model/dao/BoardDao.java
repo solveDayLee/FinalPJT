@@ -3,6 +3,7 @@ package com.ssafy.soda.model.dao;
 import java.util.List;
 
 import com.ssafy.soda.model.dto.Board;
+import com.ssafy.soda.model.dto.Likes;
 import com.ssafy.soda.model.dto.SearchCondition;
 
 public interface BoardDao {
@@ -27,5 +28,7 @@ public interface BoardDao {
 	int updateBoard(Board board);
 
 	List<Board> selectByCategory(Board board);
+
+	int addLike(Likes likes);
 
 }

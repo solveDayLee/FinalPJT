@@ -8,7 +8,7 @@ export const useChatStore = defineStore('chat', {
   actions: {
     async sendMessage(userMessage) {
       try {
-        const response = await axios.post('http://localhost:8080/etco/chat', {
+        const response = await axios.post('http://192.168.210.73:8080/etco/chat', {
           message: userMessage
         })
         return response.data
@@ -19,7 +19,7 @@ export const useChatStore = defineStore('chat', {
     },
     async resetConversation() {
       try {
-        await axios.post('http://localhost:8080/etco/chat/reset') // 백엔드 reset 엔드포인트 호출
+        await axios.post('http://192.168.210.73:8080/etco/chat/reset') // 백엔드 reset 엔드포인트 호출
       } catch (error) {
         console.error('대화 초기화 에러:', error)
         throw new Error('대화 초기화에 실패했습니다.')

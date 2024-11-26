@@ -69,7 +69,7 @@ const router = createRouter({
     {
       path: '/admin/*',  // 모든 관리자 경로
       beforeEnter: () => {
-          window.location.href = 'http://localhost:8080/admin/main'; // 직접 서버로 이동
+          window.location.href = 'http://192.168.210.73:8080/admin/main'; // 직접 서버로 이동
       }
     },
     {

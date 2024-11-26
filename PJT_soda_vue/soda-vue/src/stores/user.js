@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import router from '@/router'
 
-const REST_API_URL = `http://localhost:8080/etco`
+const REST_API_URL = `http://192.168.210.73:8080/etco`
 // axios 인터셉터 설정
 axios.interceptors.request.use(
     config => {
@@ -109,7 +109,7 @@ export const useUserStore = defineStore('user', () => {
                 });
     
                 if (res.data.role === 'ADMIN') {
-                    location.href = 'http://localhost:8080/admin/main';
+                    location.href = 'http://192.168.210.73:8080/admin/main';
                     return;
                 }
                 router.push({ name: 'Home' });

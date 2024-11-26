@@ -79,7 +79,7 @@ import { useUserStore } from '@/stores/user'
 import axios from 'axios'
  
 const userStore = useUserStore()
-axios.defaults.baseURL = 'http://localhost:8080'
+axios.defaults.baseURL = 'http://192.168.210.73:8080'
  
 const props = defineProps({
     boardNo: {

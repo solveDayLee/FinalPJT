@@ -103,7 +103,7 @@ const deleteBoard = async () => {
     try {
       //삭제로직
       console.log("route.params 전체:", route.params) // params 객체 전체 확인
-      const response = await axios.delete(`http://localhost:8080/etco/board/${route.params.no}`)
+      const response = await axios.delete(`http://192.168.210.73:8080/etco/board/${route.params.no}`)
       console.log("DELETE 요청 후 응답:", response)
       console.log("삭제완료")
       alert('삭제되었습니다.')
@@ -129,7 +129,7 @@ const handleLike = async () => {
     console.log("토큰:", token); // 토큰 값 확인
     
     const response = await axios.post(
-      `http://localhost:8080/etco/board/like/${route.params.no}`, 
+      `http://192.168.210.73:8080/etco/board/like/${route.params.no}`, 
       null, 
       {
         headers: {

@@ -49,81 +49,72 @@ public class ClientBoardController {
 	// 상세 조회
 	@GetMapping("/{no}")
 	public ResponseEntity<Board> detail(@PathVariable("no") int no) {
-		try {
-			// 조회수 증가 처리
-			boolean isUpdated = adminBoardService.increaseViewCnt(no);
-			if (!isUpdated) {
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-			}
 
-			Board board = adminBoardService.getBoard(no);
-			if (board != null) {
-				System.out.println("보드 디테일 들고감!:" + board);
-				return ResponseEntity.ok(board);
-			}
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		Board board = adminBoardService.getBoard(no);
+		if (board != null) {
+			System.out.println("보드 디테일 들고감!:" + board);
+			return ResponseEntity.ok(board);
 		}
-		
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
-
+	
 	@PostMapping("")
-	public ResponseEntity<?> write(@RequestBody Board board, @RequestHeader("Authorization") String token) {
-		try {
-			// 기존 토큰 처리 & 사용자 정보 설정
-			String actualToken = token.replace("Bearer ", "");
-			Integer userNo = jwtUtil.getUserNo(actualToken);
-			String userId = jwtUtil.getUserId(actualToken);
-			board.setUserNo(userNo);
-			board.setWriter(userId);
+	public ResponseEntity<?> write(@RequestBody Board board, 
+	                             @RequestHeader("Authorization") String token) {
+	    try {
+	        // 기존 토큰 처리 & 사용자 정보 설정
+	        String actualToken = token.replace("Bearer ", "");
+	        Integer userNo = jwtUtil.getUserNo(actualToken);
+	        String userId = jwtUtil.extractUserName(actualToken);
+	        board.setUserNo(userNo);
+	        board.setWriter(userId);
+	        System.out.println("write메서드에서 토큰에서 추출한 userNo:" + userNo);
 
-			// 1. 게시글 저장
-			boolean isAdded = adminBoardService.writeBoard(board);
+	        // 1. 게시글 저장
+	        boolean isAdded = adminBoardService.writeBoard(board);
+	        
+	        // 2. 임시 이미지들 연결 (board.getImageIds()가 있다고 가정)
+	        if(isAdded && board.getImageIds() != null) {
+	            imageService.updateBoardNo(board.getBoardNo(), board.getImageIds());
+	        }
 
-			// 2. 임시 이미지들 연결 (board.getImageIds()가 있다고 가정)
-			if (isAdded && board.getImageIds() != null) {
-				imageService.updateBoardNo(board.getBoardNo(), board.getImageIds());
-			}
-
-			return isAdded ? ResponseEntity.ok("Board added")
-					: ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add Board");
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
-		}
+	        return isAdded ? 
+	            ResponseEntity.ok("Board added") : 
+	            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add Board");
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+	    }
 
 	}
-
-	// 삭제
+	
+	//삭제 
 	@DeleteMapping("/{no}")
-	public ResponseEntity<?> delete(@PathVariable("no") int no, @RequestHeader("Authorization") String token) { // 프론트의
-																												// 인터셉터가
-																												// 보낸
-																												// 헤더를
-																												// 여기서
-																												// 받음
+	public ResponseEntity<?> delete(@PathVariable("no") int no, @RequestHeader("Authorization") String token) { // 프론트의 인터셉터가 보낸 헤더를 여기서 받음
 		try {
-			// 1. "Bearer xxxx" 형태에서 실제 토큰만 추출
+			System.out.println("delete메서드 진입");
+			//1. "Bearer xxxx" 형태에서 실제 토큰만 추출
 			String actualToken = token.replace("Bearer ", "");
-
-			// 2. 토큰에서 사용자 번호 가져오기
+			
+			//2. 토큰에서 사용자 번호 가져오기
 			Integer userNo = jwtUtil.getUserNo(actualToken);
-
-			// 3. 게시글 정보 가져오기
+			System.out.println("delete메서드 사용자 번호:" + userNo);
+			//3. 게시글 정보 가져오기
 			Board board = adminBoardService.getBoard(no);
-
-			// 4. 게시글 존재 여부 체크
-			if (board == null) {
+			System.out.println("delete메서드 보드:" + board);
+			
+			//4. 게시글 존재 여부 체크
+			if(board ==null) {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("게시글을 찾을 수 없습니다.");
 			}
-
-			// 5. 작성자 본인인지 체크
-			if (!userNo.equals(board.getUserNo())) {
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("삭제 권한이 없습니다.");
-			}
-
+			
+			//5. 작성자 본인인지 체크
+//			if(!userNo.equals(board.getUserNo())) {
+//				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("삭제 권한이 없습니다.");
+//			}
+			
 			boolean isDeleted = adminBoardService.deleteBoard(no);
-			if (isDeleted) {
+			System.out.println("isDeleted:" + isDeleted);
+			if(isDeleted) {
 				return ResponseEntity.status(HttpStatus.OK).body("Board deleted");
 			}
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete Board");

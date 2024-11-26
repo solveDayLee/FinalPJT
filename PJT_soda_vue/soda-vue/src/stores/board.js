@@ -115,7 +115,7 @@ export const useBoardStore = defineStore('board', () => {
 
             // 디버깅을 위한 로그 추가
         console.log('게시글 작성자 번호:', board.value.userNo)
-        console.log('현재 로그인한 사용자 번호:', localStorage.getItem('userNo'))
+        console.log('현재 로그인한 사용자 번호:', localStorage.getItem('userId'))
 
             return response.data
 

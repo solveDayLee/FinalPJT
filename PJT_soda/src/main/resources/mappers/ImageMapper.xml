@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.soda.model.dao.ImageDao">
+
+	<!-- 테이블에 데이터 삽입 -->
+	<insert id="insertImage" parameterType="ImageEntity">
+		INSERT INTO images (file_path, original_file_name, file_size, board_no)
+		VALUES (#{filePath}, #{originalFileName}, #{fileSize}, #{boardNo})
+	</insert>
+
+	<update id="updateBoardNo" parameterType="map">
+		UPDATE images
+		SET board_no = #{boardNo}
+		WHERE id IN
+		<foreach collection="imageIds" item="imageId" open="(" separator="," close=")">
+			#{imageId}
+		</foreach>
+	</update>
+
+	<!-- 특정 ID로 데이터 조회 <select id="selectImageById" parameterType="long" resultType="ImageEntity"> 
+		SELECT id, file_path AS filePath, original_file_name AS originalFileName, 
+		file_size AS fileSize, created_at AS createdAt FROM images WHERE id = #{id} 
+		</select> -->
+	<!-- 모든 데이터 조회 <select id="selectAllImages" resultType="ImageEntity"> SELECT 
+		id, file_path AS filePath, original_file_name AS originalFileName, file_size 
+		AS fileSize, created_at AS createdAt FROM images </select> -->
+
+	<!-- 데이터 삭제 -->
+	<delete id="deleteImageById" parameterType="long">
+		DELETE FROM images WHERE id = #{id}
+	</delete>
+
+</mapper>

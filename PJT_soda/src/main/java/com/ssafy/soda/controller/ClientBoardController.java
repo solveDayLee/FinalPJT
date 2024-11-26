@@ -2,8 +2,6 @@ package com.ssafy.soda.controller;
 
 import java.util.List;
 
-import javax.xml.stream.events.Comment;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -82,8 +80,8 @@ public class ClientBoardController {
 	    } catch (Exception e) {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
 	    }
+
 	}
-	
 	
 	//삭제 
 	@DeleteMapping("/{no}")

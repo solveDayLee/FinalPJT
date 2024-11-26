@@ -41,7 +41,8 @@
       </div>
 
       <div class="comment-section">
-        <Comment />
+      <!-- route.params.no를 postId로 전달 -->
+      <Comment :boardNo="Number(route.params.no)" />
       </div>
     </div>
   </div>

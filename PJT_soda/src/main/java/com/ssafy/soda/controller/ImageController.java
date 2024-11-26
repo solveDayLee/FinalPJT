@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,9 @@ import com.ssafy.soda.model.service.ImageService;
 @RestController
 @RequestMapping("/img")
 public class ImageController {
+	
+	@Value("${upload.base.url}")
+	private String uploadBaseUrl;
 	
 	private ImageService imageService;
 	public ImageController(ImageService imageService) {
@@ -64,7 +68,8 @@ public class ImageController {
             
             // 5. 클라이언트에서 접근 가능한 URL 생성
 //            String fileUrl = "/uploads/" + fileName;
-            String fileUrl = "http://192.168.210.73:8080/uploads/" + fileName;
+            
+            String fileUrl = uploadBaseUrl+ "/uploads/" + fileName;
             
             // 6. URL을 JSON 형태로 반환
             Map<String, String> response = new HashMap<>();

@@ -79,7 +79,7 @@ import { useUserStore } from '@/stores/user'
 import axios from 'axios'
  
 const userStore = useUserStore()
-axios.defaults.baseURL = 'http://192.168.210.73:8080'
+axios.defaults.baseURL = `${import.meta.env.VITE_BASE_URL}`
  
 const props = defineProps({
     boardNo: {

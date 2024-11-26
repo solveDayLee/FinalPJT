@@ -139,7 +139,7 @@ const imageHandler = () => {
       // const response = await axios.post('/api/upload', formData);
       // const imageUrl = response.data.url;
           // 서버로 이미지 업로드
-        const response = await axios.post('http://192.168.210.73:8080/img/upload', formData, {
+        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/img/upload`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${localStorage.getItem('token')}`

@@ -64,7 +64,7 @@ public class ImageController {
             
             // 5. 클라이언트에서 접근 가능한 URL 생성
 //            String fileUrl = "/uploads/" + fileName;
-            String fileUrl = "http://localhost:8080/uploads/" + fileName;
+            String fileUrl = "http://192.168.210.73:8080/uploads/" + fileName;
             
             // 6. URL을 JSON 형태로 반환
             Map<String, String> response = new HashMap<>();

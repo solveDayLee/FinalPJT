@@ -177,7 +177,7 @@ const imageHandler = () => {
 
   .write-container {
     width: 100%;
-    max-width: 900px;
+    /* max-width: 1000px; */
     margin: 0 auto;
     background-color: white;
     border-radius: 16px;
